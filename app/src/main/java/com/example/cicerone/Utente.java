@@ -59,6 +59,5 @@ public class Utente {
     }
 
     private Utente() {
-    //
     }
 }
