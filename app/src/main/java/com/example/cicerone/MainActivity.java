@@ -48,6 +48,6 @@ public class MainActivity extends AppCompatActivity {
     //bisogna creare registration activity
     public void openActivityRegistration()
     {
-        Intent RegistrationIntent = new Intent(this, RegistrationActivity.class);
+        Intent RegistrationIntent = new Intent(this, LoginActivity.class);
     }
 }

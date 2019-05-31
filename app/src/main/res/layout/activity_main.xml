@@ -10,15 +10,23 @@
         android:id="@+id/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="329dp"
+        android:layout_marginBottom="24dp"
         android:text="LOG  IN"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="329dp" />
+        app:layout_constraintBottom_toTopOf="@+id/button_registrazione"
+        app:layout_constraintStart_toStartOf="@+id/button_registrazione"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_registrazione"
         android:layout_width="113dp"
-        android:layout_height="62dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="268dp"
         android:text="Registrati"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="401dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_login" />
 </android.support.constraint.ConstraintLayout>
