@@ -7,7 +7,7 @@
     android:background="#4255D8"
     tools:context=".MainActivity">
 
-    <EditText
+    <TextView
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,13 +47,17 @@
 
     <Button
         android:id="@+id/button_registrazione"
+        style="@style/TextAppearance.AppCompat.Button"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginBottom="154dp"
         android:background="@color/colorAccent"
         android:text="Registrazione"
-        android:textAppearance="@style/Widget.AppCompat.Button.Colored"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+        android:textColor="#000000"
         android:textSize="30sp"
+        android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
