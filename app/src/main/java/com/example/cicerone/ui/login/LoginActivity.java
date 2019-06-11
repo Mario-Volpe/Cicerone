@@ -3,6 +3,7 @@ package com.example.cicerone.ui.login;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -19,12 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
+import com.example.cicerone.RegistrationActivity;
 import com.example.cicerone.ui.login.LoginViewModel;
 import com.example.cicerone.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private Button buttonRegistration;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+
+        buttonRegistration = (Button) findViewById(R.id.button_registrazione2);
+
+        buttonRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityRegistration();
+            }
+        });
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -123,5 +135,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void openActivityRegistration()
+    {
+        Intent RegistrationIntent = new Intent(this, RegistrationActivity.class);
+        startActivity(RegistrationIntent);
     }
 }

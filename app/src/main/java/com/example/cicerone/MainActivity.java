@@ -49,5 +49,6 @@ public class MainActivity extends AppCompatActivity {
     public void openActivityRegistration()
     {
         Intent RegistrationIntent = new Intent(this, RegistrationActivity.class);
+        startActivity(RegistrationIntent);
     }
 }
