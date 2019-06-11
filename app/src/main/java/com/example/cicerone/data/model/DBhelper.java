@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBhelper extends SQLiteOpenHelper {
     public static final String DBNAME="BILLBOOK";
+
     public DBhelper(Context context) {
         super(context, DBNAME, null, 1);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db)
     {
