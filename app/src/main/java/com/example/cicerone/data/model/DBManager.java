@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
-public class DbManager
+public class DBManager
 {
     private DBhelper dbhelper;
-    public DbManager(Context ctx)
+    public DBManager(Context ctx)
     {
         dbhelper=new DBhelper(ctx);
     }
