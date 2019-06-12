@@ -18,22 +18,30 @@ import java.util.SimpleTimeZone;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private static final String TAG = "SignupActivity";
+    private static final String TAG = "RegistrationActivity";
 
 
-    private EditText nomeUtente  = findViewById(R.id.nome);
-    private EditText cognomeUtente = findViewById(R.id.cognome);
-    private EditText passwordUtente = findViewById(R.id.password);
-    private EditText emailUtente = findViewById(R.id.email);
-    private EditText dataNascitaUtente = findViewById(R.id.dataNascita);
-    private Button inviaDatiUtente = (Button) findViewById(R.id.bottoneInvia);
-    private TextView collegamentoLogin = findViewById(R.id.link_login);
+    private  EditText nomeUtente;
+    private  EditText cognomeUtente;
+    private  EditText passwordUtente ;
+    private  EditText emailUtente;
+    private  EditText dataNascitaUtente;
+    private  Button inviaDatiUtente;
+    private  TextView collegamentoLogin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         //ButterKnife.bind(this);
+
+        nomeUtente = findViewById(R.id.nome);
+        cognomeUtente = findViewById(R.id.cognome);
+        passwordUtente = findViewById(R.id.password);
+        emailUtente = findViewById(R.id.email);
+        dataNascitaUtente = findViewById(R.id.dataNascita);
+        inviaDatiUtente = (Button) findViewById(R.id.bottoneInvia);
+        collegamentoLogin  = findViewById(R.id.link_login);
 
        inviaDatiUtente.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -82,7 +90,6 @@ public class RegistrationActivity extends AppCompatActivity {
         Calendar dataNascita = Calendar.getInstance();
         dataNascita.setTime(date);
 
-        // TODO: Implement your own signup logic here.
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
