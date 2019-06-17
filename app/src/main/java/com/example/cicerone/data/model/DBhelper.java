@@ -30,6 +30,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public DBhelper(Context context ) {
         super(context, DBNAME, null, 1);
+        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
@@ -64,7 +65,14 @@ public class DBhelper extends SQLiteOpenHelper {
         db.execSQL(createTablePrenotazione);
 
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    { }
+    {
+        db.execSQL("DROP TABLE IF EXISTS "+ UTENTE_TABLE );
+        db.execSQL("DROP TABLE IF EXISTS "+ ATTIVITA_TABLE );
+        db.execSQL("DROP TABLE IF EXISTS "+ PRENOTAZIONE_TABLE );
+
+        onCreate( db );
+    }
 }
