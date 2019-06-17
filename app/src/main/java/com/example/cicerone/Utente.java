@@ -46,6 +46,14 @@ public class Utente {
         this.nome = nome;
     }
 
-    private Utente() {
+    public Utente(String nome,String cognome, ContactsContract.CommonDataKinds.Email email, String password) {
+        setCognome(cognome);
+        setEmail(email);
+        setNome(nome);
+        setPassword(password);
+    }
+
+    public Utente(){
+
     }
 }

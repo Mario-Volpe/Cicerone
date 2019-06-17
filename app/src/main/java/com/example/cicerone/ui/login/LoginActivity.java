@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import com.example.cicerone.R;
 import com.example.cicerone.RegistrationActivity;
-import com.example.cicerone.ui.login.LoginViewModel;
-import com.example.cicerone.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
