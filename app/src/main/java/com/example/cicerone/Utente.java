@@ -5,6 +5,17 @@ import android.provider.ContactsContract;
 public class Utente {
     private static final Utente ourInstance = new Utente();
 
+    public Utente() {
+    }
+
+    public Utente(String password, String cognome, String nome, ContactsContract.CommonDataKinds.Email email) {
+        this.password = password;
+        this.cognome = cognome;
+        this.nome = nome;
+        this.email = email;
+    }
+
+
     public static Utente getInstance() {
         return ourInstance;
     }
@@ -46,6 +57,5 @@ public class Utente {
         this.nome = nome;
     }
 
-    private Utente() {
-    }
+
 }

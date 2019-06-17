@@ -68,17 +68,24 @@ public class RegistrationActivity extends AppCompatActivity {
     public void signup() throws ParseException {
         Log.d(TAG, "Accedi");
 
+        DBhelper helper = new DBhelper( this );
+        String nomeUtenteStr = nomeUtente.getText().toString();
+        String cognomeUtenteStr = cognomeUtente.getText().toString();
+        String emailUtenteStr = emailUtente.getText().toString();
+        String passwordUtenteStr = passwordUtente.getText().toString();
+
         if (!validate()) {
             onSignupFailed();
             return;
         }else{
             Utente u = new Utente();
 
-            u.setNome( nomeUtente.toString() );
-            u.setCognome( cognomeUtente.toString());
-            u.setEmail( emailUtente.toString() );
-            u.getPassword( passwordUtente.toString() );
+            u.setNome(nomeUtenteStr);
+            u.setCognome(cognomeUtenteStr);
+            //u.setEmail( emailUtenteStr );
+            u.setPassword( passwordUtenteStr );
 
+            helper.inserisciUtente( u );
 
         }
 
