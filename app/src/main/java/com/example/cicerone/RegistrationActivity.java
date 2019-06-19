@@ -129,7 +129,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login fallito", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Registrazione fallita", Toast.LENGTH_LONG).show();
         inviaDatiUtente.setEnabled(true);
     }
 
