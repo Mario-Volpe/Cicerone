@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cicerone.HomeActivity;
 import com.example.cicerone.R;
 import com.example.cicerone.RegistrationActivity;
 
@@ -121,8 +122,15 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                openActivityHome();
             }
         });
+    }
+
+    public void openActivityHome()
+    {
+        Intent Homeintent = new Intent(this, HomeActivity.class );
+        startActivity(Homeintent);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
