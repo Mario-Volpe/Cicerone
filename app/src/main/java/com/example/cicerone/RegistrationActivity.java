@@ -1,6 +1,7 @@
 package com.example.cicerone;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,14 +17,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import com.example.cicerone.Utente;
-
 
 public class RegistrationActivity extends AppCompatActivity {
 
     DBhelper db;
 
-    private Utente = new Utente();
+    private Utente u = new Utente();
 
     private  EditText nomeUtente;
     private  EditText cognomeUtente;
@@ -47,11 +46,9 @@ public class RegistrationActivity extends AppCompatActivity {
         inviaDatiUtente = (Button) findViewById(R.id.bottoneInvia);
         collegamentoLogin  = findViewById(R.id.link_login);
 
-       inviaDatiUtente.setOnClickListener( new View.OnClickListener() ) {
+       inviaDatiUtente.setOnClickListener(new View.OnClickListener() {
            @Override
-           public void onClick( View v ) {
-
-               Utente u = new Utente();
+           public void onClick(View v) {
                String nomeUtenteStr = nomeUtente.getText().toString().trim();
                String cognomeUtenteStr = cognomeUtente.getText().toString().trim();
                String emailUtenteStr = emailUtente.getText().toString().trim();
@@ -65,21 +62,13 @@ public class RegistrationActivity extends AppCompatActivity {
                long val = db.inserisciUtente( u );
 
                if (val > 0) {
-                  Toast.makeText( RegistrationActivity.this, "Ti sei registrato Pingone", Toast.LENGTH_SHORT ).show();
-                  Intent moveToLogin = new Intent ( RegistrationActivity.this, LoginActivity.class );
-                  startActivity( moveToLogin );
-               }
-
-           }
-       }
-
-        collegamentoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
-                finish();
+                   Toast.makeText( RegistrationActivity.this, "Ti sei registrato", Toast.LENGTH_SHORT ).show();
+                   finish();
+                }
             }
         }
+        );
+
     }
 
     /*public void signup() throws ParseException {
