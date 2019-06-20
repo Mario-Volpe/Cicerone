@@ -41,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //ButterKnife.bind(this);
 
+        emailText = findViewById(R.id.username);
+        passwordText = findViewById(R.id.password);
+        loginButton = (Button) findViewById(R.id.login);
+        signUpLink = findViewById(R.id.button_registrazione2);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
