@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.cicerone.Utente;
+import com.example.cicerone.;
 
 public class DBhelper extends SQLiteOpenHelper {
     public static final String DBNAME="Cicerone.db";
@@ -68,7 +68,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     }
 
-    public void inserisciUtente( Utente u )
+    public long inserisciUtente( Utente u )
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -77,8 +77,12 @@ public class DBhelper extends SQLiteOpenHelper {
         values.put( U_COL_COGNOME, u.getCognome());
         values.put( U_COL_PASSWORD, u.getPassword());
 
-        db.insert( UTENTE_TABLE, null, values );
+        long res = db.insert( UTENTE_TABLE, null, values );
+        db.close();
+
+        return res;
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
