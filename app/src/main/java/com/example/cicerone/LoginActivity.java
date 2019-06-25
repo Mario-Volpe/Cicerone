@@ -38,8 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //ButterKnife.bind(this);
+        setContentView(R.layout.activity_login);
 
         emailText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
@@ -78,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
+        progressDialog.setMessage("Autenticazione...");
         progressDialog.show();
 
         String email = emailText.getText().toString();
@@ -134,13 +133,15 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordText.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailText.setError("enter a valid email address");
+            //TODO: verificare che user (email) esiste nel db
+            emailText.setError("Inserisci un indirizzo email valido");
             valid = false;
         } else {
             emailText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            //TODO: verificare anche che la password coincida con quella dell'utente
             passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {

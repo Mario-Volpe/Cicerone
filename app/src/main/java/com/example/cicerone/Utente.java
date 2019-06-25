@@ -1,14 +1,13 @@
 package com.example.cicerone;
 
-import android.provider.ContactsContract;
-
 public class Utente {
     private static final Utente ourInstance = new Utente();
 
     public Utente() {
+
     }
 
-    public Utente(String password, String cognome, String nome, ContactsContract.CommonDataKinds.Email email) {
+    public Utente(String password, String cognome, String nome, String email) {
         this.password = password;
         this.cognome = cognome;
         this.nome = nome;
@@ -23,13 +22,13 @@ public class Utente {
     private String password;
     private String cognome;
     private String nome;
-    private ContactsContract.CommonDataKinds.Email email;
+    private String email;
 
-    public ContactsContract.CommonDataKinds.Email getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(ContactsContract.CommonDataKinds.Email email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

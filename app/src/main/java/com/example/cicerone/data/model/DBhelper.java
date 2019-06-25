@@ -32,6 +32,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public DBhelper(Context context ) {
         super(context, DBNAME, null, 1);
+
         SQLiteDatabase db = this.getWritableDatabase();
     }
 

@@ -7,12 +7,23 @@
     android:background="#4255D8"
     tools:context=".RegistrationActivity">
 
+    <EditText
+        android:id="@+id/password2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:ems="10"
+        android:hint="Conferma Password"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
     <Button
         android:id="@+id/bottoneInvia"
         style="@style/TextAppearance.AppCompat.Button"
         android:layout_width="144dp"
         android:layout_height="56dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="92dp"
         android:background="@color/colorAccent"
         android:text="Invia"
         android:textAllCaps="false"
@@ -21,6 +32,7 @@
         android:textSize="30sp"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
@@ -28,12 +40,13 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
         android:ems="10"
         android:hint="E-Mail"
         android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/dataNascita"
-        app:layout_constraintTop_toBottomOf="@+id/dataNascita" />
+        tools:layout_editor_absoluteX="101dp"
+        tools:layout_editor_absoluteY="320dp"
+        app:layout_constraintStart_toStartOf="@+id/cognome"
+        app:layout_constraintTop_toBottomOf="@+id/cognome"/>
 
     <EditText
         android:id="@+id/password"
@@ -72,26 +85,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/dataNascita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Data di Nascita"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/cognome"
-        app:layout_constraintTop_toBottomOf="@+id/cognome" />
-
     <TextView
         android:id="@+id/link_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="Sei già registrato? Accedi"
         android:textSize="16dip"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottoneInvia" />
 
