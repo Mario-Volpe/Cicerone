@@ -40,10 +40,9 @@ public class DBhelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db)
     {
         String createTableUtente = "CREATE TABLE " +UTENTE_TABLE+"(" +
-                "ID_UTENTE INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "EMAIL TEXT PRIMARY KEY," +
                 "NOME TEXT," +
                 "COGNOME TEXT," +
-                "EMAIL TEXT," +
                 "PASSWORD TEXT)";
         db.execSQL(createTableUtente);
 
@@ -53,14 +52,14 @@ public class DBhelper extends SQLiteOpenHelper {
                 "LINGUA TEXT," +
                 "MAX_PARTECIPANTI INTEGER," +
                 "ID_CICERONE INTEGER," +
-                "FOREIGN KEY (ID_CICERONE) REFERENCES Utenti(ID_UTENTE)" +
+                "FOREIGN KEY (ID_CICERONE) REFERENCES Utenti(EMAIL)" +
                 "ON DELETE CASCADE " +
                 "ON UPDATE CASCADE "+
                 ")";
         db.execSQL(createTableAttivita);
 
         String createTablePrenotazione = "CREATE TABLE " +PRENOTAZIONE_TABLE+"(" +
-                "GLOBETROTTER INTEGER REFERENCES Utenti( ID_UTENTE)," +
+                "GLOBETROTTER INTEGER REFERENCES Utenti( EMAIL)," +
                 "ID_ACTIVITY INTEGER REFERENCES Attivita(ID_ATTIVTA)," +
                 "NUMERO_PARTECIPANTI INTEGER," +
                 "PRIMARY KEY ( GLOBETROTTER, ID_ACTIVITY) " +
@@ -74,6 +73,7 @@ public class DBhelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        values.put( U_COL_EMAIL, u.getEmail() );
         values.put( U_COL_NOME, u.getNome() );
         values.put( U_COL_COGNOME, u.getCognome());
         values.put( U_COL_PASSWORD, u.getPassword());

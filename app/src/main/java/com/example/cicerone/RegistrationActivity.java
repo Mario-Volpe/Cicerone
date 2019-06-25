@@ -79,6 +79,19 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         );
 
+        collegamentoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityLogin();
+            }
+        });
+
+    }
+
+    public void openActivityLogin()
+    {
+        Intent Loginintent = new Intent(this, LoginActivity.class );
+        startActivity(Loginintent);
     }
 
 }
