@@ -2,8 +2,10 @@ package com.example.cicerone.data.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 import android.widget.Toast;
 
 import com.example.cicerone.Utente;
@@ -95,5 +97,71 @@ public class DBhelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ PRENOTAZIONE_TABLE );
 
         onCreate( db );
+    }
+
+    /**
+     * Metodo che dato un utente cerca la corrispettiva password
+     * @param utente
+     * @return "" se password non viene trovata
+     * @return password se viene trovata
+     */
+    public String searchPassword (Utente utente)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "select EMAIL, PASSWORD FROM"+UTENTE_TABLE;
+
+        Cursor cursor = db.rawQuery(query, null);
+        String a,b;
+        b = ""; //stringa vuota indica password non trovata
+
+        if (cursor.moveToFirst())
+        {
+            do {
+
+                a = cursor.getString(0); //prende l'utente
+
+                if (a.equals(utente.getEmail())) //email corrispondente trovata, assegno la password corrispondente
+                {
+                    b = cursor.getString(1);
+                    break;
+                }
+
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        return b;
+    }
+
+
+    /**
+     * Metodo che dato un utente lo cerca nel db
+     * @param utente
+     * @return True se utente esiste
+     * @return  False se utente non esiste
+     */
+    public boolean isSignedUp (Utente utente)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "select EMAIL FROM"+UTENTE_TABLE;
+
+        Cursor cursor = db.rawQuery(query, null);
+        String email;
+        boolean isIn = false;
+
+        if (cursor.moveToFirst())
+        {
+            do {
+                email = cursor.getString(0);
+
+                if (email.equals(utente.getEmail()))
+                {
+                    isIn = true;
+                    break;
+                }
+            }while (cursor.moveToNext());
+        }
+
+        db.close();
+        return isIn;
     }
 }

@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    DBhelper db;
+    DBhelper  db = new DBhelper(this);
 
     private Utente nuovoUtente = new Utente();
 
@@ -77,9 +77,24 @@ public class RegistrationActivity extends AppCompatActivity {
                        if(passwordUtenteStr.length()>15)
                            Toast.makeText( RegistrationActivity.this, "La password può contenere massimo 15 caratteri!", Toast.LENGTH_SHORT).show();
                        else
-                            //Se le password coincidono, bisogna controllare che l'utente (email) è gia usato e nel caso scrivere l'utente nel db
-                            if (db.inserisciUtente(nuovoUtente)>0)
-                                finish();
+                       {
+                           //Se le password coincidono, bisogna controllare che l'utente (email) è gia usato e nel caso scrivere l'utente nel db
+                           if (db.isSignedUp(nuovoUtente))
+                           {
+                               //utente già iscritto, stampo un messaggio d'errore
+                               Toast.makeText(RegistrationActivity.this, "Questa mail risulta essere già usata!", Toast.LENGTH_LONG).show();
+                           }
+                           else
+                           {
+                               //inserimento nel db
+                               if (db.inserisciUtente(nuovoUtente)>0)
+                               {
+                                   Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
+                                   finish();
+                               }
+                           }
+                       }
+
                    }
                }
             }

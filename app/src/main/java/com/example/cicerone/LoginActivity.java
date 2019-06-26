@@ -24,11 +24,13 @@ import android.widget.Toast;
 import com.example.cicerone.HomeActivity;
 import com.example.cicerone.R;
 import com.example.cicerone.RegistrationActivity;
+import com.example.cicerone.data.model.DBhelper;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
+    DBhelper db = new DBhelper(this);
 
     private EditText emailText;
     private EditText passwordText;
@@ -131,20 +133,43 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
+        String nome = "noNome";
+        String cognome = "noCognome";
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            //TODO: verificare che user (email) esiste nel db
+        Utente validateUser = new Utente (password,cognome,nome,email);
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ) {
             emailText.setError("Inserisci un indirizzo email valido");
             valid = false;
         } else {
             emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            //TODO: verificare anche che la password coincida con quella dell'utente
-            passwordText.setError("between 4 and 10 alphanumeric characters");
+        /*Verifico che l'email inserita esista per un utente registrato*/
+        if (db.isSignedUp(validateUser))
+        {
+            emailText.setError("Nessun utente registrato con questo indirizzo mail!");
+            valid = false;
+        }
+        else
+        {
+            emailText.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() < 5 || password.length() > 15) {
+            passwordText.setError("La password è di almeno 5 caratteri e massimo 15");
             valid = false;
         } else {
+            passwordText.setError(null);
+        }
+
+        /* Verifico che la password corrisponda a quella dell'utente*/
+        if (!db.searchPassword(validateUser).equals(password))
+        {
+            passwordText.setError("La password inserita non coincide con quella dell'utente!");
+            valid = false;
+        }
+        else {
             passwordText.setError(null);
         }
 
