@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,29 +24,25 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private Utente nuovoUtente = new Utente();
 
-    private  EditText nomeUtente;
-    private  EditText cognomeUtente;
-    private  EditText passwordUtente ;
-    private  EditText passwordUtente2 ;
-    private  EditText emailUtente;
-    private  EditText dataNascitaUtente;
-    private  Button inviaDatiUtente;
-    private  TextView collegamentoLogin;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        EditText dataNascitaUtente;
+        Button inviaDatiUtente;
+        TextView collegamentoLogin;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
 
-        nomeUtente = ( EditText ) findViewById(R.id.nome);
-        cognomeUtente = ( EditText ) findViewById(R.id.cognome);
-        passwordUtente = ( EditText ) findViewById(R.id.password);
-        passwordUtente2 = ( EditText ) findViewById(R.id.password2);
-        emailUtente = (EditText ) findViewById(R.id.email);
+        final EditText nomeUtente = ( EditText ) findViewById(R.id.nome);
+        final EditText cognomeUtente = ( EditText ) findViewById(R.id.cognome);
+        final EditText passwordUtente = ( EditText ) findViewById(R.id.password);
+        final EditText passwordUtente2 = ( EditText ) findViewById(R.id.password2);
+        final EditText emailUtente = (EditText ) findViewById(R.id.email);
         inviaDatiUtente = (Button) findViewById(R.id.bottoneInvia);
         collegamentoLogin  = findViewById(R.id.link_login);
+        ImageView img = findViewById(R.id.imageView3);
 
        inviaDatiUtente.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -100,6 +97,13 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         );
 
+       img.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               openActivityMain();
+           }
+       });
+
         collegamentoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +117,12 @@ public class RegistrationActivity extends AppCompatActivity {
     {
         Intent Loginintent = new Intent(this, LoginActivity.class );
         startActivity(Loginintent);
+    }
+
+    public void openActivityMain()
+    {
+        Intent Mainintent = new Intent(this, MainActivity.class );
+        startActivity(Mainintent);
     }
 
 }
