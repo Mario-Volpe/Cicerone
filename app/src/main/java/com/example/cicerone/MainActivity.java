@@ -9,19 +9,15 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonLogin;
-    private Button buttonRegistration;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //bottone che passa all'activity login
-        buttonLogin = (Button) findViewById(R.id.button_login);
+        Button buttonLogin = findViewById(R.id.button_login);
         //bottone che passa all'activity registrazione
-        buttonRegistration = (Button) findViewById(R.id.button_registrazione);
+        Button buttonRegistration = findViewById(R.id.button_registrazione);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Loginintent);
     }
 
-    //bisogna creare registration activity
     public void openActivityRegistration()
     {
         Intent RegistrationIntent = new Intent(this, RegistrationActivity.class);

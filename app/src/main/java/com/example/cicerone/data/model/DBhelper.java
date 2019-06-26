@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.strictmode.SqliteObjectLeakedViolation;
-import android.widget.Toast;
 
 import com.example.cicerone.Utente;
 
@@ -38,6 +37,7 @@ public class DBhelper extends SQLiteOpenHelper {
         super(context, DBNAME, null, 1);
 
         SQLiteDatabase db = this.getWritableDatabase();
+        db.close();
     }
 
     @Override
@@ -101,9 +101,8 @@ public class DBhelper extends SQLiteOpenHelper {
 
     /**
      * Metodo che dato un utente cerca la corrispettiva password
-     * @param utente
-     * @return "" se password non viene trovata
-     * @return password se viene trovata
+     * @param utente dati del registrante
+     * @return "" se la password non viene trovata, altrimenti password
      */
     public String searchPassword (Utente utente)
     {
@@ -129,15 +128,15 @@ public class DBhelper extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         db.close();
+        cursor.close();
         return b;
     }
 
 
     /**
      * Metodo che dato un utente lo cerca nel db
-     * @param utente
-     * @return True se utente esiste
-     * @return  False se utente non esiste
+     * @param utente da cercare
+     * @return True se utente esiste, False altrimenti
      */
     public boolean isSignedUp (Utente utente)
     {
@@ -162,6 +161,7 @@ public class DBhelper extends SQLiteOpenHelper {
         }
 
         db.close();
+        cursor.close();
         return isIn;
     }
 }

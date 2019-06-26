@@ -30,8 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    DBhelper db = new DBhelper(this);
-
     private EditText emailText;
     private EditText passwordText;
     private Button loginButton;
@@ -144,6 +142,8 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             emailText.setError(null);
         }
+
+        DBhelper db = new DBhelper(this);
 
         /*Verifico che l'email inserita esista per un utente registrato*/
         if (db.isSignedUp(validateUser))

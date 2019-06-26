@@ -21,8 +21,6 @@ import java.util.Date;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    DBhelper  db = new DBhelper(this);
-
     private Utente nuovoUtente = new Utente();
 
     private  EditText nomeUtente;
@@ -57,6 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
                String emailUtenteStr = emailUtente.getText().toString().trim();
                String passwordUtenteStr = passwordUtente.getText().toString().trim();
                String passwordUtende2Str = passwordUtente2.getText().toString().trim();
+               DBhelper  db = new DBhelper(RegistrationActivity.super.getBaseContext());
 
                nuovoUtente.setNome(nomeUtenteStr);
                nuovoUtente.setCognome(cognomeUtenteStr);
