@@ -83,9 +83,10 @@ public class RegistrationActivity extends AppCompatActivity {
                            else
                            {
                                //inserimento nel db
-                               if (db.inserisciUtente(nuovoUtente)>0)
+                               if (db.inserisciUtente(nuovoUtente)!=-1)
                                {
                                    Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
+                                   db.close();
                                    finish();
                                }
                            }

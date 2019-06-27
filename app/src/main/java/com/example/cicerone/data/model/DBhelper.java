@@ -107,7 +107,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public String searchPassword (Utente utente)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "select EMAIL, PASSWORD FROM"+UTENTE_TABLE;
+        String query = "select EMAIL, PASSWORD FROM "+UTENTE_TABLE;
 
         Cursor cursor = db.rawQuery(query, null);
         String a,b;
@@ -141,7 +141,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public boolean isSignedUp (Utente utente)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "select EMAIL FROM"+UTENTE_TABLE;
+        String query = "select EMAIL FROM "+UTENTE_TABLE;
 
         Cursor cursor = db.rawQuery(query, null);
         String email;

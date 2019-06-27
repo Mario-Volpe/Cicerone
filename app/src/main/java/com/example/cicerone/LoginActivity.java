@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
         DBhelper db = new DBhelper(this);
 
         /*Verifico che l'email inserita esista per un utente registrato*/
-        if (db.isSignedUp(validateUser))
+        if (!db.isSignedUp(validateUser))
         {
             emailText.setError("Nessun utente registrato con questo indirizzo mail!");
             valid = false;
