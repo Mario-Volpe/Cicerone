@@ -69,7 +69,6 @@
         android:layout_gravity="start"
         android:layout_marginBottom="40dp"
         android:background="@drawable/ic_launcher_background"
-        android:enabled="false"
         android:text="@string/action_sign_in"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
