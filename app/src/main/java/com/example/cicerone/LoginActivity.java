@@ -141,10 +141,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
-        String nome = "noNome";
-        String cognome = "noCognome";
 
-        Utente validateUser = new Utente (password,cognome,nome,email);
+        Utente validateUser = new Utente (password,"","",email,"");
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ) {
             emailText.setError("Inserisci un indirizzo email valido");

@@ -1,5 +1,8 @@
 package com.example.cicerone;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Utente {
     private static final Utente ourInstance = new Utente();
 
@@ -7,11 +10,12 @@ public class Utente {
 
     }
 
-    public Utente(String password, String cognome, String nome, String email) {
-        this.password = password;
-        this.cognome = cognome;
-        this.nome = nome;
-        this.email = email;
+    public Utente(String password, String cognome, String nome, String email, String datanascita) {
+        setPassword(password);
+        setNome(nome);
+        setCognome(cognome);
+        setEmail(email);
+        setDatanascita(datanascita);
     }
 
 
@@ -23,6 +27,7 @@ public class Utente {
     private String cognome;
     private String nome;
     private String email;
+    private String datanascita;
 
     public String getEmail() {
         return email;
@@ -57,4 +62,11 @@ public class Utente {
     }
 
 
+    public String getDatanascita() {
+        return datanascita;
+    }
+
+    public void setDatanascita(String datanascita) {
+        this.datanascita = datanascita;
+    }
 }

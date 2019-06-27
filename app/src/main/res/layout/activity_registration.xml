@@ -11,7 +11,7 @@
         android:id="@+id/password2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="27dp"
         android:ems="10"
         android:hint="Conferma Password"
         android:inputType="textPassword"
@@ -24,7 +24,7 @@
         style="@style/TextAppearance.AppCompat.Button"
         android:layout_width="144dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="47dp"
         android:background="@color/colorAccent"
         android:text="Invia"
         android:textAllCaps="false"
@@ -45,8 +45,8 @@
         android:hint="E-Mail"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/cognome"
-        app:layout_constraintTop_toBottomOf="@+id/cognome" />
+        app:layout_constraintStart_toStartOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <EditText
         android:id="@+id/password"
@@ -63,6 +63,7 @@
         android:id="@+id/nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
         android:ems="10"
         android:hint="Nome"
         android:inputType="textPersonName"
@@ -75,10 +76,11 @@
         android:id="@+id/cognome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
         android:ems="10"
         android:hint="Cognome"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintBottom_toTopOf="@+id/date"
         app:layout_constraintStart_toStartOf="@+id/nome"
         app:layout_constraintTop_toBottomOf="@+id/nome" />
 
@@ -86,7 +88,7 @@
         android:id="@+id/link_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="82dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
@@ -103,13 +105,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="62dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="2dp"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/nome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/logo" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:clickable="true"
+        android:ems="10"
+        android:hint=" Seleziona data di nascita"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintStart_toStartOf="@+id/cognome"
+        app:layout_constraintTop_toBottomOf="@+id/cognome" />
 
 </android.support.constraint.ConstraintLayout>
 

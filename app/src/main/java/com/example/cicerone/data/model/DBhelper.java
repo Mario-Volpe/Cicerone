@@ -47,7 +47,8 @@ public class DBhelper extends SQLiteOpenHelper {
                 "EMAIL TEXT PRIMARY KEY," +
                 "NOME TEXT," +
                 "COGNOME TEXT," +
-                "PASSWORD TEXT)";
+                "PASSWORD TEXT," +
+                "DATA_NASCITA TEXT)";
         db.execSQL(createTableUtente);
 
         String createTableAttivita = "CREATE TABLE " +ATTIVITA_TABLE+"(" +
@@ -81,6 +82,7 @@ public class DBhelper extends SQLiteOpenHelper {
         values.put( U_COL_NOME, u.getNome() );
         values.put( U_COL_COGNOME, u.getCognome());
         values.put( U_COL_PASSWORD, u.getPassword());
+        values.put( U_COL_DATA_NASCITA, u.getDatanascita());
 
         long res = db.insert( UTENTE_TABLE, null, values );
         db.close();
