@@ -148,9 +148,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private boolean checkData(){
         boolean res = true;
         Date date = new Date();
-        int g=date.getDay();
-        int m=date.getMonth();
-        int a=date.getYear();
+        int g=date.getDate();
+        int m=date.getMonth()+1;
+        int a=date.getYear()+1900;
 
         if(anno>a-14||anno<a-100)
             res=false;
