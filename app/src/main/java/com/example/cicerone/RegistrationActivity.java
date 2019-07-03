@@ -65,7 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
                String datanascita = mostraData.getText().toString().trim();
                DBhelper db = new DBhelper(RegistrationActivity.super.getBaseContext());
 
-               Utente nuovoUtente = new Utente(passwordUtenteStr,cognomeUtenteStr,nomeUtenteStr,emailUtenteStr,datanascita);
+               Utente nuovoUtente = new Utente(RegistrationActivity.this,passwordUtenteStr,cognomeUtenteStr,nomeUtenteStr,emailUtenteStr,datanascita);
 
                if (!checkData()) {
                    Toast.makeText(RegistrationActivity.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();

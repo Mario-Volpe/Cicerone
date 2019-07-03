@@ -1,30 +1,17 @@
 package com.example.cicerone;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cicerone.HomeActivity;
-import com.example.cicerone.R;
-import com.example.cicerone.RegistrationActivity;
 import com.example.cicerone.data.model.DBhelper;
 
 public class LoginActivity extends AppCompatActivity {
@@ -127,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
+        startActivity(new Intent(this,HomeActivity.class));
         finish();
     }
 
@@ -142,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
 
-        Utente validateUser = new Utente (password,"","",email,"");
+        Utente validateUser = new Utente (LoginActivity.this,password,"","",email,"");
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ) {
             emailText.setError("Inserisci un indirizzo email valido");

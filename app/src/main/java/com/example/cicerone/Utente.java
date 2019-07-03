@@ -1,21 +1,30 @@
 package com.example.cicerone;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 public class Utente {
     private static final Utente ourInstance = new Utente();
+    Context context;
+    SharedPreferences sharedPreferences;
 
     public Utente() {
 
     }
 
-    public Utente(String password, String cognome, String nome, String email, String datanascita) {
+    public Utente(Context context, String password, String cognome, String nome, String email, String datanascita) {
+        this.context=context;
+        sharedPreferences=context.getSharedPreferences("userinfo",context.MODE_PRIVATE);
+
         setPassword(password);
         setNome(nome);
         setCognome(cognome);
         setEmail(email);
         setDatanascita(datanascita);
+    }
+
+    public void rimuoviUtente(){
+        sharedPreferences.edit().clear().commit();
     }
 
 
@@ -54,13 +63,14 @@ public class Utente {
     }
 
     public String getNome() {
+        nome=sharedPreferences.getString("userdata","");
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+        sharedPreferences.edit().putString("userdata",nome).commit();
     }
-
 
     public String getDatanascita() {
         return datanascita;
