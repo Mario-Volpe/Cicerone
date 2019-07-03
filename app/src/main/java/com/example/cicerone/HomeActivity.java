@@ -21,13 +21,17 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    logoutButton.setVisibility(View.VISIBLE);
                     mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
+                    logoutButton.setVisibility(View.INVISIBLE);
                     mTextMessage.setText(R.string.title_dashboard);
+                    mTextMessage.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_profilo:
-                    mTextMessage.setText(R.string.title_notifications);
+                    logoutButton.setVisibility(View.VISIBLE);
+                    mTextMessage.setText("Profilo");
                     return true;
             }
             return false;

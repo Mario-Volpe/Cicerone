@@ -7,26 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_gravity="start"
-        android:layout_marginStart="81dp"
-        android:layout_marginLeft="81dp"
-        android:layout_marginTop="464dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
-        android:background="@drawable/ic_launcher_background"
-        android:text="Logout"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message" />
-
     <TextView
         android:id="@+id/message"
         android:layout_width="wrap_content"
@@ -36,10 +16,8 @@
         android:layout_marginTop="17dp"
         android:layout_marginEnd="313dp"
         android:layout_marginRight="313dp"
-        android:layout_marginBottom="464dp"
         android:text="@string/title_home"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,15 +28,29 @@
         android:layout_height="50dp"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="85dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="60dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logout"
         app:menu="@menu/bottom_nav_menu" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="513dp"
+        android:layout_marginBottom="96dp"
+        android:background="@drawable/ic_launcher_background"
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
