@@ -135,6 +135,7 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
 
+
     /**
      * Metodo che dato un utente lo cerca nel db
      * @param utente da cercare
@@ -142,7 +143,7 @@ public class DBhelper extends SQLiteOpenHelper {
      */
     public boolean isSignedUp (Utente utente)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         String query = "select EMAIL FROM "+UTENTE_TABLE;
 
         Cursor cursor = db.rawQuery(query, null);
@@ -165,5 +166,59 @@ public class DBhelper extends SQLiteOpenHelper {
         db.close();
         cursor.close();
         return isIn;
+    }
+
+    public Utente getInfoUtente( Utente utente )
+    {
+        Utente infoUtente = new Utente();
+
+        String email = null;
+        String password = null;
+        String nome = null;
+        String cognome = null;
+        String data = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select EMAIL, NOME, COGNOME, PASSWORD, DATA_NASCITA" +
+                    " FROM "+UTENTE_TABLE;
+
+
+            Cursor cursor = db.rawQuery(query, null);
+
+            boolean isIn = false;
+
+            if (cursor.moveToFirst())
+            {
+                do {
+                    email = cursor.getString(0);
+                    nome = cursor.getString( 1 );
+                    cognome = cursor.getString( 2 );
+                    password = cursor.getString( 3 );
+                    data = cursor.getString( 4 );
+
+                    if ( email.equals(utente.getEmail()) &&
+                            nome.equals(utente.getNome()) &&
+                            cognome.equals(utente.getCognome()) &&
+                            password.equals(utente.getPassword()) &&
+                            data.equals(utente.getDatanascita()) )
+                    {
+                        isIn = true;
+                        break;
+                    }
+
+                }while (cursor.moveToNext());
+
+
+            db.close();
+            cursor.close();
+        }
+
+        infoUtente.setNome(nome);
+        infoUtente.setPassword(password);
+        infoUtente.setCognome(cognome);
+        infoUtente.setEmail(email);
+        infoUtente.setDatanascita(data);
+
+        return infoUtente;
     }
 }
