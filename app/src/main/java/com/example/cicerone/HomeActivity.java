@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private Button logoutButton;
+    String inte;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -31,7 +32,6 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_profilo:
                     logoutButton.setVisibility(View.VISIBLE);
-                    String inte = getIntent().getExtras().getString("nome");
                     mTextMessage.setText(inte);
                     return true;
             }
@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        inte = getIntent().getExtras().getString("nome");
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

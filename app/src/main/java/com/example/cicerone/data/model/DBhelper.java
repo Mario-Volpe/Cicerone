@@ -170,25 +170,17 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public Utente getInfoUtente( Utente utente )
     {
-        Utente infoUtente = new Utente();
-
-        String email = null;
-        String password = null;
-        String nome = null;
-        String cognome = null;
-        String data = null;
+        String email=null,password=null,nome = null,cognome=null,data=null;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select EMAIL, NOME, COGNOME, PASSWORD, DATA_NASCITA" +
-                    " FROM "+UTENTE_TABLE;
+                    " FROM "+UTENTE_TABLE+" WHERE EMAIL = '"+utente.getEmail()+"'";
 
+        Cursor cursor = db.rawQuery(query,null );
 
-            Cursor cursor = db.rawQuery(query, null);
+        boolean isIn = false;
 
-            boolean isIn = false;
-
-            if (cursor.moveToFirst())
-            {
+            if (cursor.moveToFirst()) {
                 do {
                     email = cursor.getString(0);
                     nome = cursor.getString( 1 );
@@ -197,28 +189,23 @@ public class DBhelper extends SQLiteOpenHelper {
                     data = cursor.getString( 4 );
 
                     if ( email.equals(utente.getEmail()) &&
-                            nome.equals(utente.getNome()) &&
-                            cognome.equals(utente.getCognome()) &&
-                            password.equals(utente.getPassword()) &&
-                            data.equals(utente.getDatanascita()) )
-                    {
+                            password.equals(utente.getPassword()) ) {
                         isIn = true;
                         break;
                     }
 
-                }while (cursor.moveToNext());
-
+                }while (cursor.moveToNext()||isIn==true);
 
             db.close();
             cursor.close();
         }
 
-        infoUtente.setNome(nome);
-        infoUtente.setPassword(password);
-        infoUtente.setCognome(cognome);
-        infoUtente.setEmail(email);
-        infoUtente.setDatanascita(data);
+        utente.setNome(nome);
+        utente.setPassword(password);
+        utente.setCognome(cognome);
+        utente.setEmail(email);
+        utente.setDatanascita(data);
 
-        return infoUtente;
+        return utente;
     }
 }

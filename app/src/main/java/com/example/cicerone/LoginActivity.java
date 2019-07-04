@@ -23,11 +23,14 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView signUpLink;
     private Utente u;
+    private String email,password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        u = new Utente(LoginActivity.this,"","","","","");
 
         ImageView img = findViewById(R.id.imageView2);
 
@@ -78,9 +81,6 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Autenticazione...");
         progressDialog.show();
 
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
-
         // TODO: Implement your own authentication logic here.
 
         new android.os.Handler().postDelayed(
@@ -114,8 +114,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
+        u.setEmail(email);
+        u.setPassword(password);
+        u=new DBhelper(this).getInfoUtente(u);
         loginButton.setEnabled(true);
-        startActivity(new Intent(this,HomeActivity.class));
+        Intent Homeintent = new Intent(this,HomeActivity.class);
+        Homeintent.putExtra("nome",u.getNome());
+        startActivity(Homeintent);
         finish();
     }
 
@@ -128,8 +133,8 @@ public class LoginActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
+        email = emailText.getText().toString();
+        password = passwordText.getText().toString();
 
         Utente validateUser = new Utente (LoginActivity.this,password,"","",email,"");
 
@@ -175,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void openActivityMain()
     {
-        Intent Mainintent = new Intent(this, MainActivity.class );
+        Intent Mainintent = new Intent(LoginActivity.this, MainActivity.class );
         startActivity(Mainintent);
     }
 }
