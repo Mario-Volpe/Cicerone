@@ -63,13 +63,13 @@ public class Utente {
     }
 
     public String getNome() {
-        nome=sharedPreferences.getString("userdata","");
+        nome=sharedPreferences.getString("nome","");
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
-        sharedPreferences.edit().putString("userdata",nome).commit();
+        sharedPreferences.edit().putString("nome",nome).commit();
     }
 
     public String getDatanascita() {

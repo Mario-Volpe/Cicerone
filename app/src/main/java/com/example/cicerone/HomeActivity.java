@@ -31,7 +31,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_profilo:
                     logoutButton.setVisibility(View.VISIBLE);
-                    mTextMessage.setText("Profilo");
+                    String inte = getIntent().getExtras().getString("nome");
+                    mTextMessage.setText(inte);
                     return true;
             }
             return false;
