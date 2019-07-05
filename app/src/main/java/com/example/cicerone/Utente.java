@@ -39,27 +39,33 @@ public class Utente {
     private String datanascita;
 
     public String getEmail() {
+        email=sharedPreferences.getString("email","");
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+        sharedPreferences.edit().putString("email",email).commit();
     }
 
     public String getPassword() {
+        password=sharedPreferences.getString("password","");
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+        sharedPreferences.edit().putString("password",password).commit();
     }
 
     public String getCognome() {
+        cognome=sharedPreferences.getString("cognome","");
         return cognome;
     }
 
     public void setCognome(String cognome) {
         this.cognome = cognome;
+        sharedPreferences.edit().putString("cognome",cognome).commit();
     }
 
     public String getNome() {
@@ -73,10 +79,12 @@ public class Utente {
     }
 
     public String getDatanascita() {
+        datanascita=sharedPreferences.getString("datanascita","");
         return datanascita;
     }
 
     public void setDatanascita(String datanascita) {
         this.datanascita = datanascita;
+        sharedPreferences.edit().putString("datanascita",datanascita).commit();
     }
 }

@@ -5,35 +5,30 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#4255D8"
     tools:context=".HomeActivity">
 
     <TextView
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="313dp"
-        android:layout_marginRight="313dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginTop="86dp"
+        android:layout_marginBottom="36dp"
         android:text="@string/title_home"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
-        android:layout_width="400dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="60dp"
-        android:background="?android:attr/windowBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="#C51818"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logout"
         app:menu="@menu/bottom_nav_menu" />
@@ -42,8 +37,7 @@
         android:id="@+id/logout"
         android:layout_width="250dp"
         android:layout_height="70dp"
-        android:layout_marginTop="513dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="65dp"
         android:background="@drawable/ic_launcher_background"
         android:text="Logout"
         android:textAllCaps="false"
@@ -51,6 +45,19 @@
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/info" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginBottom="155dp"
+        android:text="Nome\nCognome\nData di nascita\nemail"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
+        app:layout_constraintStart_toStartOf="@+id/message"
+        app:layout_constraintTop_toBottomOf="@+id/message" />
 
 </android.support.constraint.ConstraintLayout>

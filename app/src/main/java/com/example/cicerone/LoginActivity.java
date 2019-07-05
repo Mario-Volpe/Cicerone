@@ -120,6 +120,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setEnabled(true);
         Intent Homeintent = new Intent(this,HomeActivity.class);
         Homeintent.putExtra("nome",u.getNome());
+        Homeintent.putExtra("cognome",u.getCognome());
+        Homeintent.putExtra("datanascita",u.getDatanascita());
+        Homeintent.putExtra("email",u.getEmail());
         startActivity(Homeintent);
         finish();
     }
