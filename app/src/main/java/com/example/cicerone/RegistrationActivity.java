@@ -1,12 +1,8 @@
 package com.example.cicerone;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +15,6 @@ import android.widget.Toast;
 
 import com.example.cicerone.data.model.DBhelper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,7 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
         final EditText passwordUtente = findViewById(R.id.password);
         final EditText passwordUtente2 = findViewById(R.id.password2);
         final EditText emailUtente = findViewById(R.id.email);
-        mostraData= (TextView) findViewById(R.id.date);
+        mostraData = findViewById(R.id.date);
         inviaDatiUtente = findViewById(R.id.bottoneInvia);
         collegamentoLogin  = findViewById(R.id.link_login);
         ImageView img = findViewById(R.id.imageView3);

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4255D8"
+    tools:context=".Creazione">
+
+    <EditText
+        android:id="@+id/cittains"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:hint="Città"
+        app:layout_constraintBottom_toTopOf="@+id/datains"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titolo" />
+
+    <TextView
+        android:id="@+id/datains"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:hint="Seleziona la data"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/linguains"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cittains" />
+
+    <EditText
+        android:id="@+id/linguains"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="44dp"
+        android:hint="Lingua di erogazione"
+        app:layout_constraintBottom_toTopOf="@+id/itinerarioins"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datains" />
+
+    <EditText
+        android:id="@+id/partecipantiins"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="87dp"
+        android:hint="Numero massimo di partecipanti"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/itinerarioins"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/datains" />
+
+    <EditText
+        android:id="@+id/itinerarioins"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="31dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Inserisci il punto d'incontro e poi descrivi brevemente l'itinerario da seguire"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/crea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linguains" />
+
+    <TextView
+        android:id="@+id/titolo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="34dp"
+        android:gravity="center"
+        android:text="Crea una nuova attività!"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/cittains"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/crea"
+        android:layout_width="135dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="149dp"
+        android:background="@color/colorPrimary"
+        android:text="Crea"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itinerarioins" />
+
+</android.support.constraint.ConstraintLayout>

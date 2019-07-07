@@ -120,6 +120,7 @@
         android:layout_marginBottom="7dp"
         android:clickable="true"
         android:ems="10"
+        android:gravity="center"
         android:hint=" Seleziona data di nascita"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/email"

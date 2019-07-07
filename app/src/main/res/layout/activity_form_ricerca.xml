@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4255D8"
+    tools:context=".FormRicerca">
+
+    <TextView
+        android:id="@+id/datain"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="39dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:hint="Seleziona la data"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/partecipantiin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cittain" />
+
+    <EditText
+        android:id="@+id/cittain"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="29dp"
+        android:hint="Città"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/datain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <EditText
+        android:id="@+id/partecipantiin"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="35dp"
+        android:hint="Partecipanti"
+        android:inputType="number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/invia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datain" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="244dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginBottom="41dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Ricerca attività"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/cittain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/invia"
+        android:layout_width="139dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="156dp"
+        android:background="@color/colorAccent"
+        android:clickable="true"
+        android:text="Cerca"
+        android:textAllCaps="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partecipantiin" />
+
+</android.support.constraint.ConstraintLayout>
