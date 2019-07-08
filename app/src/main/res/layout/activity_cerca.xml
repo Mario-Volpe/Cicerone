@@ -50,7 +50,7 @@
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:gravity="center"
-        android:text="Limite partecipanti"
+        android:text="Posti disponibili"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/datatxt"
         app:layout_constraintTop_toTopOf="parent" />

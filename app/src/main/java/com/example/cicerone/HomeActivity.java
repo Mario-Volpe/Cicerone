@@ -1,6 +1,7 @@
 package com.example.cicerone;
 
 import android.content.Intent;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -119,6 +120,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this,Modifica.class);
                 inte.putExtra("id",email);
+                inte.putExtra("chiamante","modifica");
                 startActivity(inte);
             }
         });
@@ -128,6 +130,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this,Modifica.class);
                 inte.putExtra("id",email);
+                inte.putExtra("chiamante","richieste");
                 startActivity(inte);
             }
         });

@@ -26,7 +26,9 @@ public class Rimozione extends AppCompatActivity {
         Button rimuovi = findViewById(R.id.rimozione);
         TextView alert = findViewById(R.id.alert);
 
-        final Attivita a = new DBhelper(Rimozione.this).getAttivita(getIntent().getExtras().getInt("id"));
+        final Integer id = getIntent().getExtras().getInt("id");
+
+        final Attivita a = new DBhelper(Rimozione.this).getAttivita(id);
 
         final String chiamante = getIntent().getExtras().getString("chiamante");
 
@@ -60,7 +62,14 @@ public class Rimozione extends AppCompatActivity {
                 else {
                     //richiesta di partecipazione
                     int partecipanti = getIntent().getExtras().getInt("npartecipanti");
-                    Toast.makeText(Rimozione.this, "Partecipanti: "+partecipanti, Toast.LENGTH_SHORT).show();
+                    String email = getIntent().getExtras().getString("email");
+
+                    if (new DBhelper(Rimozione.this).richiestaPartecipazione(partecipanti,id,email)==-1)
+                        Toast.makeText(Rimozione.this, "Errore nell'inoltro della richiesta.", Toast.LENGTH_SHORT).show();
+                    else{
+                        Toast.makeText(Rimozione.this, "Richiesta inoltrata.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
             }
         });

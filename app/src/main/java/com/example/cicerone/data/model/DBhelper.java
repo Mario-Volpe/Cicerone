@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.cicerone.Attivita;
+import com.example.cicerone.Prenotazione;
 import com.example.cicerone.Utente;
 
 import java.util.ArrayList;
@@ -30,14 +31,15 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String A_COL_DATA="Data";
 
     public static final String PRENOTAZIONE_TABLE="Prenotazione";
-    public static final String P_COL_ATTIVITA="ID_ACTIVITY";
-    public static final String P_COL_GLOBETROTTER="ID_Globetrotter";
+    public static final String P_COL_ATTIVITA="ID_ATTIVITA";
+    public static final String P_COL_GLOBETROTTER="Globetrotter";
     public static final String P_COL_PARTECIPANTI="Numero_partecipanti";
-
+    public static final String P_COL_COMMENTI="Commenti";
+    public static final String P_COL_CONFERMA="Conferma";
 
 
     public DBhelper(Context context ) {
-        super(context, DBNAME, null, 8);
+        super(context, DBNAME, null, 11);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.close();
@@ -70,9 +72,11 @@ public class DBhelper extends SQLiteOpenHelper {
 
         String createTablePrenotazione = "CREATE TABLE " +PRENOTAZIONE_TABLE+"(" +
                 "GLOBETROTTER TEXT REFERENCES Utenti( EMAIL)," +
-                "ID_ACTIVITY INTEGER REFERENCES Attivita(ID_ATTIVTA)," +
+                "ID_ATTIVITA INTEGER REFERENCES Attivita(ID_ATTIVITA)," +
                 "NUMERO_PARTECIPANTI INTEGER," +
-                "PRIMARY KEY ( GLOBETROTTER, ID_ACTIVITY) " +
+                "COMMENTI TEXT, " +
+                "CONFERMA INTEGER," + //0: in attesa, 1:confermata, 2:rifiutata
+                "PRIMARY KEY ( GLOBETROTTER, ID_ATTIVITA) " +
                 ")";
         db.execSQL(createTablePrenotazione);
 
@@ -342,6 +346,54 @@ public class DBhelper extends SQLiteOpenHelper {
 
         db.close();
         return flag;
+    }
+
+    public long richiestaPartecipazione(int partecipanti,int id,String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(P_COL_GLOBETROTTER, email );
+        values.put(P_COL_ATTIVITA, id );
+        values.put(P_COL_PARTECIPANTI, partecipanti );
+        values.put(P_COL_COMMENTI,"");
+        values.put(P_COL_CONFERMA,0);
+
+        long res = db.insert( PRENOTAZIONE_TABLE, null, values );
+        db.close();
+
+        return res;
+    }
+
+    public ArrayList<Prenotazione> getAllPrenotazioni(Integer id){
+        ArrayList<Prenotazione> s = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
+                " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id;
+
+        Cursor cursor = db.rawQuery(query,null );
+
+        String Globetrotter,commenti;
+        Integer nPartecipanti,idAttivita,conferma;
+
+        if (cursor.moveToFirst()) {
+            do {
+                Globetrotter = cursor.getString(0);
+                idAttivita = cursor.getInt( 1 );;
+                nPartecipanti = cursor.getInt( 2 );
+                commenti = cursor.getString( 3 );
+                conferma = cursor.getInt(4);
+
+                Prenotazione c = new Prenotazione(Globetrotter,idAttivita,nPartecipanti);
+                s.add(c);
+
+            }while (cursor.moveToNext());
+
+            db.close();
+            cursor.close();
+        }
+
+        return s;
     }
 
 }

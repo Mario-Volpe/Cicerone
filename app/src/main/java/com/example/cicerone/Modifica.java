@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.data.model.DBhelper;
@@ -23,14 +24,22 @@ public class Modifica extends AppCompatActivity {
 
         ArrayAdapter<String> adapter=null;
         FoodAdapter fadapter=null;
+        TextView partecipantitxt = findViewById(R.id.partecipantitxt);
 
         ListView lista = findViewById(R.id.listaAttivita);
 
         ArrayList<String> array = new ArrayList<>(); //visualizzati nella lista
         ArrayList<Attivita> s = new DBhelper(Modifica.this).getAllAttivita(getIntent().getExtras().getString("id"));
+        ArrayList<Prenotazione> p=null;
+        ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
+
         String avv=""; //non ci sono attività
+        String chiamante = getIntent().getExtras().getString("chiamante");
+        if(chiamante.equals("richieste"))
+            partecipantitxt.setText("Richieste");
+
         int j=0;
-        int flag=0;
+        int flag=0; //0 se ci sono attività da mostrare, 1 altrimenti.
 
         if(s.size()==0) {
             avv = "Nessuna attività creata";
@@ -45,6 +54,8 @@ public class Modifica extends AppCompatActivity {
             for(Attivita b:s) {
                 array.add(b.toStringSearch());
                 ids[j]=b.getIdAttivita();
+                p = new DBhelper(Modifica.this).getAllPrenotazioni(ids[j]);
+                r.add(p.size());
                 j++;
             }
         }
@@ -57,7 +68,11 @@ public class Modifica extends AppCompatActivity {
                 Modifica.this, android.R.layout.simple_list_item_1, array
         );
 
-        fadapter = new FoodAdapter(this,s);
+        if(chiamante.equals("modifica"))
+            fadapter = new FoodAdapter(this,s,chiamante);
+        else
+            fadapter = new FoodAdapter(this,s,r,chiamante);
+
 
         if (flag==0){
             lista.setAdapter(fadapter);

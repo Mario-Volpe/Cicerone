@@ -15,11 +15,20 @@ public class FoodAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Attivita> foodModelArrayList;
+    private ArrayList<Integer> nRichieste;
+    private String chiamante;
 
-    public FoodAdapter(Context context, ArrayList<Attivita> foodModelArrayList) {
-
+    public FoodAdapter(Context context, ArrayList<Attivita> foodModelArrayList,String chiamante) {
         this.context = context;
         this.foodModelArrayList = foodModelArrayList;
+        this.chiamante = chiamante;
+    }
+
+    public FoodAdapter(Context context, ArrayList<Attivita> foodModelArrayList,ArrayList<Integer> r,String chiamante) {
+        this.context = context;
+        this.foodModelArrayList = foodModelArrayList;
+        this.nRichieste = r;
+        this.chiamante = chiamante;
     }
 
     @Override
@@ -68,10 +77,19 @@ public class FoodAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.id.setText(""+foodModelArrayList.get(position).getIdAttivita());
+
+        holder.id.setText("" + foodModelArrayList.get(position).getIdAttivita());
         holder.citta.setText(foodModelArrayList.get(position).getCitta());
         holder.data.setText(foodModelArrayList.get(position).getData());
-        holder.partecipanti.setText(""+foodModelArrayList.get(position).getMaxPartecipanti());
+
+        if(chiamante.equals("richieste"))
+            holder.partecipanti.setText("" + nRichieste.get(position));
+        if(chiamante.equals("modifica"))
+            holder.partecipanti.setText("" + foodModelArrayList.get(position).getMaxPartecipanti());
+        if(chiamante.equals("cerca")) {
+            int h = foodModelArrayList.get(position).getMaxPartecipanti()-nRichieste.get(position);
+            holder.partecipanti.setText("" + h);
+        }
 
         return convertView;
     }
@@ -81,5 +99,4 @@ public class FoodAdapter extends BaseAdapter {
         protected TextView id, citta, data, partecipanti;
 
     }
-
 }

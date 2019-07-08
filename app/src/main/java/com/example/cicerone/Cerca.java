@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.cicerone.data.model.DBhelper;
+
 import java.util.ArrayList;
 
 public class Cerca extends AppCompatActivity {
@@ -24,6 +26,9 @@ public class Cerca extends AppCompatActivity {
 
         ArrayList<String> array = new ArrayList<>();
         ArrayList<Attivita> s = getIntent().getExtras().getParcelableArrayList("risultati");
+        ArrayList<Prenotazione> p=null;
+        ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
+
         final Integer[] ids;
         String avv="";
         int flag=0;
@@ -40,6 +45,8 @@ public class Cerca extends AppCompatActivity {
             for (Attivita b : s) {
                 array.add(b.toStringSearch());
                 ids[j] = b.getIdAttivita();
+                p = new DBhelper(Cerca.this).getAllPrenotazioni(ids[j]);
+                r.add(p.size());
                 j++;
             }
         }
@@ -52,7 +59,7 @@ public class Cerca extends AppCompatActivity {
                 Cerca.this,android.R.layout.simple_list_item_1,array
         );
 
-        fadapter = new FoodAdapter(this,s);
+        fadapter = new FoodAdapter(this,s,r,"cerca");
 
         if (flag==1)
             lista.setAdapter(adapter);
@@ -67,6 +74,7 @@ public class Cerca extends AppCompatActivity {
                     inte.putExtra("id",ids[position]);
                     inte.putExtra("chiamante","cerca");
                     inte.putExtra("npartecipanti",getIntent().getExtras().getInt("npartecipanti"));
+                    inte.putExtra("email",getIntent().getExtras().getString("email"));
                     startActivity(inte);
                 }
             });

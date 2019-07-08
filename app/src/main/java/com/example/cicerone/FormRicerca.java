@@ -70,6 +70,7 @@ public class FormRicerca extends AppCompatActivity {
                         Intent res = new Intent(FormRicerca.this, Cerca.class);
                         res.putExtra("risultati", c);
                         res.putExtra("npartecipanti",partecipantiInt);
+                        res.putExtra("email",id);
                         startActivity(res);
                         finish();
                     }
