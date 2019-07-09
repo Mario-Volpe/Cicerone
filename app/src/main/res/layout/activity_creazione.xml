@@ -10,7 +10,7 @@
     <EditText
         android:id="@+id/cittains"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginLeft="55dp"
         android:layout_marginEnd="55dp"
@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/datains"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginLeft="55dp"
         android:layout_marginEnd="55dp"
@@ -41,7 +41,7 @@
     <EditText
         android:id="@+id/linguains"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginLeft="55dp"
         android:layout_marginEnd="55dp"
@@ -56,7 +56,7 @@
     <EditText
         android:id="@+id/partecipantiins"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginLeft="55dp"
         android:layout_marginTop="69dp"

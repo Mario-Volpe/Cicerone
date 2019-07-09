@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage,info;
-    private Button logoutButton,cerca,crea,modifica,richieste;
+    private Button logoutButton,cerca,crea,modifica,richieste,storico,inoltrate;
     String nome,cognome,datanascita,email;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -29,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
                     crea.setVisibility(View.INVISIBLE);
                     richieste.setVisibility(View.INVISIBLE);
                     modifica.setVisibility(View.INVISIBLE);
+                    inoltrate.setVisibility(View.INVISIBLE);
+                    storico.setVisibility(View.INVISIBLE);
                     mTextMessage.setText("Ciao "+nome+"!");
                     return true;
                 case R.id.navigation_dashboard:
@@ -38,6 +40,8 @@ public class HomeActivity extends AppCompatActivity {
                     crea.setVisibility(View.VISIBLE);
                     modifica.setVisibility(View.VISIBLE);
                     richieste.setVisibility(View.VISIBLE);
+                    inoltrate.setVisibility(View.VISIBLE);
+                    storico.setVisibility(View.VISIBLE);
                     mTextMessage.setText("Menu attività");
                     return true;
                 case R.id.navigation_profilo:
@@ -48,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
                     crea.setVisibility(View.INVISIBLE);
                     modifica.setVisibility(View.INVISIBLE);
                     richieste.setVisibility(View.INVISIBLE);
+                    inoltrate.setVisibility(View.INVISIBLE);
+                    storico.setVisibility(View.INVISIBLE);
                     mTextMessage.setText("Riepilogo dati:");
                     info.setText(nome+"\n"+cognome+"\n"+datanascita+"\n"+email);
                     return true;
@@ -76,10 +82,15 @@ public class HomeActivity extends AppCompatActivity {
         modifica = findViewById(R.id.modifica);
         crea = findViewById(R.id.crea);
         richieste = findViewById(R.id.richieste);
+        storico = findViewById(R.id.storicoattivita);
+        inoltrate = findViewById(R.id.richiesteInoltrate);
+
         cerca.setVisibility(View.INVISIBLE);
         crea.setVisibility(View.INVISIBLE);
         modifica.setVisibility(View.INVISIBLE);
         richieste.setVisibility(View.INVISIBLE);
+        inoltrate.setVisibility(View.INVISIBLE);
+        storico.setVisibility(View.INVISIBLE);
 
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -117,7 +128,7 @@ public class HomeActivity extends AppCompatActivity {
         modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(HomeActivity.this,Modifica.class);
+                Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
                 inte.putExtra("id",email);
                 inte.putExtra("chiamante","modifica");
                 startActivity(inte);
@@ -127,9 +138,19 @@ public class HomeActivity extends AppCompatActivity {
         richieste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(HomeActivity.this,Modifica.class);
+                Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
                 inte.putExtra("id",email);
                 inte.putExtra("chiamante","richieste");
+                startActivity(inte);
+            }
+        });
+
+        inoltrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
+                inte.putExtra("id",email);
+                inte.putExtra("chiamante","inoltrate");
                 startActivity(inte);
             }
         });

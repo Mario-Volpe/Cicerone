@@ -9,9 +9,26 @@
     tools:context=".HomeActivity">
 
     <Button
+        android:id="@+id/storicoattivita"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#E95BFF"
+        android:text="Storico attività"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/richiesteInoltrate" />
+
+    <Button
         android:id="@+id/cerca"
-        android:layout_width="135dp"
-        android:layout_height="50dp"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -22,16 +39,18 @@
         android:clickable="true"
         android:text="Cerca"
         android:textAllCaps="false"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/crea"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message" />
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/crea"
-        android:layout_width="135dp"
-        android:layout_height="50dp"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
@@ -40,13 +59,13 @@
         android:clickable="true"
         android:text="Crea"
         android:textAllCaps="false"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/info"
-        app:layout_constraintVertical_bias="0.907" />
+        app:layout_constraintVertical_bias="0.435" />
 
     <TextView
         android:id="@+id/message"
@@ -92,8 +111,8 @@
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginBottom="33dp"
         android:text="Nome\nCognome\nData di nascita\nemail"
         android:textSize="32sp"
@@ -114,39 +133,56 @@
 
     <Button
         android:id="@+id/modifica"
-        android:layout_width="135dp"
-        android:layout_height="50dp"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="#D9E478"
         android:clickable="true"
         android:text="Modifica"
         android:textAllCaps="false"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crea" />
 
     <Button
         android:id="@+id/richieste"
-        android:layout_width="133dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="141dp"
-        android:layout_marginLeft="141dp"
-        android:layout_marginEnd="138dp"
-        android:layout_marginRight="138dp"
-        android:layout_marginBottom="31dp"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="#78E4C2"
         android:clickable="true"
         android:text="Gestione richieste"
         android:textAllCaps="false"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logout" />
+        app:layout_constraintTop_toBottomOf="@+id/modifica" />
+
+    <Button
+        android:id="@+id/richiesteInoltrate"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#FA7266"
+        android:text="Richieste inoltrate"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/logout" />
 
 </android.support.constraint.ConstraintLayout>

@@ -49,7 +49,7 @@ public class DettagliAttivita extends AppCompatActivity {
         city.setText(a.getCitta());
         date.setText(a.getData());
         tongue.setText(a.getLingua());
-        description.setText(a.getDescrizioneItinerario());
+        description.setText(a.getDescrizione());
 
         rimuovi.setOnClickListener(new View.OnClickListener() {
             @Override

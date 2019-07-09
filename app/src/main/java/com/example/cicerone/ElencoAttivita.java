@@ -14,12 +14,12 @@ import com.example.cicerone.data.model.DBhelper;
 
 import java.util.ArrayList;
 
-public class Modifica extends AppCompatActivity {
+public class ElencoAttivita extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modifica);
+        setContentView(R.layout.activity_elenco_attivita);
 
         ArrayAdapter<String> adapter=null;
         FoodAdapter fadapter=null;
@@ -28,7 +28,7 @@ public class Modifica extends AppCompatActivity {
         ListView lista = findViewById(R.id.listaAttivita);
 
         ArrayList<String> array = new ArrayList<>(); //visualizzati nella lista
-        ArrayList<Attivita> s = new DBhelper(Modifica.this).getAllAttivita(getIntent().getExtras().getString("id"));
+        ArrayList<Attivita> s = new DBhelper(ElencoAttivita.this).getAllAttivita(getIntent().getExtras().getString("id"));
         ArrayList<Prenotazione> p;
         ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
 
@@ -42,7 +42,7 @@ public class Modifica extends AppCompatActivity {
 
         if(s.size()==0) {
             avv = "Nessuna attività creata";
-            Toast.makeText(Modifica.this, "Nessuna attività creata", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ElencoAttivita.this, "Nessuna attività creata", Toast.LENGTH_SHORT).show();
             lista.setClickable(false);
             flag=1;
         }
@@ -54,7 +54,7 @@ public class Modifica extends AppCompatActivity {
             for(Attivita b:s) {
                 array.add(b.toStringSearch());
                 ids[j]=b.getIdAttivita();
-                p = new DBhelper(Modifica.this).getAllPrenotazioni(ids[j],chiamante);
+                p = new DBhelper(ElencoAttivita.this).getAllPrenotazioni(ids[j],chiamante);
                 r.add(p.size());
                 j++;
             }
@@ -65,7 +65,7 @@ public class Modifica extends AppCompatActivity {
         }
 
         adapter = new ArrayAdapter<>(
-                Modifica.this, android.R.layout.simple_list_item_1, array
+                ElencoAttivita.this, android.R.layout.simple_list_item_1, array
         );
 
         if(chiamante.equals("modifica"))
@@ -82,8 +82,8 @@ public class Modifica extends AppCompatActivity {
                     //final String titoloriga = (String) parent.getItemAtPosition(position);
                     Intent inte;
                     if(chiamante.equals("modifica"))
-                      inte= new Intent(Modifica.this, DettagliAttivita.class);
-                    else inte= new Intent(Modifica.this,DettaglioRichieste.class);
+                      inte= new Intent(ElencoAttivita.this, DettagliAttivita.class);
+                    else inte= new Intent(ElencoAttivita.this,DettaglioRichieste.class);
 
                     inte.putExtra("id",ids[position]);
                     inte.putExtra("chiamante",chiamante);

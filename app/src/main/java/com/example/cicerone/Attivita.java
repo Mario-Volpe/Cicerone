@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 public class Attivita implements Parcelable {
     private String Cicerone;
-    private String data,descrizioneItinerario,lingua,citta;
+    private String data, descrizione,lingua,citta;
     private Integer maxPartecipanti, idAttivita;
     private static int ids=0;
 
@@ -14,26 +14,26 @@ public class Attivita implements Parcelable {
         return ""+getIdAttivita()+"\b\b"+getCitta()+"\b\b"+getData()+"\b\b"+getMaxPartecipanti();
     }
 
-    public Attivita(String Cicerone,String data,String descrizioneItinerario,String lingua,
-                    String citta,Integer maxPartecipanti){
+    public Attivita(String Cicerone, String data, String descrizione, String lingua,
+                    String citta, Integer maxPartecipanti){
         ids++;
         setIdAttivita(ids);
         setCicerone(Cicerone);
         setData(data);
-        setDescrizioneItinerario(descrizioneItinerario);
+        setDescrizione(descrizione);
         setLingua(lingua);
         setCitta(citta);
         setMaxPartecipanti(maxPartecipanti);
 
     }
 
-    public Attivita(Integer id,String Cicerone,String data,String descrizioneItinerario,String lingua,
-                    String citta,Integer maxPartecipanti){
+    public Attivita(Integer id, String Cicerone, String data, String descrizione, String lingua,
+                    String citta, Integer maxPartecipanti){
 
         setIdAttivita(id);
         setCicerone(Cicerone);
         setData(data);
-        setDescrizioneItinerario(descrizioneItinerario);
+        setDescrizione(descrizione);
         setLingua(lingua);
         setCitta(citta);
         setMaxPartecipanti(maxPartecipanti);
@@ -50,7 +50,7 @@ public class Attivita implements Parcelable {
     protected Attivita(Parcel in) {
         Cicerone = in.readString();
         data = in.readString();
-        descrizioneItinerario = in.readString();
+        descrizione = in.readString();
         lingua = in.readString();
         citta = in.readString();
         if (in.readByte() == 0) {
@@ -101,12 +101,12 @@ public class Attivita implements Parcelable {
         this.data = data;
     }
 
-    public String getDescrizioneItinerario() {
-        return descrizioneItinerario;
+    public String getDescrizione() {
+        return descrizione;
     }
 
-    public void setDescrizioneItinerario(String descrizioneItinerario) {
-        this.descrizioneItinerario = descrizioneItinerario;
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
     }
 
     public String getLingua() {
@@ -142,7 +142,7 @@ public class Attivita implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Cicerone);
         dest.writeString(data);
-        dest.writeString(descrizioneItinerario);
+        dest.writeString(descrizione);
         dest.writeString(lingua);
         dest.writeString(citta);
         if (maxPartecipanti == null) {

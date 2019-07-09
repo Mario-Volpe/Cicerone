@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/datain"
         android:layout_width="250dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="39dp"
         android:clickable="true"
         android:gravity="center"
@@ -24,7 +24,7 @@
     <EditText
         android:id="@+id/cittain"
         android:layout_width="250dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="29dp"
         android:hint="Città"
         android:textSize="24sp"
@@ -36,7 +36,7 @@
     <EditText
         android:id="@+id/partecipantiin"
         android:layout_width="250dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="35dp"
         android:hint="Partecipanti"
         android:inputType="number"
@@ -48,8 +48,8 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="244dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:layout_marginBottom="41dp"
         android:foregroundGravity="center"

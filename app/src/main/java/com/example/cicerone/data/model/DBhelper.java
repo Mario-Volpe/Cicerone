@@ -108,7 +108,7 @@ public class DBhelper extends SQLiteOpenHelper {
         values.put( A_COL_DATA, a.getData() );
         values.put( A_COL_CITTA, a.getCitta() );
         values.put( A_COL_LINGUA, a.getLingua() );
-        values.put( A_COL_ITINERARIO, a.getDescrizioneItinerario() );
+        values.put( A_COL_ITINERARIO, a.getDescrizione() );
         values.put( A_COL_PARTECIPANTI, a.getMaxPartecipanti() );
         values.put( A_COL_CICERONE, a.getCicerone() );
 
