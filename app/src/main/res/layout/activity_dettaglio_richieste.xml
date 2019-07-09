@@ -6,4 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".DettaglioRichieste">
 
+    <ListView
+        android:id="@+id/listaAttivita"
+        android:layout_width="400dp"
+        android:layout_height="548dp"
+        android:layout_marginBottom="11dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cittatxt" />
+
+    <TextView
+        android:id="@+id/cittatxt"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:gravity="center"
+        android:text="Globetrotter"
+        app:layout_constraintBottom_toTopOf="@+id/risultati"
+        app:layout_constraintEnd_toStartOf="@+id/datatxt"
+        app:layout_constraintStart_toEndOf="@+id/idtxt"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/datatxt"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:text="E-mail"
+        app:layout_constraintEnd_toStartOf="@+id/partecipantitxt"
+        app:layout_constraintStart_toEndOf="@+id/cittatxt"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/partecipantitxt"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:gravity="center"
+        android:text="Partecipanti"
+        app:layout_constraintBottom_toTopOf="@+id/listaAttivita"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/datatxt"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/idtxt"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:gravity="center"
+        android:text="ID Attività"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cittatxt"
+        app:layout_constraintEnd_toStartOf="@+id/cittatxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

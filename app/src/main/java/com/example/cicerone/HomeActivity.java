@@ -102,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this,FormRicerca.class);
                 inte.putExtra("id",email);
+                inte.putExtra("chiamante","cerca");
                 startActivity(inte);
             }
         });

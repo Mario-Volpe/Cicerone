@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DettaglioRichieste"></activity>
-        <activity android:name=".Rimozione" />
+        <activity android:name=".GestioneRichiesta"></activity>
+        <activity android:name=".DettaglioRichieste" />
+        <activity android:name=".DettagliAttivita" />
         <activity android:name=".Modifica" />
         <activity android:name=".Creazione" />
         <activity android:name=".FormRicerca" />

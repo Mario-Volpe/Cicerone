@@ -239,10 +239,10 @@ public class DBhelper extends SQLiteOpenHelper {
         ArrayList<Attivita> s = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select ID_Attivita, Data, Citta, Lingua, Descrizione_itinerario, Max_partecipanti, Id_Cicerone" +
-                " FROM "+ATTIVITA_TABLE+ " WHERE Citta = '"+a.getCitta()+
-                "' AND DATA = '"+a.getData()+"' AND Max_partecipanti >= "+a.getMaxPartecipanti()+
-                " AND Id_Cicerone != '"+email+"'";
+        String query = "select A.ID_Attivita, A.Data, A.Citta, A.Lingua, A.Descrizione_itinerario, A.Max_partecipanti, A.Id_Cicerone, P.Conferma, P.ID_ATTIVITA,P.GLOBETROTTER" +
+                " FROM "+ATTIVITA_TABLE+ " A,"+PRENOTAZIONE_TABLE+" P WHERE A.Citta = '"+a.getCitta()+
+                "' AND A.DATA = '"+a.getData()+"' AND A.Max_partecipanti >= "+a.getMaxPartecipanti()+
+                " AND A.Id_Cicerone != '"+email+"' AND A.Id_Cicerone != P.GLOBETROTTER AND A.ID_Attivita != P.ID_ATTIVITA";
 
         Cursor cursor = db.rawQuery(query,null );
 
@@ -364,12 +364,21 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public ArrayList<Prenotazione> getAllPrenotazioni(Integer id){
+    public ArrayList<Prenotazione> getAllPrenotazioni(Integer id,String chiamante){
         ArrayList<Prenotazione> s = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
-                " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id;
+        String query;
+        if(chiamante.equals("modifica"))
+            query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
+                    " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id;
+        else
+            query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
+                    " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id+" AND CONFERMA = 1";
+
+        if(chiamante.equals("richieste"))
+            query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
+                    " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id+" AND CONFERMA = 0";
 
         Cursor cursor = db.rawQuery(query,null );
 
@@ -379,7 +388,7 @@ public class DBhelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Globetrotter = cursor.getString(0);
-                idAttivita = cursor.getInt( 1 );;
+                idAttivita = cursor.getInt( 1 );
                 nPartecipanti = cursor.getInt( 2 );
                 commenti = cursor.getString( 3 );
                 conferma = cursor.getInt(4);
@@ -394,6 +403,21 @@ public class DBhelper extends SQLiteOpenHelper {
         }
 
         return s;
+    }
+
+    public int updatePrenotazione(Prenotazione p){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues args = new ContentValues();
+        args.put(P_COL_COMMENTI, p.getCommenti());
+        args.put(P_COL_CONFERMA, p.getFlagConferma());
+
+        String[] s = new String[]{""+p.getIdAttivita(), p.getEmail()};
+
+        int flag = db.update(PRENOTAZIONE_TABLE,args,"ID_ATTIVITA=? AND GLOBETROTTER=?",s);
+
+        db.close();
+        return flag;
     }
 
 }

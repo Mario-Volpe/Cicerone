@@ -14,20 +14,16 @@ import com.example.cicerone.data.model.DBhelper;
 import java.util.ArrayList;
 
 public class Cerca extends AppCompatActivity {
-    private ListView lista;
-    private ArrayAdapter<String> adapter=null;
-    private FoodAdapter fadapter=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cerca);
-        lista = findViewById(R.id.risultati);
+        ListView lista = findViewById(R.id.risultati);
 
         ArrayList<String> array = new ArrayList<>();
-        ArrayList<Attivita> s = getIntent().getExtras().getParcelableArrayList("risultati");
-        ArrayList<Prenotazione> p=null;
-        ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
+        final ArrayList<Attivita> s = getIntent().getExtras().getParcelableArrayList("risultati");
+        final ArrayList<Integer> r= new ArrayList<>(); //n partecipanti per attività
 
         final Integer[] ids;
         String avv="";
@@ -37,6 +33,7 @@ public class Cerca extends AppCompatActivity {
         if(s.size()==0){
             avv = "Nessuna attività trovata";
             Toast.makeText(Cerca.this, "Nessuna attività trovata", Toast.LENGTH_SHORT).show();
+            lista.setClickable(false);
             flag=1;
         }
 
@@ -45,8 +42,11 @@ public class Cerca extends AppCompatActivity {
             for (Attivita b : s) {
                 array.add(b.toStringSearch());
                 ids[j] = b.getIdAttivita();
-                p = new DBhelper(Cerca.this).getAllPrenotazioni(ids[j]);
-                r.add(p.size());
+                ArrayList<Prenotazione> p = new DBhelper(Cerca.this).getAllPrenotazioni(ids[j], "cerca");
+                int h=0;
+                for(Prenotazione p2:p)
+                    h+=p2.getPartecipanti();
+                r.add(h);
                 j++;
             }
         }
@@ -55,11 +55,11 @@ public class Cerca extends AppCompatActivity {
             array.add(avv);
         }
 
-        adapter = new ArrayAdapter<>(
-                Cerca.this,android.R.layout.simple_list_item_1,array
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                Cerca.this, android.R.layout.simple_list_item_1, array
         );
 
-        fadapter = new FoodAdapter(this,s,r,"cerca");
+        FoodAdapter fadapter = new FoodAdapter(this, s, r, "cerca");
 
         if (flag==1)
             lista.setAdapter(adapter);
@@ -70,11 +70,12 @@ public class Cerca extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //final String titoloriga = (String) parent.getItemAtPosition(position);
-                    Intent inte = new Intent(Cerca.this,Rimozione.class);
+                    Intent inte = new Intent(Cerca.this, DettagliAttivita.class);
                     inte.putExtra("id",ids[position]);
                     inte.putExtra("chiamante","cerca");
                     inte.putExtra("npartecipanti",getIntent().getExtras().getInt("npartecipanti"));
                     inte.putExtra("email",getIntent().getExtras().getString("email"));
+                    inte.putExtra("postidisponibili",s.get(position).getMaxPartecipanti()-r.get(position));
                     startActivity(inte);
                 }
             });

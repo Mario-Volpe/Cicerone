@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Rimozione">
+    android:background="#4255D8"
+    tools:context=".DettagliAttivita">
 
     <TextView
         android:id="@+id/title"

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4255D8"
+    tools:context=".GestioneRichiesta">
+
+    <EditText
+        android:id="@+id/commenti"
+        android:layout_width="254dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="49dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Inserisci qui ciò che vuoi comunicare all'utente sull'incontro o il motivo per il quale hai rifiutato."
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/rifiuta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <Button
+        android:id="@+id/rifiuta"
+        android:layout_width="150dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginRight="49dp"
+        android:layout_marginBottom="117dp"
+        android:background="#F44336"
+        android:text="Rifiuta"
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/accetta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commenti" />
+
+    <Button
+        android:id="@+id/accetta"
+        android:layout_width="150dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:background="#4CAF50"
+        android:text="Accetta"
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/rifiuta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rifiuta" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="39dp"
+        android:text="Accetti la prentazione?"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/commenti"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

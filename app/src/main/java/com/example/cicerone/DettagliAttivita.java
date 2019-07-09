@@ -9,17 +9,18 @@ import android.widget.Toast;
 
 import com.example.cicerone.data.model.DBhelper;
 
-public class Rimozione extends AppCompatActivity {
+public class DettagliAttivita extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rimozione);
+        setContentView(R.layout.activity_dettagli_attivita);
 
         TextView city = findViewById(R.id.city);
         TextView date = findViewById(R.id.date);
         TextView tongue = findViewById(R.id.tongue);
         final TextView npartecipanti = findViewById(R.id.npartecipanti);
+        TextView npartecipantitxt = findViewById(R.id.npartecipantitxt);
         TextView description = findViewById(R.id.description);
         TextView cicerone = findViewById(R.id.cicerone);
         TextView ciceronetxt = findViewById(R.id.ciceronetxt);
@@ -28,16 +29,19 @@ public class Rimozione extends AppCompatActivity {
 
         final Integer id = getIntent().getExtras().getInt("id");
 
-        final Attivita a = new DBhelper(Rimozione.this).getAttivita(id);
+        final Attivita a = new DBhelper(DettagliAttivita.this).getAttivita(id);
 
         final String chiamante = getIntent().getExtras().getString("chiamante");
 
         if(chiamante.equals("cerca")) {
             rimuovi.setText("Partecipa");
             alert.setText("Inoltrando la richiesta di partecipazione bisogna aspettare di essere accettati dal Cicerone.");
+            npartecipantitxt.setText("Posti disponibili:");
+            npartecipanti.setText(""+getIntent().getExtras().getInt("postidisponibili"));
             cicerone.setText(a.getCicerone());
         }
         else {
+            npartecipanti.setText(""+a.getMaxPartecipanti());
             cicerone.setVisibility(View.INVISIBLE);
             ciceronetxt.setVisibility(View.INVISIBLE);
         }
@@ -45,17 +49,16 @@ public class Rimozione extends AppCompatActivity {
         city.setText(a.getCitta());
         date.setText(a.getData());
         tongue.setText(a.getLingua());
-        npartecipanti.setText(""+a.getMaxPartecipanti());
         description.setText(a.getDescrizioneItinerario());
 
         rimuovi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(chiamante.equals("modifica")){
-                    if(new DBhelper(Rimozione.this).rimuoviAttivita(a.getIdAttivita())==0)
-                        Toast.makeText(Rimozione.this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
+                    if(new DBhelper(DettagliAttivita.this).rimuoviAttivita(a.getIdAttivita())==0)
+                        Toast.makeText(DettagliAttivita.this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
                     else {
-                        Toast.makeText(Rimozione.this, "Rimozione completata.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DettagliAttivita.this, "DettagliAttivita completata.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
@@ -64,10 +67,10 @@ public class Rimozione extends AppCompatActivity {
                     int partecipanti = getIntent().getExtras().getInt("npartecipanti");
                     String email = getIntent().getExtras().getString("email");
 
-                    if (new DBhelper(Rimozione.this).richiestaPartecipazione(partecipanti,id,email)==-1)
-                        Toast.makeText(Rimozione.this, "Errore nell'inoltro della richiesta.", Toast.LENGTH_SHORT).show();
+                    if (new DBhelper(DettagliAttivita.this).richiestaPartecipazione(partecipanti,id,email)==-1)
+                        Toast.makeText(DettagliAttivita.this, "Errore nell'inoltro della richiesta.", Toast.LENGTH_SHORT).show();
                     else{
-                        Toast.makeText(Rimozione.this, "Richiesta inoltrata.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DettagliAttivita.this, "Richiesta inoltrata.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

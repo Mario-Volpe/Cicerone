@@ -3,7 +3,6 @@ package com.example.cicerone;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,11 +29,11 @@ public class Modifica extends AppCompatActivity {
 
         ArrayList<String> array = new ArrayList<>(); //visualizzati nella lista
         ArrayList<Attivita> s = new DBhelper(Modifica.this).getAllAttivita(getIntent().getExtras().getString("id"));
-        ArrayList<Prenotazione> p=null;
+        ArrayList<Prenotazione> p;
         ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
 
         String avv=""; //non ci sono attività
-        String chiamante = getIntent().getExtras().getString("chiamante");
+        final String chiamante = getIntent().getExtras().getString("chiamante");
         if(chiamante.equals("richieste"))
             partecipantitxt.setText("Richieste");
 
@@ -44,6 +43,7 @@ public class Modifica extends AppCompatActivity {
         if(s.size()==0) {
             avv = "Nessuna attività creata";
             Toast.makeText(Modifica.this, "Nessuna attività creata", Toast.LENGTH_SHORT).show();
+            lista.setClickable(false);
             flag=1;
         }
 
@@ -54,7 +54,7 @@ public class Modifica extends AppCompatActivity {
             for(Attivita b:s) {
                 array.add(b.toStringSearch());
                 ids[j]=b.getIdAttivita();
-                p = new DBhelper(Modifica.this).getAllPrenotazioni(ids[j]);
+                p = new DBhelper(Modifica.this).getAllPrenotazioni(ids[j],chiamante);
                 r.add(p.size());
                 j++;
             }
@@ -80,9 +80,13 @@ public class Modifica extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //final String titoloriga = (String) parent.getItemAtPosition(position);
-                    Intent inte = new Intent(Modifica.this,Rimozione.class);
+                    Intent inte;
+                    if(chiamante.equals("modifica"))
+                      inte= new Intent(Modifica.this, DettagliAttivita.class);
+                    else inte= new Intent(Modifica.this,DettaglioRichieste.class);
+
                     inte.putExtra("id",ids[position]);
-                    inte.putExtra("chiamante","modifica");
+                    inte.putExtra("chiamante",chiamante);
                     startActivity(inte);
                     finish();
                 }
