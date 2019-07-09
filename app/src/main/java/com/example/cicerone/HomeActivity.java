@@ -1,7 +1,6 @@
 package com.example.cicerone;
 
 import android.content.Intent;
-import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
@@ -91,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                new Utente(HomeActivity.this,"","","","","").rimuoviUtente();
+                new Utente(HomeActivity.this,"","","","","").logout();
                 startActivity(new Intent(HomeActivity.this,MainActivity.class));
                 finish();
             }

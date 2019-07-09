@@ -23,7 +23,7 @@ public class Utente {
         setDatanascita(datanascita);
     }
 
-    public void rimuoviUtente(){
+    public void logout(){
         sharedPreferences.edit().clear().commit();
     }
 
