@@ -40,10 +40,17 @@ public class DettagliAttivita extends AppCompatActivity {
             npartecipanti.setText(""+getIntent().getExtras().getInt("postidisponibili"));
             cicerone.setText(a.getCicerone());
         }
-        else {
+        if(chiamante.equals("modifica")) {
             npartecipanti.setText(""+a.getMaxPartecipanti());
             cicerone.setVisibility(View.INVISIBLE);
             ciceronetxt.setVisibility(View.INVISIBLE);
+        }
+        if(chiamante.equals("inoltrate")) {
+            rimuovi.setText("Annulla prenotazione");
+            alert.setVisibility(View.INVISIBLE);
+            npartecipantitxt.setText("Posti prenotati:");
+            npartecipanti.setText(""+getIntent().getExtras().getInt("prenotati"));
+            cicerone.setText(a.getCicerone());
         }
 
         city.setText(a.getCitta());
@@ -58,11 +65,11 @@ public class DettagliAttivita extends AppCompatActivity {
                     if(new DBhelper(DettagliAttivita.this).rimuoviAttivita(a.getIdAttivita())==0)
                         Toast.makeText(DettagliAttivita.this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
                     else {
-                        Toast.makeText(DettagliAttivita.this, "DettagliAttivita completata.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DettagliAttivita.this, "Rimozione completata.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
-                else {
+                if(chiamante.equals("cerca")) {
                     //richiesta di partecipazione
                     int partecipanti = getIntent().getExtras().getInt("npartecipanti");
                     String email = getIntent().getExtras().getString("email");
@@ -71,6 +78,14 @@ public class DettagliAttivita extends AppCompatActivity {
                         Toast.makeText(DettagliAttivita.this, "Errore nell'inoltro della richiesta.", Toast.LENGTH_SHORT).show();
                     else{
                         Toast.makeText(DettagliAttivita.this, "Richiesta inoltrata.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+                if(chiamante.equals("inoltrate")){
+                    if(new DBhelper(DettagliAttivita.this).rimuoviPrenotazione(a.getIdAttivita())==0)
+                        Toast.makeText(DettagliAttivita.this, "Errore nell'annullamento.", Toast.LENGTH_SHORT).show();
+                    else {
+                        Toast.makeText(DettagliAttivita.this, "Annullamento completato.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

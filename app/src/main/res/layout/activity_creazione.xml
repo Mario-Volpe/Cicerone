@@ -81,7 +81,7 @@
         android:layout_marginBottom="31dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Inserisci il punto d'incontro e poi descrivi brevemente l'itinerario da seguire"
+        android:hint="Inserisci il punto d'incontro e poi descrivi l'itinerario ed eventuali altri dettagli."
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/crea"
         app:layout_constraintEnd_toEndOf="parent"

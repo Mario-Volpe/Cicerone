@@ -15,6 +15,14 @@ public class Prenotazione implements Parcelable {
         setFlagConferma(0);
     }
 
+    public Prenotazione(String email,Integer idAttivita,Integer partecipanti,String commenti,Integer flagConferma){
+        setIdAttivita(idAttivita);
+        setEmail(email);
+        setPartecipanti(partecipanti);
+        setCommenti(commenti);
+        setFlagConferma(flagConferma);
+    }
+
     protected Prenotazione(Parcel in) {
         email = in.readString();
         commenti = in.readString();

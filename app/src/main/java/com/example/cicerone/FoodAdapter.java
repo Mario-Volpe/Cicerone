@@ -4,33 +4,30 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.example.cicerone.Attivita;
 
 import java.util.ArrayList;
 
 public class FoodAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Attivita> foodModelArrayList;
+    private ArrayList<Attivita> a;
     private ArrayList<Integer> nRichieste;
     private ArrayList<Prenotazione> p;
     private ArrayList<Utente> u;
     private String chiamante;
     private Integer id;
 
-    public FoodAdapter(Context context, ArrayList<Attivita> foodModelArrayList,String chiamante) {
+    public FoodAdapter(Context context, ArrayList<Attivita> a, String chiamante) {
         this.context = context;
-        this.foodModelArrayList = foodModelArrayList;
+        this.a = a;
         this.chiamante = chiamante;
     }
 
-    public FoodAdapter(Context context, ArrayList<Attivita> foodModelArrayList,ArrayList<Integer> r,String chiamante) {
+    public FoodAdapter(Context context, ArrayList<Attivita> a, ArrayList<Integer> r, String chiamante) {
         this.context = context;
-        this.foodModelArrayList = foodModelArrayList;
+        this.a = a;
         this.nRichieste = r;
         this.chiamante = chiamante;
     }
@@ -41,6 +38,13 @@ public class FoodAdapter extends BaseAdapter {
         this.p=p;
         this.u=u;
         this.chiamante = chiamante;
+    }
+
+    public FoodAdapter(Context context, ArrayList<Attivita> a, String chiamante, ArrayList<Prenotazione> p) {
+        this.context = context;
+        this.a = a;
+        this.chiamante = chiamante;
+        this.p = p;
     }
 
     @Override
@@ -57,14 +61,14 @@ public class FoodAdapter extends BaseAdapter {
     public int getCount() {
         if(chiamante.equals("dettaglio"))
             return p.size();
-        else return foodModelArrayList.size();
+        else return a.size();
     }
 
     @Override
     public Object getItem(int position) {
         if(chiamante.equals("dettaglio"))
             return p.get(position);
-        else return foodModelArrayList.get(position);
+        else return a.get(position);
     }
 
     @Override
@@ -100,17 +104,32 @@ public class FoodAdapter extends BaseAdapter {
             holder.partecipanti.setText(""+p.get(position).getPartecipanti());
         }
         else {
-            holder.id.setText("" + foodModelArrayList.get(position).getIdAttivita());
-            holder.citta.setText(foodModelArrayList.get(position).getCitta());
-            holder.data.setText(foodModelArrayList.get(position).getData());
+            holder.id.setText("" + a.get(position).getIdAttivita());
+            holder.citta.setText(a.get(position).getCitta());
+            holder.data.setText(a.get(position).getData());
 
             if (chiamante.equals("richieste"))
                 holder.partecipanti.setText("" + nRichieste.get(position));
             if (chiamante.equals("modifica"))
-                holder.partecipanti.setText("" + foodModelArrayList.get(position).getMaxPartecipanti());
+                holder.partecipanti.setText("" + a.get(position).getMaxPartecipanti());
             if (chiamante.equals("cerca")) {
-                int h = foodModelArrayList.get(position).getMaxPartecipanti() - nRichieste.get(position);
+                int h = a.get(position).getMaxPartecipanti() - nRichieste.get(position);
                 holder.partecipanti.setText("" + h);
+            }
+            if(chiamante.equals("inoltrate")) {
+                String esito="";
+                switch (p.get(position).getFlagConferma()){
+                    case 0:
+                        esito="In sospeso";
+                        break;
+                    case 1:
+                        esito="Accettata";
+                        break;
+                    case 2:
+                        esito="Rifiutata";
+                        break;
+                }
+                holder.partecipanti.setText(esito);
             }
         }
 

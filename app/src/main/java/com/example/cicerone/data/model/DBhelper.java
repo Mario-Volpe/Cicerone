@@ -405,6 +405,40 @@ public class DBhelper extends SQLiteOpenHelper {
         return s;
     }
 
+    public ArrayList<Prenotazione> getAllPrenotazioniUtente(String id){
+        ArrayList<Prenotazione> s = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query;
+
+        query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
+                " FROM "+PRENOTAZIONE_TABLE+ " WHERE GLOBETROTTER = '"+id+"'";
+
+        Cursor cursor = db.rawQuery(query,null );
+
+        String Globetrotter,commenti;
+        Integer nPartecipanti,idAttivita,conferma;
+
+        if (cursor.moveToFirst()) {
+            do {
+                Globetrotter = cursor.getString(0);
+                idAttivita = cursor.getInt( 1 );
+                nPartecipanti = cursor.getInt( 2 );
+                commenti = cursor.getString( 3 );
+                conferma = cursor.getInt(4);
+
+                Prenotazione c = new Prenotazione(Globetrotter,idAttivita,nPartecipanti,commenti,conferma);
+                s.add(c);
+
+            }while (cursor.moveToNext());
+
+            db.close();
+            cursor.close();
+        }
+
+        return s;
+    }
+
     public int updatePrenotazione(Prenotazione p){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -420,4 +454,12 @@ public class DBhelper extends SQLiteOpenHelper {
         return flag;
     }
 
+    public int rimuoviPrenotazione(Integer id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int flag = db.delete(PRENOTAZIONE_TABLE,"ID_Attivita=?",new String[]{""+id});
+
+        db.close();
+        return flag;
+    }
 }
