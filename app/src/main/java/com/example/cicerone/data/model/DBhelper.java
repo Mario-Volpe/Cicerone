@@ -239,9 +239,7 @@ public class DBhelper extends SQLiteOpenHelper {
                 "' AND A.DATA = '"+a.getData()+"' AND A.Max_partecipanti >= "+a.getMaxPartecipanti()+
                 " AND A.Id_Cicerone != '"+email+"' AND A.Id_Cicerone != P.GLOBETROTTER AND A.ID_Attivita != P.ID_ATTIVITA";
 
-        ArrayList<Attivita> s = attivitaSearcher(query);
-
-        return s;
+        return attivitaSearcher(query);
     }
 
     public Attivita getAttivita(Integer id) {
@@ -256,8 +254,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public ArrayList<Attivita> getAllAttivita(String email) {
         String query = "select ID_Attivita, Data, Citta, Lingua, Descrizione_itinerario, Max_partecipanti, Id_Cicerone" +
                  FROM +ATTIVITA_TABLE+ " WHERE Id_Cicerone = '"+email+"'";
-        ArrayList<Attivita> s = attivitaSearcher(query);
-        return s;
+        return attivitaSearcher(query);
     }
 
     private ArrayList<Attivita> attivitaSearcher(String query) {
