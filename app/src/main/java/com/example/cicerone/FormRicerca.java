@@ -4,19 +4,15 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.cicerone.data.model.DBhelper;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class FormRicerca extends AppCompatActivity {
 
@@ -57,7 +53,7 @@ public class FormRicerca extends AppCompatActivity {
 
                 DBhelper db = new DBhelper(FormRicerca.super.getBaseContext());
 
-                if (!checkData()) {
+                if (!Functions.checkData(anno,mese,giorno)) {
                     Toast.makeText(FormRicerca.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -71,6 +67,7 @@ public class FormRicerca extends AppCompatActivity {
                         res.putExtra("risultati", c);
                         res.putExtra("npartecipanti",partecipantiInt);
                         res.putExtra("email",id);
+                        res.putExtra("chiamante",getIntent().getExtras().getString("chiamante"));
                         startActivity(res);
                         finish();
                     }
@@ -96,33 +93,9 @@ public class FormRicerca extends AppCompatActivity {
                 anno=year;
                 mese=month;
                 giorno=dayOfMonth;
-
-                Log.d(TAG,"onDateSet: dd/mm/yyyy: "+ dayOfMonth+"/"+month+"/"+year);
-
                 String date = dayOfMonth+"/"+month+"/"+year;
                 mostraData.setText(date);
             }
         };
-    }
-
-    private boolean checkData(){
-        boolean res = true;
-        Date date = new Date();
-        int g=date.getDate();
-        int m=date.getMonth()+1;
-        int a=date.getYear()+1900;
-
-        if(anno<a)
-            res=false;
-        else if(anno==a){
-            if(mese<m)
-                res=false;
-            else
-            if(mese==m&&giorno<g)
-                res=false;
-
-
-        }
-        return res;
     }
 }

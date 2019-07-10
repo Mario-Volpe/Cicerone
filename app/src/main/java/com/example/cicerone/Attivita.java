@@ -8,7 +8,6 @@ public class Attivita implements Parcelable {
     private String Cicerone;
     private String data, descrizione,lingua,citta;
     private Integer maxPartecipanti, idAttivita;
-    private static int ids=0;
 
     public String toStringSearch(){
         return ""+getIdAttivita()+"\b\b"+getCitta()+"\b\b"+getData()+"\b\b"+getMaxPartecipanti();
@@ -16,8 +15,7 @@ public class Attivita implements Parcelable {
 
     public Attivita(String Cicerone, String data, String descrizione, String lingua,
                     String citta, Integer maxPartecipanti){
-        ids++;
-        setIdAttivita(ids);
+
         setCicerone(Cicerone);
         setData(data);
         setDescrizione(descrizione);
@@ -39,13 +37,6 @@ public class Attivita implements Parcelable {
         setMaxPartecipanti(maxPartecipanti);
 
     }
-
-   /* public String[] toStringArray(){
-        ArrayList<String> a = new ArrayList<>();
-
-        String[] s = (String[]) a.toArray();
-        return s;
-    }*/
 
     protected Attivita(Parcel in) {
         Cicerone = in.readString();

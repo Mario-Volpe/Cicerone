@@ -24,6 +24,7 @@ public class Cerca extends AppCompatActivity {
         ArrayList<String> array = new ArrayList<>();
         final ArrayList<Attivita> s = getIntent().getExtras().getParcelableArrayList("risultati");
         final ArrayList<Integer> r= new ArrayList<>(); //n partecipanti per attività
+        final String chiamante = getIntent().getExtras().getString("chiamante");
 
         final Integer[] ids;
         String avv="";
@@ -42,7 +43,7 @@ public class Cerca extends AppCompatActivity {
             for (Attivita b : s) {
                 array.add(b.toStringSearch());
                 ids[j] = b.getIdAttivita();
-                ArrayList<Prenotazione> p = new DBhelper(Cerca.this).getAllPrenotazioni(ids[j], "cerca");
+                ArrayList<Prenotazione> p = new DBhelper(Cerca.this).getAllPrenotazioni(ids[j], chiamante);
                 int h=0;
                 for(Prenotazione p2:p)
                     h+=p2.getPartecipanti();
@@ -59,7 +60,7 @@ public class Cerca extends AppCompatActivity {
                 Cerca.this, android.R.layout.simple_list_item_1, array
         );
 
-        FoodAdapter fadapter = new FoodAdapter(this, s, r, "cerca");
+        FoodAdapter fadapter = new FoodAdapter(this, s, r, chiamante);
 
         if (flag==1)
             lista.setAdapter(adapter);
@@ -69,10 +70,9 @@ public class Cerca extends AppCompatActivity {
             lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //final String titoloriga = (String) parent.getItemAtPosition(position);
                     Intent inte = new Intent(Cerca.this, DettagliAttivita.class);
                     inte.putExtra("id",ids[position]);
-                    inte.putExtra("chiamante","cerca");
+                    inte.putExtra("chiamante",chiamante);
                     inte.putExtra("npartecipanti",getIntent().getExtras().getInt("npartecipanti"));
                     inte.putExtra("email",getIntent().getExtras().getString("email"));
                     inte.putExtra("postidisponibili",s.get(position).getMaxPartecipanti()-r.get(position));

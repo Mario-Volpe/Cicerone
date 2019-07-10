@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailText;
     private EditText passwordText;
     private Button loginButton;
-    private TextView signUpLink;
     private Utente u;
     private String email,password;
 
@@ -36,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
 
         emailText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
-        loginButton = (Button) findViewById(R.id.login);
-        signUpLink = findViewById(R.id.button_registrazione2);
+        loginButton = findViewById(R.id.login);
+        TextView signUpLink = findViewById(R.id.button_registrazione2);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -85,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
                         onLoginSuccess();
-                        // onLoginFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
@@ -94,11 +92,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
-                this.finish();
-            }
-        }
+        if (requestCode == REQUEST_SIGNUP && resultCode == RESULT_OK)
+            this.finish();
     }
 
     @Override

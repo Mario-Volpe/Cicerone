@@ -106,7 +106,7 @@
     <Button
         android:id="@+id/crea"
         android:layout_width="135dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="149dp"
         android:background="@color/colorPrimary"
         android:text="Crea"

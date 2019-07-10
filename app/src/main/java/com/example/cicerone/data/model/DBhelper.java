@@ -5,41 +5,43 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.example.cicerone.Attivita;
 import com.example.cicerone.Prenotazione;
 import com.example.cicerone.Utente;
-
 import java.util.ArrayList;
 
 public class DBhelper extends SQLiteOpenHelper {
-    public static final String DBNAME="Cicerone.db";
-    public static final String UTENTE_TABLE="Utenti";
-    public static final String U_COL_NOME="Nome";
-    public static final String U_COL_COGNOME="Cognome";
-    public static final String U_COL_EMAIL="Email";
-    public static final String U_COL_DATA_NASCITA="Data_nascita";
+
+    private static final String CREATE_TABLE="CREATE TABLE ";
+    private static final String DROP ="DROP TABLE IF EXISTS ";
+    private static final String FROM=" FROM ";
+
+    private static final String DBNAME="Cicerone.db";
+    private static final String UTENTE_TABLE="Utenti";
+    private static final String U_COL_NOME="Nome";
+    private static final String U_COL_COGNOME="Cognome";
+    private static final String U_COL_EMAIL="Email";
+    private static final String U_COL_DATA_NASCITA="Data_nascita";
     private static final String U_COL_SEC="Password";
 
-    public static final String ATTIVITA_TABLE="Attivita";
-    public static final String A_COL_ATTIVITA="ID_Attivita";
-    public static final String A_COL_CICERONE="ID_Cicerone";
-    public static final String A_COL_CITTA="Citta";
-    public static final String A_COL_ITINERARIO="Descrizione_itinerario";
-    public static final String A_COL_LINGUA="Lingua";
-    public static final String A_COL_PARTECIPANTI="Max_partecipanti";
-    public static final String A_COL_DATA="Data";
+    private static final String ATTIVITA_TABLE="Attivita";
+    private static final String A_COL_ATTIVITA="ID_Attivita";
+    private static final String A_COL_CICERONE="ID_Cicerone";
+    private static final String A_COL_CITTA="Citta";
+    private static final String A_COL_ITINERARIO="Descrizione_itinerario";
+    private static final String A_COL_LINGUA="Lingua";
+    private static final String A_COL_PARTECIPANTI="Max_partecipanti";
+    private static final String A_COL_DATA="Data";
 
-    public static final String PRENOTAZIONE_TABLE="Prenotazione";
-    public static final String P_COL_ATTIVITA="ID_ATTIVITA";
-    public static final String P_COL_GLOBETROTTER="Globetrotter";
-    public static final String P_COL_PARTECIPANTI="Numero_partecipanti";
-    public static final String P_COL_COMMENTI="Commenti";
-    public static final String P_COL_CONFERMA="Conferma";
-
+    private static final String PRENOTAZIONE_TABLE="Prenotazione";
+    private static final String P_COL_ATTIVITA="ID_ATTIVITA";
+    private static final String P_COL_GLOBETROTTER="Globetrotter";
+    private static final String P_COL_PARTECIPANTI="Numero_partecipanti";
+    private static final String P_COL_COMMENTI="Commenti";
+    private static final String P_COL_CONFERMA="Conferma";
 
     public DBhelper(Context context ) {
-        super(context, DBNAME, null, 11);
+        super(context, DBNAME, null, 12);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.close();
@@ -48,7 +50,7 @@ public class DBhelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String createTableUtente = "CREATE TABLE " +UTENTE_TABLE+"(" +
+        String createTableUtente = CREATE_TABLE +UTENTE_TABLE+"(" +
                 "EMAIL TEXT PRIMARY KEY," +
                 "NOME TEXT," +
                 "COGNOME TEXT," +
@@ -56,8 +58,8 @@ public class DBhelper extends SQLiteOpenHelper {
                 "DATA_NASCITA TEXT)";
         db.execSQL(createTableUtente);
 
-        String createTableAttivita = "CREATE TABLE " +ATTIVITA_TABLE+"(" +
-                "ID_ATTIVITA INTEGER PRIMARY KEY," +
+        String createTableAttivita = CREATE_TABLE +ATTIVITA_TABLE+"(" +
+                "ID_ATTIVITA INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "DATA TEXT," +
                 "CITTA TEXT," +
                 "LINGUA TEXT," +
@@ -70,7 +72,7 @@ public class DBhelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createTableAttivita);
 
-        String createTablePrenotazione = "CREATE TABLE " +PRENOTAZIONE_TABLE+"(" +
+        String createTablePrenotazione = CREATE_TABLE +PRENOTAZIONE_TABLE+"(" +
                 "GLOBETROTTER TEXT REFERENCES Utenti( EMAIL)," +
                 "ID_ATTIVITA INTEGER REFERENCES Attivita(ID_ATTIVITA)," +
                 "NUMERO_PARTECIPANTI INTEGER," +
@@ -104,7 +106,6 @@ public class DBhelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put( A_COL_ATTIVITA, a.getIdAttivita() );
         values.put( A_COL_DATA, a.getData() );
         values.put( A_COL_CITTA, a.getCitta() );
         values.put( A_COL_LINGUA, a.getLingua() );
@@ -122,9 +123,9 @@ public class DBhelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-        db.execSQL("DROP TABLE IF EXISTS "+ UTENTE_TABLE );
-        db.execSQL("DROP TABLE IF EXISTS "+ ATTIVITA_TABLE );
-        db.execSQL("DROP TABLE IF EXISTS "+ PRENOTAZIONE_TABLE );
+        db.execSQL(DROP+ UTENTE_TABLE );
+        db.execSQL(DROP+ ATTIVITA_TABLE );
+        db.execSQL(DROP+ PRENOTAZIONE_TABLE );
 
         onCreate( db );
     }
@@ -137,19 +138,19 @@ public class DBhelper extends SQLiteOpenHelper {
     public String searchPassword (Utente utente)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "select EMAIL, PASSWORD FROM "+UTENTE_TABLE;
+        String query = "select EMAIL, PASSWORD"+FROM+UTENTE_TABLE;
 
         Cursor cursor = db.rawQuery(query, null);
-        String a,b;
+        String c,b;
         b = ""; //stringa vuota indica password non trovata
 
         if (cursor.moveToFirst())
         {
             do {
 
-                a = cursor.getString(0); //prende l'utente
+                c = cursor.getString(0); //prende l'utente
 
-                if (a.equals(utente.getEmail())) //email corrispondente trovata, assegno la password corrispondente
+                if (c.equals(utente.getEmail())) //email corrispondente trovata, assegno la password corrispondente
                 {
                     b = cursor.getString(1);
                     break;
@@ -162,8 +163,6 @@ public class DBhelper extends SQLiteOpenHelper {
         return b;
     }
 
-
-
     /**
      * Metodo che dato un utente lo cerca nel db
      * @param utente da cercare
@@ -172,7 +171,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public boolean isSignedUp (Utente utente)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select EMAIL FROM "+UTENTE_TABLE;
+        String query = "select EMAIL"+FROM+UTENTE_TABLE;
 
         Cursor cursor = db.rawQuery(query, null);
         String email;
@@ -202,7 +201,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select EMAIL, NOME, COGNOME, PASSWORD, DATA_NASCITA" +
-                    " FROM "+UTENTE_TABLE+" WHERE EMAIL = '"+utente.getEmail()+"'";
+                    FROM +UTENTE_TABLE+" WHERE EMAIL = '"+utente.getEmail()+"'";
 
         Cursor cursor = db.rawQuery(query,null );
 
@@ -234,51 +233,37 @@ public class DBhelper extends SQLiteOpenHelper {
         return utente;
     }
 
-    public ArrayList<Attivita> getInfoAttivita(Attivita a,String email)
-    {
-        ArrayList<Attivita> s = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
+    public ArrayList<Attivita> getInfoAttivita(Attivita a,String email) {
         String query = "select A.ID_Attivita, A.Data, A.Citta, A.Lingua, A.Descrizione_itinerario, A.Max_partecipanti, A.Id_Cicerone, P.Conferma, P.ID_ATTIVITA,P.GLOBETROTTER" +
-                " FROM "+ATTIVITA_TABLE+ " A,"+PRENOTAZIONE_TABLE+" P WHERE A.Citta = '"+a.getCitta()+
+                 FROM +ATTIVITA_TABLE+ " AS A, "+PRENOTAZIONE_TABLE+" AS P WHERE A.Citta = '"+a.getCitta()+
                 "' AND A.DATA = '"+a.getData()+"' AND A.Max_partecipanti >= "+a.getMaxPartecipanti()+
                 " AND A.Id_Cicerone != '"+email+"' AND A.Id_Cicerone != P.GLOBETROTTER AND A.ID_Attivita != P.ID_ATTIVITA";
 
-        Cursor cursor = db.rawQuery(query,null );
+        ArrayList<Attivita> s = attivitaSearcher(query);
 
-        String Cicerone;
-        String data,descrizioneItinerario,lingua,citta;
-        Integer maxPartecipanti,idAttivita;
-
-        if (cursor.moveToFirst()) {
-            do {
-                idAttivita = cursor.getInt( 0 );
-                data = cursor.getString( 1 );
-                citta = cursor.getString( 2 );
-                lingua = cursor.getString( 3 );
-                descrizioneItinerario = cursor.getString(4);
-                maxPartecipanti = cursor.getInt( 5 );
-                Cicerone = cursor.getString( 6 );
-
-                Attivita c = new Attivita (idAttivita,Cicerone,data,descrizioneItinerario,lingua,citta,maxPartecipanti);
-                s.add(c);
-
-            }while (cursor.moveToNext());
-
-            db.close();
-            cursor.close();
-        }
         return s;
     }
 
     public Attivita getAttivita(Integer id) {
-        Attivita a=null;
-
-        SQLiteDatabase db = this.getReadableDatabase();
         String query = "select ID_Attivita, Data, Citta, Lingua, Descrizione_itinerario, Max_partecipanti, Id_Cicerone" +
-                " FROM " + ATTIVITA_TABLE + " WHERE ID_Attivita ="+id;
+                  FROM  + ATTIVITA_TABLE + " WHERE ID_Attivita ="+id;
 
+        ArrayList<Attivita> s = attivitaSearcher(query);
+
+        return s.get(0);
+    }
+
+    public ArrayList<Attivita> getAllAttivita(String email) {
+        String query = "select ID_Attivita, Data, Citta, Lingua, Descrizione_itinerario, Max_partecipanti, Id_Cicerone" +
+                 FROM +ATTIVITA_TABLE+ " WHERE Id_Cicerone = '"+email+"'";
+        ArrayList<Attivita> s = attivitaSearcher(query);
+        return s;
+    }
+
+    private ArrayList<Attivita> attivitaSearcher(String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
+        ArrayList<Attivita> s = new ArrayList<>();
 
         String Cicerone;
         String data, descrizioneItinerario, lingua, citta;
@@ -294,49 +279,15 @@ public class DBhelper extends SQLiteOpenHelper {
                 maxPartecipanti = cursor.getInt(5);
                 Cicerone = cursor.getString(6);
 
-                a = new Attivita(idAttivita, Cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
+                Attivita c = new Attivita(idAttivita, Cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
+                s.add(c);
 
             } while (cursor.moveToNext());
 
             db.close();
             cursor.close();
         }
-        return a;
-    }
-
-    public ArrayList<Attivita> getAllAttivita(String email) {
-        ArrayList<Attivita> s = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select ID_Attivita, Data, Citta, Lingua, Descrizione_itinerario, Max_partecipanti, Id_Cicerone" +
-                " FROM "+ATTIVITA_TABLE+ " WHERE Id_Cicerone = '"+email+"'";
-
-        Cursor cursor = db.rawQuery(query,null );
-
-        String Cicerone;
-        String data,descrizioneItinerario,lingua,citta;
-        Integer maxPartecipanti,idAttivita;
-
-        if (cursor.moveToFirst()) {
-            do {
-                idAttivita = cursor.getInt( 0 );
-                data = cursor.getString( 1 );
-                citta = cursor.getString( 2 );
-                lingua = cursor.getString( 3 );
-                descrizioneItinerario = cursor.getString(4);
-                maxPartecipanti = cursor.getInt( 5 );
-                Cicerone = cursor.getString( 6 );
-
-                Attivita c = new Attivita (idAttivita,Cicerone,data,descrizioneItinerario,lingua,citta,maxPartecipanti);
-                s.add(c);
-
-            }while (cursor.moveToNext());
-
-            db.close();
-            cursor.close();
-        }
-
-        return s;
+        return  s;
     }
 
     public int rimuoviAttivita(Integer id) {
@@ -365,36 +316,33 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Prenotazione> getAllPrenotazioni(Integer id,String chiamante){
-        ArrayList<Prenotazione> s = new ArrayList<>();
+        ArrayList<Prenotazione> p = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         String query;
+        String sel="select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA";
+        String where=" WHERE ID_ATTIVITA = ";
         if(chiamante.equals("modifica"))
-            query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
-                    " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id;
+            query = sel + FROM +PRENOTAZIONE_TABLE+ where+id;
         else
-            query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
-                    " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id+" AND CONFERMA = 1";
+            query = sel + FROM +PRENOTAZIONE_TABLE+ where+id+" AND CONFERMA = 1";
 
         if(chiamante.equals("richieste"))
-            query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
-                    " FROM "+PRENOTAZIONE_TABLE+ " WHERE ID_ATTIVITA = "+id+" AND CONFERMA = 0";
+            query = sel + FROM +PRENOTAZIONE_TABLE+ where+id+" AND CONFERMA = 0";
 
         Cursor cursor = db.rawQuery(query,null );
 
-        String Globetrotter,commenti;
-        Integer nPartecipanti,idAttivita,conferma;
+        String Globetrotter;
+        Integer nPartecipanti,idAttivita;
 
         if (cursor.moveToFirst()) {
             do {
                 Globetrotter = cursor.getString(0);
                 idAttivita = cursor.getInt( 1 );
                 nPartecipanti = cursor.getInt( 2 );
-                commenti = cursor.getString( 3 );
-                conferma = cursor.getInt(4);
 
                 Prenotazione c = new Prenotazione(Globetrotter,idAttivita,nPartecipanti);
-                s.add(c);
+                p.add(c);
 
             }while (cursor.moveToNext());
 
@@ -402,17 +350,17 @@ public class DBhelper extends SQLiteOpenHelper {
             cursor.close();
         }
 
-        return s;
+        return p;
     }
 
     public ArrayList<Prenotazione> getAllPrenotazioniUtente(String id){
-        ArrayList<Prenotazione> s = new ArrayList<>();
+        ArrayList<Prenotazione> p = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         String query;
 
         query = "select GLOBETROTTER, ID_ATTIVITA, NUMERO_PARTECIPANTI, COMMENTI, CONFERMA" +
-                " FROM "+PRENOTAZIONE_TABLE+ " WHERE GLOBETROTTER = '"+id+"'";
+                 FROM +PRENOTAZIONE_TABLE+ " WHERE GLOBETROTTER = '"+id+"'";
 
         Cursor cursor = db.rawQuery(query,null );
 
@@ -428,7 +376,7 @@ public class DBhelper extends SQLiteOpenHelper {
                 conferma = cursor.getInt(4);
 
                 Prenotazione c = new Prenotazione(Globetrotter,idAttivita,nPartecipanti,commenti,conferma);
-                s.add(c);
+                p.add(c);
 
             }while (cursor.moveToNext());
 
@@ -436,7 +384,7 @@ public class DBhelper extends SQLiteOpenHelper {
             cursor.close();
         }
 
-        return s;
+        return p;
     }
 
     public int updatePrenotazione(Prenotazione p){
@@ -446,9 +394,9 @@ public class DBhelper extends SQLiteOpenHelper {
         args.put(P_COL_COMMENTI, p.getCommenti());
         args.put(P_COL_CONFERMA, p.getFlagConferma());
 
-        String[] s = new String[]{""+p.getIdAttivita(), p.getEmail()};
+        String[] str = new String[]{""+p.getIdAttivita(), p.getEmail()};
 
-        int flag = db.update(PRENOTAZIONE_TABLE,args,"ID_ATTIVITA=? AND GLOBETROTTER=?",s);
+        int flag = db.update(PRENOTAZIONE_TABLE,args,"ID_ATTIVITA=? AND GLOBETROTTER=?",str);
 
         db.close();
         return flag;

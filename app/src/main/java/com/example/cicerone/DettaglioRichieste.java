@@ -39,7 +39,7 @@ public class DettaglioRichieste extends AppCompatActivity {
         int flag=0;
         int j=0;
 
-        if(p.size()==0){
+        if(p==null||p.size()==0){
             Toast.makeText(DettaglioRichieste.this, "Nessuna richiesta trovata", Toast.LENGTH_SHORT).show();
             flag=1;
         }

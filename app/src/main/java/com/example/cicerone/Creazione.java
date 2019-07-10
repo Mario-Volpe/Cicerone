@@ -3,24 +3,19 @@ package com.example.cicerone;
 import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.cicerone.data.model.DBhelper;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Creazione extends AppCompatActivity {
 
-    private Button crea;
     private DatePickerDialog.OnDateSetListener setData ;
-    private static final String TAG = "Creazione";
 
     private int anno=0;
     private int mese=0;
@@ -31,7 +26,7 @@ public class Creazione extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creazione);
 
-        crea = findViewById(R.id.crea);
+        Button crea = findViewById(R.id.crea);
         final TextView mostraData = findViewById(R.id.datains);
         final EditText partecipanti = findViewById(R.id.partecipantiins);
         final EditText lingua = findViewById(R.id.linguains);
@@ -52,23 +47,15 @@ public class Creazione extends AppCompatActivity {
                     Toast.makeText(Creazione.this, "Tutti i campi sono obbligatori!", Toast.LENGTH_SHORT).show();
                 else partecipantiInt = Integer.parseInt(partecipantiStr);
 
-                if (!checkData()) {
-                    Toast.makeText(Creazione.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
-                } else {
-                    if(partecipantiInt<=0)
-                        Toast.makeText(Creazione.this, "Il numero dei partecipanti non è corretto.", Toast.LENGTH_SHORT).show();
-                    else {
-                        final Attivita a = new Attivita(getIntent().getExtras().getString("id"), dataStr,
-                                itinerarioStr, linguaStr, cittaStr, partecipantiInt);
+                if (checkInfo(partecipantiInt)) {
+                    final Attivita a = new Attivita(getIntent().getExtras().getString("id"), dataStr,itinerarioStr, linguaStr, cittaStr, partecipantiInt);
 
-                        DBhelper db = new DBhelper(Creazione.super.getBaseContext());
-                        if(db.inserisciAttivita(a)!=-1)
-                           Toast.makeText(Creazione.this, "Creazione riuscita.", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(Creazione.this, "Errore nella creazione.", Toast.LENGTH_SHORT).show();
-                        finish();
-
-                    }
+                    DBhelper db = new DBhelper(Creazione.super.getBaseContext());
+                    if(db.inserisciAttivita(a)!=-1)
+                        Toast.makeText(Creazione.this, "Creazione riuscita.", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(Creazione.this, "Errore nella creazione.", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
@@ -91,33 +78,25 @@ public class Creazione extends AppCompatActivity {
                 anno=year;
                 mese=month;
                 giorno=dayOfMonth;
-
-                Log.d(TAG,"onDateSet: dd/mm/yyyy: "+ dayOfMonth+"/"+month+"/"+year);
-
                 String date = dayOfMonth+"/"+month+"/"+year;
                 mostraData.setText(date);
             }
         };
     }
 
-    private boolean checkData(){
-        boolean res = true;
-        Date date = new Date();
-        int g=date.getDate();
-        int m=date.getMonth()+1;
-        int a=date.getYear()+1900;
+    private boolean checkInfo(Integer partecipantiInt){
 
-        if(anno<a)
-            res=false;
-        else if(anno==a){
-            if(mese<m)
-                res=false;
-            else
-            if(mese==m&&giorno<g)
-                res=false;
+        if (!Functions.checkData(anno,mese,giorno)) {
+            Toast.makeText(Creazione.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
 
+            if(partecipantiInt<=0) {
+                Toast.makeText(Creazione.this, "Il numero dei partecipanti non è corretto.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
+            else return true;
         }
-        return res;
     }
 }

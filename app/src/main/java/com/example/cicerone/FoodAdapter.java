@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class FoodAdapter extends BaseAdapter {
+    private static final String DETTAGLIO = "dettaglio";
 
     private Context context;
     private ArrayList<Attivita> a;
@@ -53,20 +54,19 @@ public class FoodAdapter extends BaseAdapter {
     }
     @Override
     public int getItemViewType(int position) {
-
         return position;
     }
 
     @Override
     public int getCount() {
-        if(chiamante.equals("dettaglio"))
+        if(chiamante.equals(DETTAGLIO))
             return p.size();
         else return a.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if(chiamante.equals("dettaglio"))
+        if(chiamante.equals(DETTAGLIO))
             return p.get(position);
         else return a.get(position);
     }
@@ -86,10 +86,10 @@ public class FoodAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.multiple_columns, null, true);
 
-            holder.id = (TextView) convertView.findViewById(R.id.id);
-            holder.citta = (TextView) convertView.findViewById(R.id.citta);
-            holder.data = (TextView) convertView.findViewById(R.id.data);
-            holder.partecipanti = (TextView) convertView.findViewById(R.id.partecipanti);
+            holder.id = convertView.findViewById(R.id.id);
+            holder.citta = convertView.findViewById(R.id.citta);
+            holder.data = convertView.findViewById(R.id.data);
+            holder.partecipanti = convertView.findViewById(R.id.partecipanti);
 
             convertView.setTag(holder);
         }else {
@@ -97,7 +97,7 @@ public class FoodAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        if(chiamante.equals("dettaglio")){
+        if(chiamante.equals(DETTAGLIO)){
             holder.id.setText("" + id);
             holder.citta.setText(u.get(position).getNome()+" "+u.get(position).getCognome());
             holder.data.setText(u.get(position).getEmail());
@@ -117,7 +117,8 @@ public class FoodAdapter extends BaseAdapter {
                 holder.partecipanti.setText("" + h);
             }
             if(chiamante.equals("inoltrate")) {
-                String esito="";
+                String esito;
+
                 switch (p.get(position).getFlagConferma()){
                     case 0:
                         esito="In sospeso";
@@ -128,6 +129,8 @@ public class FoodAdapter extends BaseAdapter {
                     case 2:
                         esito="Rifiutata";
                         break;
+                    default:
+                        esito="In sospeso";
                 }
                 holder.partecipanti.setText(esito);
             }

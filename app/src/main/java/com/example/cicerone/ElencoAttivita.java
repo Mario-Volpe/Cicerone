@@ -15,6 +15,14 @@ import com.example.cicerone.data.model.DBhelper;
 import java.util.ArrayList;
 
 public class ElencoAttivita extends AppCompatActivity {
+    private static final String INOLTRATE = "inoltrate";
+    private static final String MODIFICA = "modifica";
+    private static final String RICHIESTE = "ricbieste";
+    private int j=0;
+    private int flag=0; //0 se ci sono attività da mostrare, 1 altrimenti.
+    private String avv=""; //non ci sono attività
+    private Integer[] ids; //array degli id
+    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +30,19 @@ public class ElencoAttivita extends AppCompatActivity {
         setContentView(R.layout.activity_elenco_attivita);
 
         final String chiamante = getIntent().getExtras().getString("chiamante");
-        ArrayAdapter<String> adapter=null;
+        ArrayAdapter<String> adapter;
         FoodAdapter fadapter=null;
         TextView partecipantitxt = findViewById(R.id.partecipantitxt);
 
-        ListView lista = findViewById(R.id.listaAttivita);
+        lista = findViewById(R.id.listaAttivita);
 
         ArrayList<String> array = new ArrayList<>(); //visualizzati nella lista
-        ArrayList<Attivita> s= new ArrayList<>();
+        ArrayList<Attivita> s = new ArrayList<>();
         ArrayList<Prenotazione> p = new ArrayList<>();
 
-        if(chiamante.equals("inoltrate")){
+        ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
+
+        if(chiamante.equals(INOLTRATE)){
             String email = getIntent().getExtras().getString("id");
             p = new DBhelper(ElencoAttivita.this).getAllPrenotazioniUtente(email);
             for(Prenotazione p2:p)
@@ -40,33 +50,7 @@ public class ElencoAttivita extends AppCompatActivity {
         }
         else s = new DBhelper(ElencoAttivita.this).getAllAttivita(getIntent().getExtras().getString("id"));
 
-        ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
-
-        String avv=""; //non ci sono attività
-        //array degli id
-        final Integer[] ids;
-
-        if(chiamante.equals("richieste"))
-            partecipantitxt.setText("Richieste");
-        if(chiamante.equals("inoltrate"))
-            partecipantitxt.setText("Stato");
-
-        int j=0;
-        int flag=0; //0 se ci sono attività da mostrare, 1 altrimenti.
-
-        if(s.size()==0) {
-            if(chiamante.equals("inoltrate")){
-                avv = "Nessuna richiesta inoltrata";
-                Toast.makeText(ElencoAttivita.this, "Nessuna richiesta inoltrata", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                avv = "Nessuna attività creata";
-                Toast.makeText(ElencoAttivita.this, "Nessuna attività creata", Toast.LENGTH_SHORT).show();
-            }
-            lista.setClickable(false);
-            flag=1;
-        }
-
+        inizializza(chiamante,partecipantitxt,s);
 
         if (flag == 0) {
                 ids = new Integer[s.size()];
@@ -74,7 +58,7 @@ public class ElencoAttivita extends AppCompatActivity {
                     array.add(b.toStringSearch());
                     ids[j] = b.getIdAttivita();
                     ArrayList<Prenotazione> p2 = new DBhelper(ElencoAttivita.this).getAllPrenotazioni(ids[j], chiamante);
-                    r.add(p.size());
+                    r.add(p2.size());
                     j++;
                 }
         }
@@ -88,37 +72,60 @@ public class ElencoAttivita extends AppCompatActivity {
                 ElencoAttivita.this, android.R.layout.simple_list_item_1, array
         );
 
-        if(chiamante.equals("modifica"))
-            fadapter = new FoodAdapter(this,s,chiamante);
-        if(chiamante.equals("richieste"))
-            fadapter = new FoodAdapter(this,s,r,chiamante);
-        if(chiamante.equals("inoltrate"))
-            fadapter = new FoodAdapter(this,s,chiamante,p);
+        if(flag==0) {
+            if (chiamante.equals(MODIFICA))
+                fadapter = new FoodAdapter(this, s, chiamante);
+            if (chiamante.equals(RICHIESTE))
+                fadapter = new FoodAdapter(this, s, r, chiamante);
+            if (chiamante.equals(INOLTRATE))
+                fadapter = new FoodAdapter(this, s, chiamante, p);
 
-        final ArrayList<Prenotazione> pf = p;
-
-        if (flag==0){
             lista.setAdapter(fadapter);
+            final ArrayList<Prenotazione> pf = p;
             lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent inte=null;
-                    if(chiamante.equals("modifica"))
-                      inte= new Intent(ElencoAttivita.this, DettagliAttivita.class);
-                    if(chiamante.equals("richieste"))
-                        inte= new Intent(ElencoAttivita.this,DettaglioRichieste.class);
-                    if(chiamante.equals("inoltrate")){
-                        inte = new Intent(ElencoAttivita.this, DettagliAttivita.class);
-                        inte.putExtra("prenotati",pf.get(position).getPartecipanti());
-                    }
-
-                    inte.putExtra("id",ids[position]);
-                    inte.putExtra("chiamante",chiamante);
-                    startActivity(inte);
-                    finish();
+                bottone(chiamante,position,pf,ids);
                 }
         });
         }
         else lista.setAdapter(adapter);
+    }
+
+    private void inizializza(String chiamante,TextView partecipantitxt,ArrayList<Attivita> s){
+        if(chiamante.equals(RICHIESTE))
+            partecipantitxt.setText("Richieste");
+        if(chiamante.equals(INOLTRATE))
+            partecipantitxt.setText("Stato");
+
+        if(s==null||s.size()==0) {
+            if(chiamante.equals(INOLTRATE)){
+                avv = "Nessuna richiesta inoltrata";
+                Toast.makeText(ElencoAttivita.this, "Nessuna richiesta inoltrata", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                avv = "Nessuna attività creata";
+                Toast.makeText(ElencoAttivita.this, "Nessuna attività creata", Toast.LENGTH_SHORT).show();
+            }
+            lista.setClickable(false);
+            flag=1;
+        }
+    }
+
+    private void bottone(String chiamante,int position,ArrayList<Prenotazione> pf,Integer[] ids){
+        Intent inte=new Intent(ElencoAttivita.this, DettagliAttivita.class);
+        if(chiamante.equals(MODIFICA))
+            inte= new Intent(ElencoAttivita.this, DettagliAttivita.class);
+        if(chiamante.equals(RICHIESTE))
+            inte= new Intent(ElencoAttivita.this,DettaglioRichieste.class);
+        if(chiamante.equals(INOLTRATE)){
+            inte = new Intent(ElencoAttivita.this, DettagliAttivita.class);
+            inte.putExtra("prenotati",pf.get(position).getPartecipanti());
+        }
+
+        inte.putExtra("id",ids[position]);
+        inte.putExtra("chiamante",chiamante);
+        startActivity(inte);
+        finish();
     }
 }

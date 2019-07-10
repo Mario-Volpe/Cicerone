@@ -14,6 +14,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage,info;
     private Button logoutButton,cerca,crea,modifica,richieste,storico,inoltrate;
     String nome,cognome,datanascita,email;
+    private static final String CHIAMANTE = "chiamante";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -57,6 +58,16 @@ public class HomeActivity extends AppCompatActivity {
                     mTextMessage.setText("Riepilogo dati:");
                     info.setText(nome+"\n"+cognome+"\n"+datanascita+"\n"+email);
                     return true;
+                default:
+                    logoutButton.setVisibility(View.VISIBLE);
+                    mTextMessage.setVisibility(View.VISIBLE);
+                    info.setVisibility(View.INVISIBLE);
+                    cerca.setVisibility(View.INVISIBLE);
+                    crea.setVisibility(View.INVISIBLE);
+                    richieste.setVisibility(View.INVISIBLE);
+                    modifica.setVisibility(View.INVISIBLE);
+                    inoltrate.setVisibility(View.INVISIBLE);
+                    storico.setVisibility(View.INVISIBLE);
             }
             return false;
         }
@@ -111,7 +122,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this,FormRicerca.class);
                 inte.putExtra("id",email);
-                inte.putExtra("chiamante","cerca");
+                inte.putExtra(CHIAMANTE,"cerca");
                 startActivity(inte);
             }
         });
@@ -120,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this,Creazione.class);
-                inte.putExtra("id",email);
+                inte.putExtra(CHIAMANTE,email);
                 startActivity(inte);
             }
         });
@@ -130,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
                 inte.putExtra("id",email);
-                inte.putExtra("chiamante","modifica");
+                inte.putExtra(CHIAMANTE,"modifica");
                 startActivity(inte);
             }
         });
@@ -140,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
                 inte.putExtra("id",email);
-                inte.putExtra("chiamante","richieste");
+                inte.putExtra(CHIAMANTE,"richieste");
                 startActivity(inte);
             }
         });
@@ -150,7 +161,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
                 inte.putExtra("id",email);
-                inte.putExtra("chiamante","inoltrate");
+                inte.putExtra(CHIAMANTE,"inoltrate");
                 startActivity(inte);
             }
         });

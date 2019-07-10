@@ -68,30 +68,8 @@ public class RegistrationActivity extends AppCompatActivity {
                    if (!passwordUtenteStr.equals(passwordUtende2Str)) {
                    //Password e conferma non coincidono!
                    Toast.makeText(RegistrationActivity.this, "Le password non coincidono!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        //la password deve essere lunga almeno 5 caratteri
-                        if (passwordUtenteStr.length() < 5)
-                            Toast.makeText(RegistrationActivity.this, "La password deve contenere almeno 5 caratteri!", Toast.LENGTH_SHORT).show();
-                        else {
-                            if (passwordUtenteStr.length() > 15)
-                           Toast.makeText(RegistrationActivity.this, "La password può contenere massimo 15 caratteri!", Toast.LENGTH_SHORT).show();
-                            else {
-                           //Se le password coincidono, bisogna controllare che l'utente (email) è gia usato e nel caso scrivere l'utente nel db
-                            if (db.isSignedUp(nuovoUtente)) {
-                               //utente già iscritto, stampo un messaggio d'errore
-                               Toast.makeText(RegistrationActivity.this, "Questa mail risulta essere già usata!", Toast.LENGTH_LONG).show();
-                           } else {
-                               //inserimento nel db
-                               if (db.inserisciUtente(nuovoUtente) != -1) {
-                                   Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
-                                   db.close();
-                                   finish();
-                               }
-                           }
-                       }
-
-                   }
-               }
+                    }
+                   else checkInfo(passwordUtenteStr,db,nuovoUtente);
              }
             }
         }
@@ -172,4 +150,28 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(Mainintent);
     }
 
+    private void checkInfo(String passwordUtenteStr,DBhelper db,Utente nuovoUtente){
+        //la password deve essere lunga almeno 5 caratteri
+        if (passwordUtenteStr.length() < 5)
+            Toast.makeText(RegistrationActivity.this, "La password deve contenere almeno 5 caratteri!", Toast.LENGTH_SHORT).show();
+        else {
+            if (passwordUtenteStr.length() > 15)
+                Toast.makeText(RegistrationActivity.this, "La password può contenere massimo 15 caratteri!", Toast.LENGTH_SHORT).show();
+            else {
+                //Se le password coincidono, bisogna controllare che l'utente (email) è gia usato e nel caso scrivere l'utente nel db
+                if (db.isSignedUp(nuovoUtente)) {
+                    //utente già iscritto, stampo un messaggio d'errore
+                    Toast.makeText(RegistrationActivity.this, "Questa mail risulta essere già usata!", Toast.LENGTH_LONG).show();
+                } else {
+                    //inserimento nel db
+                    if (db.inserisciUtente(nuovoUtente) != -1) {
+                        Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
+                        db.close();
+                        finish();
+                    }
+                }
+            }
+
+        }
+    }
 }
