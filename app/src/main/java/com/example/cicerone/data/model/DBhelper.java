@@ -41,7 +41,7 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String P_COL_CONFERMA="Conferma";
 
     public DBhelper(Context context ) {
-        super(context, DBNAME, null, 12);
+        super(context, DBNAME, null, 13);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.close();
@@ -234,10 +234,11 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Attivita> getInfoAttivita(Attivita a,String email) {
-        String query = "select A.ID_Attivita, A.Data, A.Citta, A.Lingua, A.Descrizione_itinerario, A.Max_partecipanti, A.Id_Cicerone, P.Conferma, P.ID_ATTIVITA,P.GLOBETROTTER" +
-                 FROM +ATTIVITA_TABLE+ " AS A, "+PRENOTAZIONE_TABLE+" AS P WHERE A.Citta = '"+a.getCitta()+
-                "' AND A.DATA = '"+a.getData()+"' AND A.Max_partecipanti >= "+a.getMaxPartecipanti()+
-                " AND A.Id_Cicerone != '"+email+"' AND A.Id_Cicerone != P.GLOBETROTTER AND A.ID_Attivita != P.ID_ATTIVITA";
+        String query = "select ID_Attivita, Data, Citta, Lingua, Descrizione_itinerario, Max_partecipanti, Id_Cicerone" +
+                 FROM +ATTIVITA_TABLE+ " WHERE Citta = '"+a.getCitta()+
+                "' AND DATA = '"+a.getData()+"' AND Max_partecipanti >= "+a.getMaxPartecipanti()+
+                " AND Id_Cicerone != '"+email+"'";
+        // ulteriore condizione:  AND A.Id_Cicerone != P.GLOBETROTTER AND A.ID_Attivita != P.ID_ATTIVITA
 
         return attivitaSearcher(query);
     }

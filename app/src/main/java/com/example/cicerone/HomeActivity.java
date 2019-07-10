@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this,Creazione.class);
-                inte.putExtra(CHIAMANTE,email);
+                inte.putExtra("id",email);
                 startActivity(inte);
             }
         });

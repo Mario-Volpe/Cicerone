@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ElencoAttivita extends AppCompatActivity {
     private static final String INOLTRATE = "inoltrate";
     private static final String MODIFICA = "modifica";
-    private static final String RICHIESTE = "ricbieste";
+    private static final String RICHIESTE = "richieste";
     private int j=0;
     private int flag=0; //0 se ci sono attività da mostrare, 1 altrimenti.
     private String avv=""; //non ci sono attività
@@ -29,6 +29,7 @@ public class ElencoAttivita extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elenco_attivita);
 
+        DBhelper db = new DBhelper(this);
         final String chiamante = getIntent().getExtras().getString("chiamante");
         ArrayAdapter<String> adapter;
         FoodAdapter fadapter=null;
@@ -44,11 +45,10 @@ public class ElencoAttivita extends AppCompatActivity {
 
         if(chiamante.equals(INOLTRATE)){
             String email = getIntent().getExtras().getString("id");
-            p = new DBhelper(ElencoAttivita.this).getAllPrenotazioniUtente(email);
+            p = db.getAllPrenotazioniUtente(email);
             for(Prenotazione p2:p)
-                s.add(new DBhelper(ElencoAttivita.this).getAttivita(p2.getIdAttivita()));
-        }
-        else s = new DBhelper(ElencoAttivita.this).getAllAttivita(getIntent().getExtras().getString("id"));
+                s.add(db.getAttivita(p2.getIdAttivita()));
+        } else s = db.getAllAttivita(getIntent().getExtras().getString("id"));
 
         inizializza(chiamante,partecipantitxt,s);
 
@@ -57,7 +57,7 @@ public class ElencoAttivita extends AppCompatActivity {
                 for (Attivita b : s) {
                     array.add(b.toStringSearch());
                     ids[j] = b.getIdAttivita();
-                    ArrayList<Prenotazione> p2 = new DBhelper(ElencoAttivita.this).getAllPrenotazioni(ids[j], chiamante);
+                    ArrayList<Prenotazione> p2 = db.getAllPrenotazioni(ids[j], chiamante);
                     r.add(p2.size());
                     j++;
                 }
