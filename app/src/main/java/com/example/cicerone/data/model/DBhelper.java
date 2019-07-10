@@ -235,10 +235,9 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public ArrayList<Attivita> getInfoAttivita(Attivita a,String email) {
         String query = "select ID_Attivita, Data, Citta, Lingua, Descrizione_itinerario, Max_partecipanti, Id_Cicerone" +
-                 FROM +ATTIVITA_TABLE+ " WHERE Citta = '"+a.getCitta()+
-                "' AND DATA = '"+a.getData()+"' AND Max_partecipanti >= "+a.getMaxPartecipanti()+
-                " AND Id_Cicerone != '"+email+"'";
-        // ulteriore condizione:  AND A.Id_Cicerone != P.GLOBETROTTER AND A.ID_Attivita != P.ID_ATTIVITA
+                 FROM +ATTIVITA_TABLE+" a NATURAL JOIN"+PRENOTAZIONE_TABLE+ "p WHERE Citta = '"+a.getCitta()+
+                "' AND a.DATA = '"+a.getData()+"' AND a.Max_partecipanti >= "+a.getMaxPartecipanti()+
+                " AND a.Id_Cicerone != '"+email+"' AND a.Id_Cicerone != p.GLOBETROTTER AND a.ID_Attivita != p.ID_ATTIVITA";
 
         return attivitaSearcher(query);
     }
