@@ -17,8 +17,6 @@ import java.util.Calendar;
 public class FormRicerca extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener setData ;
-    private static final String TAG = "FormRicerca";
-
     private int anno=0;
     private int mese=0;
     private int giorno=0;

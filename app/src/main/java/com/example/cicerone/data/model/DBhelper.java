@@ -235,11 +235,48 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public ArrayList<Attivita> getInfoAttivita(Attivita a,String email) {
         String query = "select a.ID_Attivita, a.Data, a.Citta, a.Lingua, a.Descrizione_itinerario, a.Max_partecipanti, a.Id_Cicerone" +
-                 FROM +ATTIVITA_TABLE+" a NATURAL JOIN "+PRENOTAZIONE_TABLE+ " p WHERE a.Citta = '"+a.getCitta()+
+                 FROM +ATTIVITA_TABLE+" a WHERE a.Citta = '"+a.getCitta()+
                 "' AND a.DATA = '"+a.getData()+"' AND a.Max_partecipanti >= "+a.getMaxPartecipanti()+
-                " AND a.Id_Cicerone != '"+email+"' AND a.Id_Cicerone != p.GLOBETROTTER AND a.ID_Attivita != p.ID_ATTIVITA";
+                " AND a.Id_Cicerone != '"+email+"'";
 
-        return attivitaSearcher(query);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<Attivita> s = new ArrayList<>();
+
+        String Cicerone;
+        String data, descrizioneItinerario, lingua, citta;
+        Integer maxPartecipanti, idAttivita;
+
+        if (cursor.moveToFirst()) {
+            do {
+                idAttivita = cursor.getInt(0);
+                data = cursor.getString(1);
+                citta = cursor.getString(2);
+                lingua = cursor.getString(3);
+                descrizioneItinerario = cursor.getString(4);
+                maxPartecipanti = cursor.getInt(5);
+                Cicerone = cursor.getString(6);
+
+                ArrayList <Prenotazione> p = getAllPrenotazioni(idAttivita,"cerca");
+
+                if(p==null||p.size()==0){
+                    Attivita c = new Attivita(idAttivita, Cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
+                    s.add(c);
+                }
+                else
+                    for(Prenotazione p2:p){
+                        if(!p2.getEmail().equals(email)){
+                            Attivita c = new Attivita(idAttivita, Cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
+                            s.add(c);
+                        }
+                    }
+
+            } while (cursor.moveToNext());
+
+            db.close();
+            cursor.close();
+        }
+        return  s;
     }
 
     public Attivita getAttivita(Integer id) {

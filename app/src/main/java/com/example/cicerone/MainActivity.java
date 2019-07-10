@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivityLogin()
     {
-        Intent Loginintent = new Intent(this, LoginActivity.class );
-        startActivity(Loginintent);
+        Intent loginIntent = new Intent(this, LoginActivity.class );
+        startActivity(loginIntent);
     }
 
     public void openActivityRegistration()
     {
-        Intent RegistrationIntent = new Intent(this, RegistrationActivity.class);
-        startActivity(RegistrationIntent);
+        Intent registrationIntent = new Intent(this, RegistrationActivity.class);
+        startActivity(registrationIntent);
     }
 }

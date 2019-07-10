@@ -22,7 +22,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordText;
     private Button loginButton;
     private Utente u;
-    private String email,password;
+    private String email;
+    private String password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,12 +108,12 @@ public class LoginActivity extends AppCompatActivity {
         u.setPassword(password);
         u=new DBhelper(this).getInfoUtente(u);
         loginButton.setEnabled(true);
-        Intent Homeintent = new Intent(this,HomeActivity.class);
-        Homeintent.putExtra("nome",u.getNome());
-        Homeintent.putExtra("cognome",u.getCognome());
-        Homeintent.putExtra("datanascita",u.getDatanascita());
-        Homeintent.putExtra("email",u.getEmail());
-        startActivity(Homeintent);
+        Intent homeIntent = new Intent(this,HomeActivity.class);
+        homeIntent.putExtra("nome",u.getNome());
+        homeIntent.putExtra("cognome",u.getCognome());
+        homeIntent.putExtra("datanascita",u.getDatanascita());
+        homeIntent.putExtra("email",u.getEmail());
+        startActivity(homeIntent);
         finish();
     }
 
@@ -172,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void openActivityMain()
     {
-        Intent Mainintent = new Intent(LoginActivity.this, MainActivity.class );
-        startActivity(Mainintent);
+        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class );
+        startActivity(mainIntent);
     }
 }

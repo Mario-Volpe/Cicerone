@@ -8,8 +8,10 @@
 
     <ListView
         android:id="@+id/listaAttivita"
-        android:layout_width="400dp"
-        android:layout_height="548dp"
+        android:layout_width="383dp"
+        android:layout_height="541dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginBottom="11dp"
         android:layout_weight="1"
         android:clickable="true"

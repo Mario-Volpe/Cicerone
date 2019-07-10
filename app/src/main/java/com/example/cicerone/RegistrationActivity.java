@@ -37,7 +37,6 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-
         final EditText nomeUtente =  findViewById(R.id.nome);
         final EditText cognomeUtente = findViewById(R.id.cognome);
         final EditText passwordUtente = findViewById(R.id.password);
@@ -140,14 +139,14 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void openActivityLogin()
     {
-        Intent Loginintent = new Intent(this, LoginActivity.class );
-        startActivity(Loginintent);
+        Intent loginIntent = new Intent(this, LoginActivity.class );
+        startActivity(loginIntent);
     }
 
     public void openActivityMain()
     {
-        Intent Mainintent = new Intent(this, MainActivity.class );
-        startActivity(Mainintent);
+        Intent mainIntent = new Intent(this, MainActivity.class );
+        startActivity(mainIntent);
     }
 
     private void checkInfo(String passwordUtenteStr,DBhelper db,Utente nuovoUtente){

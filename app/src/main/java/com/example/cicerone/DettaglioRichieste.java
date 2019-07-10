@@ -8,17 +8,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.cicerone.data.model.DBhelper;
 
 import java.util.ArrayList;
 
 public class DettaglioRichieste extends AppCompatActivity {
-    private static final String TAG = "DettaglioRichieste";
-
-    public static String getTAG() {
-        return TAG;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,10 +16,8 @@ public class GestioneRichiesta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_richiesta);
 
-        Button rifiuta,accetta;
-
-        rifiuta = findViewById(R.id.rifiuta);
-        accetta = findViewById(R.id.accetta);
+        Button rifiuta = findViewById(R.id.rifiuta);
+        Button accetta = findViewById(R.id.accetta);
 
         final Prenotazione p = (Prenotazione) getIntent().getExtras().get("prenotazione");
 

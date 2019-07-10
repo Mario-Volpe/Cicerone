@@ -121,6 +121,8 @@ public class ElencoAttivita extends AppCompatActivity {
         if(chiamante.equals(INOLTRATE)){
             inte = new Intent(ElencoAttivita.this, DettagliAttivita.class);
             inte.putExtra("prenotati",pf.get(position).getPartecipanti());
+            inte.putExtra("flag",pf.get(position).getFlagConferma());
+            inte.putExtra("descrizione",pf.get(position).getCommenti());
         }
 
         inte.putExtra("id",ids[position]);

@@ -11,9 +11,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
-    private TextView mTextMessage,info;
-    private Button logoutButton,cerca,crea,modifica,richieste,storico,inoltrate;
-    String nome,cognome,datanascita,email;
+    private TextView mTextMessage;
+    private TextView info;
+    private Button logoutButton;
+    private Button cerca;
+    private Button crea;
+    private Button modifica;
+    private Button richieste;
+    private Button storico;
+    private Button inoltrate;
+    private String nome;
+    private String cognome;
+    private String datanascita;
+    private String email;
     private static final String CHIAMANTE = "chiamante";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -105,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
 
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        logoutButton = (Button) findViewById(R.id.logout);
+        logoutButton = findViewById(R.id.logout);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
 

@@ -11,18 +11,19 @@ import com.example.cicerone.data.model.DBhelper;
 
 public class DettagliAttivita extends AppCompatActivity {
     private String chiamante;
+    private TextView description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_attivita);
 
+        description = findViewById(R.id.description);
         TextView city = findViewById(R.id.city);
         TextView date = findViewById(R.id.date);
         TextView tongue = findViewById(R.id.tongue);
         final TextView npartecipanti = findViewById(R.id.npartecipanti);
         TextView npartecipantitxt = findViewById(R.id.npartecipantitxt);
-        TextView description = findViewById(R.id.description);
         TextView cicerone = findViewById(R.id.cicerone);
         TextView ciceronetxt = findViewById(R.id.ciceronetxt);
         Button rimuovi = findViewById(R.id.rimozione);
@@ -39,7 +40,6 @@ public class DettagliAttivita extends AppCompatActivity {
         city.setText(a.getCitta());
         date.setText(a.getData());
         tongue.setText(a.getLingua());
-        description.setText(a.getDescrizione());
 
         rimuovi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +58,13 @@ public class DettagliAttivita extends AppCompatActivity {
             npartecipantitxt.setText("Posti disponibili:");
             npartecipanti.setText(""+getIntent().getExtras().getInt("postidisponibili"));
             cicerone.setText(a.getCicerone());
+            description.setText(a.getDescrizione());
         }
         if(chiamante.equals("modifica")) {
             npartecipanti.setText(""+a.getMaxPartecipanti());
             cicerone.setVisibility(View.INVISIBLE);
             ciceronetxt.setVisibility(View.INVISIBLE);
+            description.setText(a.getDescrizione());
         }
         if(chiamante.equals("inoltrate")) {
             rimuovi.setText("Annulla prenotazione");
@@ -70,6 +72,9 @@ public class DettagliAttivita extends AppCompatActivity {
             npartecipantitxt.setText("Posti prenotati:");
             npartecipanti.setText(""+getIntent().getExtras().getInt("prenotati"));
             cicerone.setText(a.getCicerone());
+            if(getIntent().getExtras().getInt("flag")==0)
+                description.setText(a.getDescrizione());
+            else description.setText(getIntent().getExtras().getString("descrizione"));
         }
     }
 
