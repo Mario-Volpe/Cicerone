@@ -69,15 +69,15 @@ public class HomeActivity extends AppCompatActivity {
                     info.setText(nome+"\n"+cognome+"\n"+datanascita+"\n"+email);
                     return true;
                 default:
-                    logoutButton.setVisibility(View.VISIBLE);
-                    mTextMessage.setVisibility(View.VISIBLE);
+                    logoutButton.setVisibility(View.INVISIBLE);
                     info.setVisibility(View.INVISIBLE);
-                    cerca.setVisibility(View.INVISIBLE);
-                    crea.setVisibility(View.INVISIBLE);
-                    richieste.setVisibility(View.INVISIBLE);
-                    modifica.setVisibility(View.INVISIBLE);
-                    inoltrate.setVisibility(View.INVISIBLE);
-                    storico.setVisibility(View.INVISIBLE);
+                    cerca.setVisibility(View.VISIBLE);
+                    crea.setVisibility(View.VISIBLE);
+                    modifica.setVisibility(View.VISIBLE);
+                    richieste.setVisibility(View.VISIBLE);
+                    inoltrate.setVisibility(View.VISIBLE);
+                    storico.setVisibility(View.VISIBLE);
+                    mTextMessage.setText("Menu attività");
             }
             return false;
         }
@@ -176,6 +176,29 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        storico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
+                inte.putExtra("id",email);
+                inte.putExtra(CHIAMANTE,"storico");
+                startActivity(inte);
+            }
+        });
+
     }
 
+    @Override
+    public void onBackPressed() {
+        logoutButton.setVisibility(View.VISIBLE);
+        mTextMessage.setVisibility(View.VISIBLE);
+        info.setVisibility(View.INVISIBLE);
+        cerca.setVisibility(View.INVISIBLE);
+        crea.setVisibility(View.INVISIBLE);
+        richieste.setVisibility(View.INVISIBLE);
+        modifica.setVisibility(View.INVISIBLE);
+        inoltrate.setVisibility(View.INVISIBLE);
+        storico.setVisibility(View.INVISIBLE);
+        mTextMessage.setText("Ciao "+nome+"!");
+    }
 }

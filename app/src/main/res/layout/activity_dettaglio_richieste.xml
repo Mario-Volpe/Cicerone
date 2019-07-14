@@ -36,8 +36,10 @@
         android:id="@+id/datatxt"
         android:layout_width="0dp"
         android:layout_height="39dp"
+        android:layout_marginBottom="6dp"
         android:gravity="center"
         android:text="E-mail"
+        app:layout_constraintBottom_toTopOf="@+id/listaAttivita"
         app:layout_constraintEnd_toStartOf="@+id/partecipantitxt"
         app:layout_constraintStart_toEndOf="@+id/cittatxt"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,12 +63,15 @@
         android:layout_height="39dp"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
+        android:layout_marginBottom="6dp"
         android:gravity="center"
         android:text="ID Attività"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cittatxt"
+        app:layout_constraintBottom_toTopOf="@+id/listaAttivita"
         app:layout_constraintEnd_toStartOf="@+id/cittatxt"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

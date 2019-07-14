@@ -115,7 +115,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="Nome\nCognome\nData di nascita\nemail"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/modifica"
         app:layout_constraintEnd_toEndOf="parent"

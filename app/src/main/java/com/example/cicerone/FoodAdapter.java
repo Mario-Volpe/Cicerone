@@ -17,6 +17,7 @@ public class FoodAdapter extends BaseAdapter {
     private ArrayList<Integer> nRichieste;
     private ArrayList<Prenotazione> p;
     private ArrayList<Utente> u;
+    private ArrayList<Boolean> f;
     private String chiamante;
     private Integer id;
 
@@ -46,6 +47,13 @@ public class FoodAdapter extends BaseAdapter {
         this.a = a;
         this.chiamante = chiamante;
         this.p = p;
+    }
+
+    public FoodAdapter(ArrayList<Attivita> a,Context context, ArrayList<Boolean> f, String chiamante) {
+        this.context = context;
+        this.a = a;
+        this.f = f;
+        this.chiamante = chiamante;
     }
 
     @Override
@@ -134,6 +142,17 @@ public class FoodAdapter extends BaseAdapter {
                 }
                 holder.partecipanti.setText(esito);
             }
+            if(chiamante.equals("storico")) {
+                String res;
+                if(f.get(position))
+                    res="Sì";
+                else res="No";
+
+                holder.partecipanti.setText(res);
+            }
+            if(chiamante.equals("elencoF")){
+                holder.partecipanti.setText(""+nRichieste.get(position));
+            }
         }
 
         return convertView;
@@ -141,7 +160,10 @@ public class FoodAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        protected TextView id, citta, data, partecipanti;
+        TextView id;
+        TextView citta;
+        TextView data;
+        TextView partecipanti;
 
     }
 }

@@ -25,7 +25,6 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String U_COL_SEC="Password";
 
     private static final String ATTIVITA_TABLE="Attivita";
-    private static final String A_COL_ATTIVITA="ID_Attivita";
     private static final String A_COL_CICERONE="ID_Cicerone";
     private static final String A_COL_CITTA="Citta";
     private static final String A_COL_ITINERARIO="Descrizione_itinerario";
@@ -40,8 +39,14 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String P_COL_COMMENTI="Commenti";
     private static final String P_COL_CONFERMA="Conferma";
 
+    private static final String FEEDBACK_TABLE="Feedback";
+    private static final String F_COL_ATTIVITA="ID_ATTIVITA";
+    private static final String F_COL_GLOBETROTTER="Globetrotter";
+    private static final String F_COL_VOTO="Voto";
+    private static final String F_COL_COMMENTO="Commento";
+
     public DBhelper(Context context ) {
-        super(context, DBNAME, null, 13);
+        super(context, DBNAME, null, 14);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.close();
@@ -81,6 +86,15 @@ public class DBhelper extends SQLiteOpenHelper {
                 "PRIMARY KEY ( GLOBETROTTER, ID_ATTIVITA) " +
                 ")";
         db.execSQL(createTablePrenotazione);
+
+        String createTableFeedback = CREATE_TABLE +FEEDBACK_TABLE+"(" +
+                "GLOBETROTTER TEXT REFERENCES Utenti( EMAIL)," +
+                "ID_ATTIVITA INTEGER REFERENCES Attivita(ID_ATTIVITA)," +
+                "VOTO INTEGER," +
+                "COMMENTO TEXT, " +
+                "PRIMARY KEY ( GLOBETROTTER, ID_ATTIVITA) " +
+                ")";
+        db.execSQL(createTableFeedback);
 
     }
 
@@ -243,7 +257,7 @@ public class DBhelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         ArrayList<Attivita> s = new ArrayList<>();
 
-        String Cicerone;
+        String cicerone;
         String data, descrizioneItinerario, lingua, citta;
         Integer maxPartecipanti, idAttivita;
 
@@ -255,18 +269,18 @@ public class DBhelper extends SQLiteOpenHelper {
                 lingua = cursor.getString(3);
                 descrizioneItinerario = cursor.getString(4);
                 maxPartecipanti = cursor.getInt(5);
-                Cicerone = cursor.getString(6);
+                cicerone = cursor.getString(6);
 
                 ArrayList <Prenotazione> p = getAllPrenotazioni(idAttivita,"cerca");
 
                 if(p==null||p.size()==0){
-                    Attivita c = new Attivita(idAttivita, Cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
+                    Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
                     s.add(c);
                 }
                 else
                     for(Prenotazione p2:p){
                         if(!p2.getEmail().equals(email)){
-                            Attivita c = new Attivita(idAttivita, Cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
+                            Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
                             s.add(c);
                         }
                     }
@@ -299,7 +313,7 @@ public class DBhelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         ArrayList<Attivita> s = new ArrayList<>();
 
-        String Cicerone;
+        String cicerone;
         String data, descrizioneItinerario, lingua, citta;
         Integer maxPartecipanti, idAttivita;
 
@@ -311,9 +325,9 @@ public class DBhelper extends SQLiteOpenHelper {
                 lingua = cursor.getString(3);
                 descrizioneItinerario = cursor.getString(4);
                 maxPartecipanti = cursor.getInt(5);
-                Cicerone = cursor.getString(6);
+                cicerone = cursor.getString(6);
 
-                Attivita c = new Attivita(idAttivita, Cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
+                Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti);
                 s.add(c);
 
             } while (cursor.moveToNext());
@@ -443,5 +457,66 @@ public class DBhelper extends SQLiteOpenHelper {
 
         db.close();
         return flag;
+    }
+
+    public long inserisciFeedback(Feedback f){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(F_COL_GLOBETROTTER, f.getGlobetrotter() );
+        values.put(F_COL_ATTIVITA, f.getIdAttivita() );
+        values.put(F_COL_VOTO, f.getVoto() );
+        values.put(F_COL_COMMENTO,f.getCommento());
+
+        long res = db.insert( FEEDBACK_TABLE, null, values );
+        db.close();
+
+        return res;
+    }
+
+    public Feedback getFeedback(Integer idAttivita, String email) {
+        String query = "select GLOBETROTTER, ID_ATTIVITA, VOTO, COMMENTO" +
+                FROM +FEEDBACK_TABLE+ " WHERE GLOBETROTTER = '"+email+"' AND ID_ATTIVITA = "+idAttivita;
+
+        ArrayList<Feedback> f = feedbackSearcher(query);
+
+        if(f==null||f.size()==0)
+            return null;
+        else return f.get(0);
+    }
+
+    public ArrayList<Feedback> getAllFeedback(Integer idAttivita){
+        String query = "select GLOBETROTTER, ID_ATTIVITA, VOTO, COMMENTO" +
+                FROM +FEEDBACK_TABLE+ " WHERE ID_ATTIVITA = "+idAttivita;
+
+        return feedbackSearcher(query);
+    }
+
+    private ArrayList<Feedback> feedbackSearcher(String query){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Feedback f;
+        ArrayList<Feedback> a = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery(query,null );
+
+        String commento,email;
+        Integer voto,idAttivita;
+
+        if (cursor.moveToFirst()) {
+            do {
+                email = cursor.getString( 0 );
+                idAttivita = cursor.getInt( 1 );
+                voto = cursor.getInt( 2 );
+                commento = cursor.getString( 3 );
+
+                f = new Feedback(email,idAttivita,voto,commento);
+                a.add(f);
+
+            }while (cursor.moveToNext());
+
+            db.close();
+            cursor.close();
+        }
+        return a;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.cicerone;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.example.cicerone.data.model.DBhelper;
 public class DettagliAttivita extends AppCompatActivity {
     private String chiamante;
     private TextView description;
+    private Button feedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class DettagliAttivita extends AppCompatActivity {
         TextView ciceronetxt = findViewById(R.id.ciceronetxt);
         Button rimuovi = findViewById(R.id.rimozione);
         TextView alert = findViewById(R.id.alert);
+        feedback = findViewById(R.id.feedback);
 
         final Integer id = getIntent().getExtras().getInt("id");
 
@@ -47,10 +50,9 @@ public class DettagliAttivita extends AppCompatActivity {
                 bottone(chiamante,a,id);
             }
         });
-
     }
 
-    private void inizializza(Button rimuovi, TextView alert, TextView npartecipantitxt, TextView npartecipanti,TextView cicerone, TextView ciceronetxt, Attivita a){
+    private void inizializza(Button rimuovi, TextView alert, TextView npartecipantitxt, TextView npartecipanti, TextView cicerone, TextView ciceronetxt, final Attivita a){
 
         if(chiamante.equals("cerca")) {
             rimuovi.setText("Partecipa");
@@ -59,16 +61,28 @@ public class DettagliAttivita extends AppCompatActivity {
             npartecipanti.setText(""+getIntent().getExtras().getInt("postidisponibili"));
             cicerone.setText(a.getCicerone());
             description.setText(a.getDescrizione());
+
+            feedback.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent inte = new Intent(DettagliAttivita.this,ElencoFeedback.class);
+                    inte.putExtra("email",a.getCicerone());
+                    startActivity(inte);
+                }
+            });
+
         }
         if(chiamante.equals("modifica")) {
             npartecipanti.setText(""+a.getMaxPartecipanti());
             cicerone.setVisibility(View.INVISIBLE);
             ciceronetxt.setVisibility(View.INVISIBLE);
+            feedback.setVisibility(View.INVISIBLE);
             description.setText(a.getDescrizione());
         }
         if(chiamante.equals("inoltrate")) {
             rimuovi.setText("Annulla prenotazione");
             alert.setVisibility(View.INVISIBLE);
+            feedback.setVisibility(View.INVISIBLE);
             npartecipantitxt.setText("Posti prenotati:");
             npartecipanti.setText(""+getIntent().getExtras().getInt("prenotati"));
             cicerone.setText(a.getCicerone());

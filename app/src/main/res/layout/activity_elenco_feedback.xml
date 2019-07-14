@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ElencoAttivita">
+
+    <ListView
+        android:id="@+id/listaFeedback"
+        android:layout_width="370dp"
+        android:layout_height="496dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/media"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/cittatxt"
+        android:layout_width="101dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="Città"
+        app:layout_constraintBottom_toTopOf="@+id/listaFeedback"
+        app:layout_constraintStart_toEndOf="@+id/idAttivitatxt"
+        app:layout_constraintTop_toTopOf="@+id/datatxt"
+        app:layout_constraintVertical_bias="0.941" />
+
+    <TextView
+        android:id="@+id/datatxt"
+        android:layout_width="101dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:text="Data"
+        app:layout_constraintStart_toEndOf="@+id/cittatxt"
+        app:layout_constraintTop_toTopOf="@+id/idAttivitatxt" />
+
+    <TextView
+        android:id="@+id/vototxt"
+        android:layout_width="101dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:text="Voto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/datatxt"
+        app:layout_constraintTop_toTopOf="@+id/idAttivitatxt" />
+
+    <TextView
+        android:id="@+id/idAttivitatxt"
+        android:layout_width="101dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center|left"
+        android:text="ID Attività"
+        app:layout_constraintEnd_toStartOf="@+id/cittatxt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/media"
+        android:layout_width="360dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Media delle valutazioni:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

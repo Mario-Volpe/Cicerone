@@ -8,18 +8,20 @@
 
     <ListView
         android:id="@+id/listaAttivita"
-        android:layout_width="383dp"
-        android:layout_height="541dp"
+        android:layout_width="374dp"
+        android:layout_height="546dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="11dp"
         android:layout_weight="1"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cittatxt" />
+        app:layout_constraintTop_toBottomOf="@+id/cittatxt"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/cittatxt"
@@ -29,7 +31,7 @@
         android:layout_marginRight="2dp"
         android:gravity="center"
         android:text="Città"
-        app:layout_constraintBottom_toTopOf="@+id/risultati"
+        app:layout_constraintBottom_toTopOf="@+id/listaAttivita"
         app:layout_constraintEnd_toStartOf="@+id/datatxt"
         app:layout_constraintStart_toEndOf="@+id/idtxt"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,8 +40,10 @@
         android:id="@+id/datatxt"
         android:layout_width="0dp"
         android:layout_height="39dp"
+        android:layout_marginBottom="6dp"
         android:gravity="center"
         android:text="Data"
+        app:layout_constraintBottom_toTopOf="@+id/listaAttivita"
         app:layout_constraintEnd_toStartOf="@+id/partecipantitxt"
         app:layout_constraintStart_toEndOf="@+id/cittatxt"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,8 +54,10 @@
         android:layout_height="43dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
+        android:layout_marginBottom="2dp"
         android:gravity="center"
         android:text="Limite partecipanti"
+        app:layout_constraintBottom_toTopOf="@+id/listaAttivita"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/datatxt"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,10 +70,12 @@
         android:layout_marginLeft="2dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
-        android:gravity="center"
+        android:layout_marginBottom="6dp"
+        android:gravity="center|left"
         android:text="ID"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cittatxt"
+        app:layout_constraintBottom_toTopOf="@+id/listaAttivita"
         app:layout_constraintEnd_toStartOf="@+id/cittatxt"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

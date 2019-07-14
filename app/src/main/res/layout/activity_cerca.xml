@@ -49,8 +49,10 @@
         android:layout_height="43dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
+        android:layout_marginBottom="1dp"
         android:gravity="center"
         android:text="Posti disponibili"
+        app:layout_constraintBottom_toTopOf="@+id/risultati"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/datatxt"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,13 +63,16 @@
         android:layout_height="39dp"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
         android:gravity="center"
         android:text="ID"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cittatxt"
+        app:layout_constraintBottom_toTopOf="@+id/risultati"
         app:layout_constraintEnd_toStartOf="@+id/cittatxt"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
