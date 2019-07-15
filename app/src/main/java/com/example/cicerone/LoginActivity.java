@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.data.model.DBhelper;
+import com.example.cicerone.data.model.SendIt;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Utente u;
     private String email;
     private String password;
+    private TextView reset;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,27 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
         TextView signUpLink = findViewById(R.id.button_registrazione2);
+        reset = findViewById(R.id.reset);
+
+        reset.setClickable(true);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                email = emailText.getText().toString();
+                if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() )
+                    Toast.makeText(LoginActivity.this, "Inserisci un indirizzo e-mail valido", Toast.LENGTH_LONG).show();
+                else {
+                    Utente u = new Utente(LoginActivity.this,"","","",email,"");
+                    u = new DBhelper(LoginActivity.this).getInfoUtente(u);
+                    String subject = "Problemi all'accesso";
+                    String corpo = "Ciao "+u.getNome()+"!\n\nEcco la password per effettuare l'accesso: " + u.getPassword() +
+                            "\nNon dimenticarla e fai attenzione a non rivelarla a nessuno!\n\nIl team Step di Cicerone.";
+                    SendIt sendIt = new SendIt(u.getEmail(), subject, corpo, LoginActivity.this);
+                    sendIt.execute();
+                    Toast.makeText(LoginActivity.this, "Controlla la tua casella di posta elettronica", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 

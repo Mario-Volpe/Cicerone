@@ -9,11 +9,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.data.model.DBhelper;
+import com.example.cicerone.data.model.SendIt;
+
+import java.util.ArrayList;
 
 public class DettagliAttivita extends AppCompatActivity {
     private String chiamante;
     private TextView description;
     private Button feedback;
+    private ArrayList<Prenotazione> p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class DettagliAttivita extends AppCompatActivity {
         city.setText(a.getCitta());
         date.setText(a.getData());
         tongue.setText(a.getLingua());
+
+        p = new DBhelper(this).getAllPrenotazioni(id,chiamante);
 
         rimuovi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +104,13 @@ public class DettagliAttivita extends AppCompatActivity {
                 Toast.makeText(DettagliAttivita.this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
             else {
                 Toast.makeText(DettagliAttivita.this, "Rimozione completata.", Toast.LENGTH_SHORT).show();
+                for(Prenotazione p2:p){
+                    String subject = "Rimozione attività";
+                    String corpo = "Ciao!\n\nPurtroppo il Cicerone "+a.getCicerone()+" ha rimosso la sua attività n "+a.getIdAttivita()+
+                            " che si sarebbe svolta a "+a.getCitta()+" il "+a.getData()+".\n\nIl team Step di Cicerone.";
+                    SendIt sendIt = new SendIt(p2.getEmail(),subject,corpo,this);
+                    sendIt.execute();
+                }
                 finish();
             }
         }
@@ -111,6 +124,12 @@ public class DettagliAttivita extends AppCompatActivity {
                 Toast.makeText(DettagliAttivita.this, "Errore nell'inoltro della richiesta.", Toast.LENGTH_SHORT).show();
             else{
                 Toast.makeText(DettagliAttivita.this, "Richiesta inoltrata.", Toast.LENGTH_SHORT).show();
+                String subject = "Richiesta di partecipazione";
+                String corpo = "Ciao!\n\nIl Globetrotter "+email+" vorrebbe partecipare all'attività n "+a.getIdAttivita()+
+                        " che si svolge a "+a.getCitta()+" il "+a.getData()+".\nCorri nella sezione 'Gestione richieste'"+
+                        " e fai la tua scelta.\n\nIl team Step di Cicerone.";
+                SendIt sendIt = new SendIt(a.getCicerone(),subject,corpo,this);
+                sendIt.execute();
                 finish();
             }
         }
@@ -118,7 +137,13 @@ public class DettagliAttivita extends AppCompatActivity {
             if(new DBhelper(DettagliAttivita.this).rimuoviPrenotazione(a.getIdAttivita())==0)
                 Toast.makeText(DettagliAttivita.this, "Errore nell'annullamento.", Toast.LENGTH_SHORT).show();
             else {
+                String email = getIntent().getExtras().getString("email");
                 Toast.makeText(DettagliAttivita.this, "Annullamento completato.", Toast.LENGTH_SHORT).show();
+                String subject = "Annullamento prenotazione";
+                String corpo = "Ciao!\n\nL'utente "+email+" ha rimosso la sua prenotazione dall'attività n "+a.getIdAttivita()+
+                        " che si svolge a "+a.getCitta()+" il "+a.getData()+".\n\nIl team Step di Cicerone.";
+                SendIt sendIt = new SendIt(a.getCicerone(),subject,corpo,this);
+                sendIt.execute();
                 finish();
             }
         }

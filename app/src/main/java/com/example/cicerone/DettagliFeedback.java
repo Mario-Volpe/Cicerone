@@ -37,11 +37,12 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
         if(flag==true){
             titolo.setText("Riepilogo feedback");
             spinner.setVisibility(View.INVISIBLE);
+            commentoins.setVisibility(View.VISIBLE);
             Feedback f = db.getFeedback(id,email);
 
             votoins.setText(""+f.getVoto()+"/5");
             if(!f.getCommento().equals(""))
-                commentoins.setText(""+f.getCommento());
+                commentoins.setText(f.getCommento());
             b.setVisibility(View.INVISIBLE);
             commento.setVisibility(View.INVISIBLE);
         }
@@ -52,13 +53,13 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(this);
-            commentotxt = commento.getText().toString().trim();
         }
 
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                commentotxt = commento.getText().toString().trim();
                 Feedback f = new Feedback(email,id,voto,commentotxt);
                 if(db.inserisciFeedback(f)!=-1)
                     Toast.makeText(DettagliFeedback.this, "Feedback inserito.", Toast.LENGTH_SHORT).show();

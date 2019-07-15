@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private TextView info;
+    private TextView info2;
     private Button logoutButton;
     private Button cerca;
     private Button crea;
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
                     modifica.setVisibility(View.INVISIBLE);
                     inoltrate.setVisibility(View.INVISIBLE);
                     storico.setVisibility(View.INVISIBLE);
+                    info2.setVisibility(View.INVISIBLE);
                     mTextMessage.setText("Ciao "+nome+"!");
                     return true;
                 case R.id.navigation_dashboard:
@@ -53,10 +55,12 @@ public class HomeActivity extends AppCompatActivity {
                     richieste.setVisibility(View.VISIBLE);
                     inoltrate.setVisibility(View.VISIBLE);
                     storico.setVisibility(View.VISIBLE);
+                    info2.setVisibility(View.INVISIBLE);
                     mTextMessage.setText("Menu attività");
                     return true;
                 case R.id.navigation_profilo:
                     info.setVisibility(View.VISIBLE);
+                    info2.setVisibility(View.VISIBLE);
                     logoutButton.setVisibility(View.VISIBLE);
                     mTextMessage.setVisibility(View.VISIBLE);
                     cerca.setVisibility(View.INVISIBLE);
@@ -71,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
                 default:
                     logoutButton.setVisibility(View.INVISIBLE);
                     info.setVisibility(View.INVISIBLE);
+                    info2.setVisibility(View.INVISIBLE);
                     cerca.setVisibility(View.VISIBLE);
                     crea.setVisibility(View.VISIBLE);
                     modifica.setVisibility(View.VISIBLE);
@@ -97,6 +102,8 @@ public class HomeActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         info = findViewById(R.id.info);
         info.setVisibility(View.INVISIBLE);
+        info2 = findViewById(R.id.info2);
+        info2.setVisibility(View.INVISIBLE);
         mTextMessage.setText("Ciao "+nome+"!");
 
         cerca = findViewById(R.id.cerca);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.data.model.DBhelper;
+import com.example.cicerone.data.model.SendIt;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -165,6 +166,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     //inserimento nel db
                     if (db.inserisciUtente(nuovoUtente) != -1) {
                         Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
+                        String subject = "Benvenuto in Cicerone";
+                        String corpo = "Ciao "+nuovoUtente.getNome()+"!\n\nBenvenuto sulla nostra piattaforma. D'ora in poi potrai " +
+                                "creare attività o partecipare ad una di esse. Divertiti ad esplorare il mondo senza girare a vuoto!\n\nIl team Step di Cicerone.";
+                        SendIt sendIt = new SendIt(nuovoUtente.getEmail(), subject, corpo, RegistrationActivity.this);
+                        sendIt.execute();
                         db.close();
                         finish();
                     }

@@ -161,6 +161,7 @@ public class ElencoAttivita extends AppCompatActivity {
             inte.putExtra("prenotati",pf.get(position).getPartecipanti());
             inte.putExtra("flag",pf.get(position).getFlagConferma());
             inte.putExtra("descrizione",pf.get(position).getCommenti());
+            inte.putExtra("email",globetrotter);
         }
         if(chiamante.equals(STORICO)) {
             inte = new Intent(ElencoAttivita.this, DettagliFeedback.class);

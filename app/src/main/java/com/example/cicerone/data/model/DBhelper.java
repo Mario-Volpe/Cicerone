@@ -465,7 +465,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
         values.put(F_COL_GLOBETROTTER, f.getGlobetrotter() );
         values.put(F_COL_ATTIVITA, f.getIdAttivita() );
-        values.put(F_COL_VOTO, f.getVoto() );
+        values.put(F_COL_VOTO, f.getVoto());
         values.put(F_COL_COMMENTO,f.getCommento());
 
         long res = db.insert( FEEDBACK_TABLE, null, values );

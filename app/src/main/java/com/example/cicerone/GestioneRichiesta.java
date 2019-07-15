@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cicerone.data.model.DBhelper;
+import com.example.cicerone.data.model.SendIt;
 
 public class GestioneRichiesta extends AppCompatActivity {
 
@@ -47,7 +48,16 @@ public class GestioneRichiesta extends AppCompatActivity {
             p.setCommenti(commentiStr);
             if(new DBhelper(GestioneRichiesta.this).updatePrenotazione(p)<=0)
                 Toast.makeText(GestioneRichiesta.this, "Errore.", Toast.LENGTH_SHORT).show();
-            else Toast.makeText(GestioneRichiesta.this, "Operazione effettuata.", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(GestioneRichiesta.this, "Operazione effettuata.", Toast.LENGTH_SHORT).show();
+                Attivita a= new DBhelper(this).getAttivita(p.getIdAttivita());
+                String subject = "Conferma prenotazione";
+                String corpo = "Ciao!\n\nIl Cicerone "+a.getCicerone()+" ha confermato la tua prenotazione dall'attività n "+p.getIdAttivita()+
+                        " che si svolge a "+a.getCitta()+" il "+a.getData()+".\n\nIl team Step di Cicerone.";
+                SendIt sendIt = new SendIt(p.getEmail(),subject,corpo,this);
+                sendIt.execute();
+                finish();
+            }
             finish();
         }
     }
