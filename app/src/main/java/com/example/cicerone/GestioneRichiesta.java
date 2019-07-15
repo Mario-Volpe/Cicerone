@@ -49,12 +49,22 @@ public class GestioneRichiesta extends AppCompatActivity {
             if(new DBhelper(GestioneRichiesta.this).updatePrenotazione(p)<=0)
                 Toast.makeText(GestioneRichiesta.this, "Errore.", Toast.LENGTH_SHORT).show();
             else {
+                String subject;
+                String corpo;
+
                 Toast.makeText(GestioneRichiesta.this, "Operazione effettuata.", Toast.LENGTH_SHORT).show();
                 Attivita a= new DBhelper(this).getAttivita(p.getIdAttivita());
-                String subject = "Conferma prenotazione";
-                String corpo = "Ciao!\n\nIl Cicerone "+a.getCicerone()+" ha confermato la tua prenotazione dall'attività n "+p.getIdAttivita()+
-                        " che si svolge a "+a.getCitta()+" il "+a.getData()+".\n\nIl team Step di Cicerone.";
-                SendIt sendIt = new SendIt(p.getEmail(),subject,corpo,this);
+                if(flag==1) {
+                    subject = "Conferma prenotazione";
+                    corpo = "Ciao!\n\nIl Cicerone " + a.getCicerone() + " ha confermato la tua prenotazione dall'attività n " + p.getIdAttivita() +
+                            " che si svolge a " + a.getCitta() + " il " + a.getData() + ". Commento: "+commentiStr+"\n\nIl team Step di Cicerone.";
+                }
+                else {
+                    subject = "Annullamento prenotazione";
+                    corpo = "Ciao!\n\nIl Cicerone " + a.getCicerone() + " ha rifiutato la tua richiesta di partecipazione all'attività n " + p.getIdAttivita() +
+                            " che si svolge a " + a.getCitta() + " il " + a.getData() + ". Commento: "+commentiStr+"\n\nIl team Step di Cicerone.";
+                }
+                SendIt sendIt = new SendIt(p.getEmail(), subject, corpo, this);
                 sendIt.execute();
                 finish();
             }
