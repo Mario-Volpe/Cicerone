@@ -15,7 +15,7 @@ public class SendIt extends AsyncTask<String,String,Void> {
 
     private String mailhost = "smtp.gmail.com";
     private String user = "ciceronestep@gmail.com";
-    private String password = "itpscorsob";
+    private String segreto = "itpscorsob";
     private Session session;
     private String email;
     private String subject;
@@ -54,7 +54,7 @@ public class SendIt extends AsyncTask<String,String,Void> {
                 new javax.mail.Authenticator() {
                     //Authenticating the password
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(user,password);
+                        return new PasswordAuthentication(user,segreto);
                     }
                 });
 

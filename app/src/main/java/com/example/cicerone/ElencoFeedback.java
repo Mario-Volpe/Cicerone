@@ -26,7 +26,7 @@ public class ElencoFeedback extends AppCompatActivity {
         ListView lista = findViewById(R.id.listaFeedback);
         String cicerone = getIntent().getExtras().getString("email");
         TextView media = findViewById(R.id.media);
-        float avg;
+        double avg;
         DBhelper db = new DBhelper(this);
         f = new ArrayList<>();
         ArrayAdapter<String> adapter;
@@ -53,16 +53,15 @@ public class ElencoFeedback extends AppCompatActivity {
         else {
             a = new ArrayList<>();
             int somma=0;
-            int i=0;
+
             for (Feedback f2 : f){
                 somma += f2.getVoto();
                 voti.add(f2.getVoto());
                 Attivita a2 = db.getAttivita(f2.getIdAttivita());
                 a.add(a2);
-                i++;
             }
 
-            avg = somma / i;
+            avg = (double) (somma / f.size());
             media.append(" " + avg + "/5");
 
             fadapter = new FoodAdapter(this,a,voti,"elencoF");

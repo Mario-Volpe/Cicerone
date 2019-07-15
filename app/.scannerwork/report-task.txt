@@ -2,5 +2,5 @@ projectKey=ciceroneApp
 serverUrl=http://localhost:9000
 serverVersion=7.7.0.23042
 dashboardUrl=http://localhost:9000/dashboard?id=ciceroneApp
-ceTaskId=AWvdnxIJgjqtwOGXZhQD
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWvdnxIJgjqtwOGXZhQD
+ceTaskId=AWv1DNGnqgcAvC8NZIut
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWv1DNGnqgcAvC8NZIut
