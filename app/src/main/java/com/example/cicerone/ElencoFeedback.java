@@ -23,17 +23,24 @@ public class ElencoFeedback extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elenco_feedback);
 
-        ListView lista = findViewById(R.id.listaFeedback);
-        String cicerone = getIntent().getExtras().getString("email");
-        TextView media = findViewById(R.id.media);
+        ListView lista;
+        lista = findViewById(R.id.listaFeedback);
+        String cicerone;
+        cicerone = getIntent().getExtras().getString("email");
+        TextView media;
+        media = findViewById(R.id.media);
         double avg;
-        DBhelper db = new DBhelper(this);
+        DBhelper db;
+        db = new DBhelper(this);
         f = new ArrayList<>();
         ArrayAdapter<String> adapter;
         FoodAdapter fadapter;
-        String avv="Nessun feedback presente";
-        ArrayList<String> array = new ArrayList<>();
-        ArrayList<Integer> voti = new ArrayList<>();
+        String avv;
+        avv = "Nessun feedback presente";
+        ArrayList<String> array;
+        array = new ArrayList<>();
+        ArrayList<Integer> voti;
+        voti = new ArrayList<>();
 
         Integer[] ids;
 
@@ -52,7 +59,8 @@ public class ElencoFeedback extends AppCompatActivity {
         }
         else {
             a = new ArrayList<>();
-            int somma=0;
+            double somma;
+            somma = 0;
 
             for (Feedback f2 : f){
                 somma += f2.getVoto();
@@ -61,7 +69,7 @@ public class ElencoFeedback extends AppCompatActivity {
                 a.add(a2);
             }
 
-            avg = (double) (somma / f.size());
+            avg = (somma / f.size());
             media.append(" " + avg + "/5");
 
             fadapter = new FoodAdapter(this,a,voti,"elencoF");

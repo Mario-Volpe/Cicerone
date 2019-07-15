@@ -46,7 +46,7 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String F_COL_COMMENTO="Commento";
 
     public DBhelper(Context context ) {
-        super(context, DBNAME, null, 14);
+        super(context, DBNAME, null, 15);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.close();
@@ -140,6 +140,7 @@ public class DBhelper extends SQLiteOpenHelper {
         db.execSQL(DROP+ UTENTE_TABLE );
         db.execSQL(DROP+ ATTIVITA_TABLE );
         db.execSQL(DROP+ PRENOTAZIONE_TABLE );
+        db.execSQL(DROP+ FEEDBACK_TABLE );
 
         onCreate( db );
     }

@@ -47,6 +47,7 @@ public class SendIt extends AsyncTask<String,String,Void> {
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.checkserveridentity","true");
         props.put("mail.smtp.port", "465");
 
         //Creating a new session
