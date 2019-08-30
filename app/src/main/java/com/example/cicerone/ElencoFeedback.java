@@ -34,7 +34,7 @@ public class ElencoFeedback extends AppCompatActivity {
         db = new DBhelper(this);
         f = new ArrayList<>();
         ArrayAdapter<String> adapter;
-        FoodAdapter fadapter;
+        EAdapter fadapter;
         String avv;
         avv = "Nessun feedback presente";
         ArrayList<String> array;
@@ -72,7 +72,7 @@ public class ElencoFeedback extends AppCompatActivity {
             avg = (somma / f.size());
             media.append(" " + avg + "/5");
 
-            fadapter = new FoodAdapter(this,a,voti,"elencoF");
+            fadapter = new EAdapter(this,a,voti,"elencoF");
 
             lista.setAdapter(fadapter);
             lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {

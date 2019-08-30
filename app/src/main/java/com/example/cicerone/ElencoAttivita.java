@@ -36,7 +36,7 @@ public class ElencoAttivita extends AppCompatActivity {
         DBhelper db = new DBhelper(this);
         final String chiamante = getIntent().getExtras().getString("chiamante");
         ArrayAdapter<String> adapter;
-        FoodAdapter fadapter=null;
+        EAdapter fadapter=null;
         TextView partecipantitxt = findViewById(R.id.partecipantitxt);
 
         lista = findViewById(R.id.listaAttivita);
@@ -101,13 +101,13 @@ public class ElencoAttivita extends AppCompatActivity {
 
         if(flag==0) {
             if (chiamante.equals(MODIFICA))
-                fadapter = new FoodAdapter(this, s, chiamante);
+                fadapter = new EAdapter(this, s, chiamante);
             if (chiamante.equals(RICHIESTE))
-                fadapter = new FoodAdapter(this, s, r, chiamante);
+                fadapter = new EAdapter(this, s, r, chiamante);
             if (chiamante.equals(INOLTRATE))
-                fadapter = new FoodAdapter(this, s, chiamante, p);
+                fadapter = new EAdapter(this, s, chiamante, p);
             if (chiamante.equals(STORICO))
-                fadapter = new FoodAdapter(sf,this,f,chiamante);
+                fadapter = new EAdapter(sf,this,f,chiamante);
 
             lista.setAdapter(fadapter);
             final ArrayList<Prenotazione> pf = p;

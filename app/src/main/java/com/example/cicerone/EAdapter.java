@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class FoodAdapter extends BaseAdapter {
+public class EAdapter extends BaseAdapter {
     private static final String DETTAGLIO = "dettaglio";
 
     private Context context;
@@ -21,20 +21,20 @@ public class FoodAdapter extends BaseAdapter {
     private String chiamante;
     private Integer id;
 
-    public FoodAdapter(Context context, ArrayList<Attivita> a, String chiamante) {
+    public EAdapter(Context context, ArrayList<Attivita> a, String chiamante) {
         this.context = context;
         this.a = a;
         this.chiamante = chiamante;
     }
 
-    public FoodAdapter(Context context, ArrayList<Attivita> a, ArrayList<Integer> r, String chiamante) {
+    public EAdapter(Context context, ArrayList<Attivita> a, ArrayList<Integer> r, String chiamante) {
         this.context = context;
         this.a = a;
         this.nRichieste = r;
         this.chiamante = chiamante;
     }
 
-    public FoodAdapter(Context context, Integer id, ArrayList<Prenotazione> p, ArrayList<Utente> u,String chiamante) {
+    public EAdapter(Context context, Integer id, ArrayList<Prenotazione> p, ArrayList<Utente> u, String chiamante) {
         this.context = context;
         this.id=id;
         this.p=p;
@@ -42,14 +42,14 @@ public class FoodAdapter extends BaseAdapter {
         this.chiamante = chiamante;
     }
 
-    public FoodAdapter(Context context, ArrayList<Attivita> a, String chiamante, ArrayList<Prenotazione> p) {
+    public EAdapter(Context context, ArrayList<Attivita> a, String chiamante, ArrayList<Prenotazione> p) {
         this.context = context;
         this.a = a;
         this.chiamante = chiamante;
         this.p = p;
     }
 
-    public FoodAdapter(ArrayList<Attivita> a,Context context, ArrayList<Boolean> f, String chiamante) {
+    public EAdapter(ArrayList<Attivita> a, Context context, ArrayList<Boolean> f, String chiamante) {
         this.context = context;
         this.a = a;
         this.f = f;

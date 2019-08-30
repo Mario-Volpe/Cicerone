@@ -60,7 +60,7 @@ public class Cerca extends AppCompatActivity {
                 Cerca.this, android.R.layout.simple_list_item_1, array
         );
 
-        FoodAdapter fadapter = new FoodAdapter(this, s, r, chiamante);
+        EAdapter fadapter = new EAdapter(this, s, r, chiamante);
 
         if (flag==1)
             lista.setAdapter(adapter);

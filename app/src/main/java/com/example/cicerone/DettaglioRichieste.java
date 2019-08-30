@@ -54,7 +54,7 @@ public class DettaglioRichieste extends AppCompatActivity {
                 DettaglioRichieste.this,android.R.layout.simple_list_item_1,array
         );
 
-        FoodAdapter fadapter = new FoodAdapter(this,idAttivita,p,u,"dettaglio");
+        EAdapter fadapter = new EAdapter(this,idAttivita,p,u,"dettaglio");
 
         if (flag==1)
             lista.setAdapter(adapter);
