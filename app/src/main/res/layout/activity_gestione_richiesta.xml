@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4255D8"
-    tools:context=".GestioneRichiesta">
+    tools:context=".data.control.GestioneRichiesta">
 
     <EditText
         android:id="@+id/commenti"

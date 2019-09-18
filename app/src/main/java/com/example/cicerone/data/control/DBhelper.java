@@ -1,13 +1,16 @@
-package com.example.cicerone.data.model;
+package com.example.cicerone.data.control;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.cicerone.Attivita;
-import com.example.cicerone.Prenotazione;
-import com.example.cicerone.Utente;
+
+import com.example.cicerone.data.model.Attivita;
+import com.example.cicerone.data.model.Feedback;
+import com.example.cicerone.data.model.Prenotazione;
+import com.example.cicerone.data.model.Utente;
+
 import java.util.ArrayList;
 
 public class DBhelper extends SQLiteOpenHelper {

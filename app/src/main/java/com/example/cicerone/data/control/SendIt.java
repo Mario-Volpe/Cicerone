@@ -1,4 +1,4 @@
-package com.example.cicerone.data.model;
+package com.example.cicerone.data.control;
 
 import android.content.Context;
 import android.os.AsyncTask;

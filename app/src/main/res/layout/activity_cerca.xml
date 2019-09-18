@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Cerca">
+    tools:context=".data.control.Cerca">
 
     <ListView
         android:id="@+id/risultati"

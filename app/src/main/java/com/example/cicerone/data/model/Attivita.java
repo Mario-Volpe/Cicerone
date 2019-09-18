@@ -1,4 +1,4 @@
-package com.example.cicerone;
+package com.example.cicerone.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

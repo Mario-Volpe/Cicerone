@@ -1,4 +1,4 @@
-package com.example.cicerone;
+package com.example.cicerone.data.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;

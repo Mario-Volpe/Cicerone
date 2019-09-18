@@ -1,4 +1,4 @@
-package com.example.cicerone;
+package com.example.cicerone.data.control;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.SendIt;
+import com.example.cicerone.R;
+import com.example.cicerone.data.model.Utente;
 
 import java.util.Calendar;
 import java.util.Date;

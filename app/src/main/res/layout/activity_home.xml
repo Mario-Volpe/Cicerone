@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4255D8"
-    tools:context=".HomeActivity">
+    tools:context=".data.control.HomeActivity">
 
     <TextView
         android:id="@+id/info2"

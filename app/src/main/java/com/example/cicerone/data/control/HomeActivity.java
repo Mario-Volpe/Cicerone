@@ -1,4 +1,4 @@
-package com.example.cicerone;
+package com.example.cicerone.data.control;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.cicerone.R;
+import com.example.cicerone.data.model.Utente;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -34,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    logoutButton.setVisibility(View.VISIBLE);
+                    logoutButton.setVisibility(View.INVISIBLE);
                     mTextMessage.setVisibility(View.VISIBLE);
                     info.setVisibility(View.INVISIBLE);
                     cerca.setVisibility(View.INVISIBLE);
@@ -123,6 +126,7 @@ public class HomeActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         logoutButton = findViewById(R.id.logout);
+        logoutButton.setVisibility(View.INVISIBLE);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
 
@@ -137,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
         cerca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(HomeActivity.this,FormRicerca.class);
+                Intent inte = new Intent(HomeActivity.this, FormRicerca.class);
                 inte.putExtra("id",email);
                 inte.putExtra(CHIAMANTE,"cerca");
                 startActivity(inte);
@@ -147,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
         crea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(HomeActivity.this,Creazione.class);
+                Intent inte = new Intent(HomeActivity.this, Creazione.class);
                 inte.putExtra("id",email);
                 startActivity(inte);
             }

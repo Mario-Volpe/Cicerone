@@ -11,32 +11,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DettagliFeedback"></activity>
-        <activity android:name=".GestioneRichiesta" />
-        <activity android:name=".DettaglioRichieste" />
-        <activity android:name=".DettagliAttivita" />
-        <activity android:name=".ElencoAttivita" />
-        <activity android:name=".Creazione" />
-        <activity android:name=".FormRicerca" />
-        <activity android:name=".Cerca" />
+        <activity android:name=".data.control.DettagliFeedback"></activity>
+        <activity android:name=".data.control.GestioneRichiesta" />
+        <activity android:name=".data.control.DettaglioRichieste" />
+        <activity android:name=".data.control.DettagliAttivita" />
+        <activity android:name=".data.control.ElencoAttivita" />
+        <activity android:name=".data.control.Creazione" />
+        <activity android:name=".data.control.FormRicerca" />
+        <activity android:name=".data.control.Cerca" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".data.control.HomeActivity"
             android:label="@string/title_activity_home" />
-        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".data.control.RegistrationActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".data.control.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".data.control.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ElencoFeedback" />
+        <activity android:name=".data.control.ElencoFeedback" />
 
         <!--suppress AndroidDomInspection -->
-        <service android:name=".data.model.SendIt" />
+        <service android:name=".data.control.SendIt" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

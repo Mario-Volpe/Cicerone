@@ -1,4 +1,4 @@
-package com.example.cicerone;
+package com.example.cicerone.data.control;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.cicerone.data.model.DBhelper;
+import com.example.cicerone.R;
+import com.example.cicerone.data.view.EAdapter;
+import com.example.cicerone.data.model.Attivita;
 import com.example.cicerone.data.model.Feedback;
 
 import java.util.ArrayList;
