@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.view.EAdapter;
+import com.example.cicerone.data.model.DBhelper;
 import com.example.cicerone.data.model.Prenotazione;
 import com.example.cicerone.data.model.Utente;
 

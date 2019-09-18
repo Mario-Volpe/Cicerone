@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
+import com.example.cicerone.data.model.DBhelper;
 import com.example.cicerone.data.model.Feedback;
 
 public class DettagliFeedback extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

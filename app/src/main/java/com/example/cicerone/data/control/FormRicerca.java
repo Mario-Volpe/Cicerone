@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.cicerone.R;
 import com.example.cicerone.data.model.Attivita;
+import com.example.cicerone.data.model.DBhelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;

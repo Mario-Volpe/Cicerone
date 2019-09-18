@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data.model;
 
 import android.content.ContentValues;
 import android.content.Context;

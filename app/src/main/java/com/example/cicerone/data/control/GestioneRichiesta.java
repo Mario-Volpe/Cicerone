@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.cicerone.R;
 import com.example.cicerone.data.model.Attivita;
+import com.example.cicerone.data.model.DBhelper;
 import com.example.cicerone.data.model.Prenotazione;
 
 public class GestioneRichiesta extends AppCompatActivity {
