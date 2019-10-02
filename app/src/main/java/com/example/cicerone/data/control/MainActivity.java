@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         //bottone che passa all'activity registrazione
         Button buttonRegistration = findViewById(R.id.button_registrazione);
 
+        new ConnectDB().getMySqlConnection();
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

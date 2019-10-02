@@ -4,34 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4255D8"
+    android:background="#6979FF"
     tools:context=".data.control.FormRicerca">
 
-    <TextView
-        android:id="@+id/datain"
-        android:layout_width="250dp"
+    <Button
+        android:id="@+id/invia"
+        android:layout_width="139dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="39dp"
+        android:layout_marginBottom="156dp"
+        android:background="@color/colorAccent"
         android:clickable="true"
-        android:gravity="center"
-        android:hint="Seleziona la data"
+        android:text="Cerca"
+        android:textAllCaps="false"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/partecipantiin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cittain" />
-
-    <EditText
-        android:id="@+id/cittain"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="29dp"
-        android:hint="Città"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/datain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/partecipantiin" />
 
     <EditText
         android:id="@+id/partecipantiin"
@@ -45,6 +34,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/datain" />
+
+    <EditText
+        android:id="@+id/cittain"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="29dp"
+        android:hint="Città"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/datain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/title"
@@ -61,19 +62,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/invia"
-        android:layout_width="139dp"
+    <TextView
+        android:id="@+id/datain"
+        android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="156dp"
-        android:background="@color/colorAccent"
+        android:layout_marginBottom="39dp"
         android:clickable="true"
-        android:text="Cerca"
-        android:textAllCaps="false"
+        android:gravity="center"
+        android:hint="Seleziona la data"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/partecipantiin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/partecipantiin" />
+        app:layout_constraintTop_toBottomOf="@+id/cittain" />
 
 </android.support.constraint.ConstraintLayout>

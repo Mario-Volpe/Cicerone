@@ -4,22 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4255D8"
+    android:background="#6979FF"
     tools:context=".data.control.GestioneRichiesta">
-
-    <EditText
-        android:id="@+id/commenti"
-        android:layout_width="263dp"
-        android:layout_height="206dp"
-        android:layout_marginBottom="49dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Inserisci qui ciò che vuoi comunicare all'utente sull'incontro o il motivo per il quale hai rifiutato."
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/rifiuta"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <Button
         android:id="@+id/rifiuta"
@@ -52,6 +38,20 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/rifiuta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/rifiuta" />
+
+    <EditText
+        android:id="@+id/commenti"
+        android:layout_width="263dp"
+        android:layout_height="206dp"
+        android:layout_marginBottom="49dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Inserisci qui ciò che vuoi comunicare all'utente sull'incontro o il motivo per il quale hai rifiutato."
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/rifiuta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/title"

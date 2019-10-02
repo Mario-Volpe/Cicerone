@@ -4,20 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4255D8"
+    android:background="#6979FF"
     tools:context=".data.control.DettagliFeedback">
-
-    <EditText
-        android:id="@+id/commento"
-        android:layout_width="265dp"
-        android:layout_height="143dp"
-        android:layout_marginBottom="91dp"
-        android:gravity="center|top"
-        android:hint="Commento"
-        app:layout_constraintBottom_toTopOf="@+id/inviaF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Button
         android:id="@+id/inviaF"
@@ -32,6 +20,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commento" />
+
+    <EditText
+        android:id="@+id/commento"
+        android:layout_width="265dp"
+        android:layout_height="143dp"
+        android:layout_marginBottom="91dp"
+        android:gravity="center|top"
+        android:hint="Commento"
+        app:layout_constraintBottom_toTopOf="@+id/inviaF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Spinner
         android:id="@+id/spinner"
