@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import java.util.Date;
 
@@ -19,7 +19,7 @@ public abstract class Functions {
             if(mese<m)
                 res=false;
             else
-            if(mese==m&&giorno<g)
+            if(mese==m&&giorno<=g)
                 res=false;
         }
         return res;

@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,9 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.Attivita;
-import com.example.cicerone.data.model.Prenotazione;
-import com.example.cicerone.data.model.Utente;
 
 import java.util.ArrayList;
 

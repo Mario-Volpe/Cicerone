@@ -37,5 +37,5 @@ dependencies {
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
     implementation 'org.jetbrains:annotations-java5:15.0'
-    implementation project(path: ':mysql-connector-java-8.0.17')
+    implementation 'com.loopj.android:android-async-http:1.4.9'
 }

@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
         Button buttonLogin = findViewById(R.id.button_login);
         //bottone che passa all'activity registrazione
         Button buttonRegistration = findViewById(R.id.button_registrazione);
-
-        new ConnectDB().getMySqlConnection();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override

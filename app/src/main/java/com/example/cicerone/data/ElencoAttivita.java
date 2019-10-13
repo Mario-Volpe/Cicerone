@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.Attivita;
-import com.example.cicerone.data.model.Prenotazione;
 
 import java.util.ArrayList;
 
@@ -70,7 +67,7 @@ public class ElencoAttivita extends AppCompatActivity {
             }
 
         } else {
-            ArrayList<Attivita> s2 = db.getAllAttivita(getIntent().getExtras().getString("id"));
+            ArrayList<Attivita> s2 = db.getAllAttivita(getIntent().getExtras().getInt("id"));
 
             for(Attivita a:s2){
                 Integer[] data = Functions.parseData(a.getData());

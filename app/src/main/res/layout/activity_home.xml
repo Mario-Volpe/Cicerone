@@ -5,12 +5,12 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6979FF"
-    tools:context=".data.control.HomeActivity">
+    android:background="#90CAF9"
+    tools:context=".data.HomeActivity">
 
     <Button
         android:id="@+id/storicoattivita"
-        android:layout_width="151dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -18,8 +18,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#E95BFF"
-        android:text="Storico attività"
+        android:background="#3EFFFFFF"
+        android:text="Storico partecipazioni ad attività"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
@@ -30,7 +30,7 @@
 
     <Button
         android:id="@+id/cerca"
-        android:layout_width="151dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -39,7 +39,7 @@
         android:layout_marginRight="8dp"
         android:background="#FFFFFF"
         android:clickable="true"
-        android:text="Cerca"
+        android:text="Cerca attività"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,16 +48,16 @@
 
     <Button
         android:id="@+id/crea"
-        android:layout_width="151dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="#67D86F"
+        android:background="#3EFFFFFF"
         android:clickable="true"
-        android:text="Crea"
+        android:text="Crea attività"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/ic_launcher_background"
+        android:background="#3EFFFFFF"
         android:text="Logout"
         android:textAllCaps="false"
         android:textSize="36sp"
@@ -84,16 +84,16 @@
 
     <Button
         android:id="@+id/modifica"
-        android:layout_width="151dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="#D9E478"
+        android:background="#FFFFFF"
         android:clickable="true"
-        android:text="Modifica"
+        android:text="Modifica attività"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,16 +102,16 @@
 
     <Button
         android:id="@+id/richieste"
-        android:layout_width="151dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="#78E4C2"
+        android:background="#3EFFFFFF"
         android:clickable="true"
-        android:text="Gestione richieste"
+        android:text="Richieste ricevute"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,14 +120,14 @@
 
     <Button
         android:id="@+id/richiesteInoltrate"
-        android:layout_width="151dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="29dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="#FA7266"
+        android:background="#FFFFFF"
         android:text="Richieste inoltrate"
         android:textAllCaps="false"
         android:textSize="18sp"
@@ -147,7 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logo" />
+        app:srcCompat="@mipmap/logoc" />
 
     <TextView
         android:id="@+id/info2"
@@ -200,7 +200,7 @@
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#C51818"
+        android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />

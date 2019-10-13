@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -14,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.Utente;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -60,7 +58,7 @@ public class RegistrationActivity extends AppCompatActivity {
                String datanascita = mostraData.getText().toString().trim();
                DBhelper db = new DBhelper(RegistrationActivity.super.getBaseContext());
 
-               Utente nuovoUtente = new Utente(RegistrationActivity.this,passwordUtenteStr,cognomeUtenteStr,nomeUtenteStr,emailUtenteStr,datanascita);
+               Utente nuovoUtente = new Utente(RegistrationActivity.this,passwordUtenteStr,cognomeUtenteStr,nomeUtenteStr,emailUtenteStr,datanascita, 0);
 
                if (!checkData()) {
                    Toast.makeText(RegistrationActivity.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
@@ -164,6 +162,9 @@ public class RegistrationActivity extends AppCompatActivity {
                     //utente già iscritto, stampo un messaggio d'errore
                     Toast.makeText(RegistrationActivity.this, "Questa mail risulta essere già usata!", Toast.LENGTH_LONG).show();
                 } else {
+                    if(nuovoUtente.getNome().equals("")||nuovoUtente.getCognome().equals(""))
+                        Toast.makeText(RegistrationActivity.this, "Compila tutti i campi!", Toast.LENGTH_LONG).show();
+                    else
                     //inserimento nel db
                     if (db.inserisciUtente(nuovoUtente) != -1) {
                         Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();

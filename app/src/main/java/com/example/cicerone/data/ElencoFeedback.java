@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.Attivita;
-import com.example.cicerone.data.model.Feedback;
 
 import java.util.ArrayList;
 
@@ -27,8 +24,7 @@ public class ElencoFeedback extends AppCompatActivity {
 
         ListView lista;
         lista = findViewById(R.id.listaFeedback);
-        String cicerone;
-        cicerone = getIntent().getExtras().getString("email");
+        Integer cicerone = getIntent().getExtras().getInt("id");
         TextView media;
         media = findViewById(R.id.media);
         double avg;

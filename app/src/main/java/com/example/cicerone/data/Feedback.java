@@ -1,4 +1,4 @@
-package com.example.cicerone.data.model;
+package com.example.cicerone.data;
 
 public class Feedback {
     private String globetrotter;

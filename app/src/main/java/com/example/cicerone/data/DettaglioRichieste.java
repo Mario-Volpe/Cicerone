@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +10,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.Prenotazione;
-import com.example.cicerone.data.model.Utente;
 
 import java.util.ArrayList;
 
@@ -46,7 +43,7 @@ public class DettaglioRichieste extends AppCompatActivity {
             ids = new Integer[p.size()];
             for (Prenotazione b : p) {
                 ids[j] = b.getIdAttivita();
-                Utente u2 = new Utente(this,"","","",b.getEmail(),"");
+                Utente u2 = new Utente(this,"","","",b.getEmail(),"", 0);
                 u.add(new DBhelper(this).getInfoUtente(u2));
                 j++;
             }

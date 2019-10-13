@@ -1,4 +1,4 @@
-package com.example.cicerone.data.model;
+package com.example.cicerone.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,9 +12,10 @@ public class Utente {
 
     }
 
-    public Utente(Context context, String password, String cognome, String nome, String email, String datanascita) {
+    public Utente(Context context, String password, String cognome, String nome, String email, String datanascita, Integer id) {
         this.context=context;
         sharedPreferences=context.getSharedPreferences("userinfo",context.MODE_PRIVATE);
+        this.id = id;
 
         setPassword(password);
         setNome(nome);
@@ -37,6 +38,9 @@ public class Utente {
     private String nome;
     private String email;
     private String datanascita;
+    private String telefono;
+    private String CF;
+    private Integer id;
 
     public String getEmail() {
         email=sharedPreferences.getString("email","");
@@ -86,5 +90,29 @@ public class Utente {
     public void setDatanascita(String datanascita) {
         this.datanascita = datanascita;
         sharedPreferences.edit().putString("datanascita",datanascita).commit();
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCF() {
+        return CF;
+    }
+
+    public void setCF(String CF) {
+        this.CF = CF;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6979FF"
-    tools:context=".data.control.FormRicerca">
+    android:background="#90CAF9"
+    tools:context=".data.FormRicerca">
 
     <Button
         android:id="@+id/invia"
         android:layout_width="139dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="156dp"
-        android:background="@color/colorAccent"
+        android:layout_marginBottom="60dp"
+        android:background="#3EFFFFFF"
         android:clickable="true"
         android:text="Cerca"
         android:textAllCaps="false"
@@ -26,20 +26,20 @@
         android:id="@+id/partecipantiin"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="39dp"
         android:hint="Partecipanti"
         android:inputType="number"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/invia"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datain" />
+        app:layout_constraintTop_toBottomOf="@+id/linguain" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/cittain"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="24dp"
         android:hint="Città"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/datain"
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="45dp"
         android:foregroundGravity="center"
         android:gravity="center"
         android:text="Ricerca attività"
@@ -66,14 +66,39 @@
         android:id="@+id/datain"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="39dp"
+        android:layout_marginBottom="20dp"
         android:clickable="true"
         android:gravity="center"
         android:hint="Seleziona la data"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/partecipantiin"
+        app:layout_constraintBottom_toTopOf="@+id/orain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cittain" />
+
+    <TextView
+        android:id="@+id/orain"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:hint="Seleziona l'ora"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/linguain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datain" />
+
+    <Spinner
+        android:id="@+id/linguain"
+        android:tooltipText="Lingua"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/partecipantiin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orain" />
 
 </android.support.constraint.ConstraintLayout>

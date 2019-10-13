@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,8 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.Utente;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -33,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        u = new Utente(LoginActivity.this,"","","","","");
+        u = new Utente(LoginActivity.this,"","","","","", 0);
 
         ImageView img = findViewById(R.id.imageView2);
 
@@ -51,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() )
                     Toast.makeText(LoginActivity.this, "Inserisci un indirizzo e-mail valido", Toast.LENGTH_LONG).show();
                 else {
-                    Utente u = new Utente(LoginActivity.this,"","","",email,"");
+                    Utente u = new Utente(LoginActivity.this,"","","",email,"", 0);
                     u = new DBhelper(LoginActivity.this).getInfoUtente(u);
                     String subject = "Problemi all'accesso";
                     String corpo = "Ciao "+u.getNome()+"!\n\nEcco la password per effettuare l'accesso: " + u.getPassword() +
@@ -137,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         homeIntent.putExtra("cognome",u.getCognome());
         homeIntent.putExtra("datanascita",u.getDatanascita());
         homeIntent.putExtra("email",u.getEmail());
+        homeIntent.putExtra("id",u.getId());
         startActivity(homeIntent);
         finish();
     }
@@ -153,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         email = emailText.getText().toString();
         password = passwordText.getText().toString();
 
-        Utente validateUser = new Utente (LoginActivity.this,password,"","",email,"");
+        Utente validateUser = new Utente (LoginActivity.this,password,"","",email,"", 0);
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ) {
             emailText.setError("Inserisci un indirizzo email valido");

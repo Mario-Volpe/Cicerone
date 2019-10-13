@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,9 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.Attivita;
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.Prenotazione;
 
 public class GestioneRichiesta extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.Utente;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -28,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private String cognome;
     private String datanascita;
     private String email;
+    private Integer id;
     private static final String CHIAMANTE = "chiamante";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -100,6 +100,7 @@ public class HomeActivity extends AppCompatActivity {
         cognome = getIntent().getExtras().getString("cognome");
         datanascita = getIntent().getExtras().getString("datanascita");
         email = getIntent().getExtras().getString("email");
+        id = getIntent().getExtras().getInt("id");
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
@@ -132,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                new Utente(HomeActivity.this,"","","","","").logout();
+                new Utente(HomeActivity.this,"","","","","",0).logout();
                 startActivity(new Intent(HomeActivity.this,MainActivity.class));
                 finish();
             }
@@ -152,7 +153,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, Creazione.class);
-                inte.putExtra("id",email);
+                inte.putExtra("id",id);
                 startActivity(inte);
             }
         });
@@ -161,7 +162,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",email);
+                inte.putExtra("id",id);
                 inte.putExtra(CHIAMANTE,"modifica");
                 startActivity(inte);
             }
@@ -171,7 +172,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",email);
+                inte.putExtra("id",id);
                 inte.putExtra(CHIAMANTE,"richieste");
                 startActivity(inte);
             }
@@ -181,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",email);
+                inte.putExtra("id",id);
                 inte.putExtra(CHIAMANTE,"inoltrate");
                 startActivity(inte);
             }
@@ -191,7 +192,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",email);
+                inte.putExtra("id",id);
                 inte.putExtra(CHIAMANTE,"storico");
                 startActivity(inte);
             }
@@ -201,7 +202,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        logoutButton.setVisibility(View.VISIBLE);
+        logoutButton.setVisibility(View.INVISIBLE);
         mTextMessage.setVisibility(View.VISIBLE);
         info.setVisibility(View.INVISIBLE);
         cerca.setVisibility(View.INVISIBLE);

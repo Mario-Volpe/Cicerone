@@ -1,21 +1,24 @@
-package com.example.cicerone.data.model;
+package com.example.cicerone.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.sql.Time;
+
 
 public class Attivita implements Parcelable {
-    private String Cicerone;
-    private String data, descrizione,lingua,citta;
-    private Integer maxPartecipanti, idAttivita;
+    private String data, descrizione,citta;
+    private Integer maxPartecipanti, idAttivita, Cicerone,lingua;
+    private Time ora;
 
     public String toStringSearch(){
         return ""+getIdAttivita()+"\b\b"+getCitta()+"\b\b"+getData()+"\b\b"+getMaxPartecipanti();
     }
 
-    public Attivita(String Cicerone, String data, String descrizione, String lingua,
-                    String citta, Integer maxPartecipanti){
+    public Attivita(Integer Cicerone, String data, String descrizione, Integer lingua,
+                    String citta, Integer maxPartecipanti,Time ora){
 
+        setOra(ora);
         setCicerone(Cicerone);
         setData(data);
         setDescrizione(descrizione);
@@ -25,8 +28,9 @@ public class Attivita implements Parcelable {
 
     }
 
-    public Attivita(Integer id, String Cicerone, String data, String descrizione, String lingua,
-                    String citta, Integer maxPartecipanti){
+    public Attivita(Integer id, Integer Cicerone, String data, String descrizione, Integer lingua,
+                    String citta, Integer maxPartecipanti, Time ora){
+        this.ora = ora;
 
         setIdAttivita(id);
         setCicerone(Cicerone);
@@ -39,10 +43,10 @@ public class Attivita implements Parcelable {
     }
 
     protected Attivita(Parcel in) {
-        Cicerone = in.readString();
+        Cicerone = in.readInt();
         data = in.readString();
         descrizione = in.readString();
-        lingua = in.readString();
+        lingua = in.readInt();
         citta = in.readString();
         if (in.readByte() == 0) {
             maxPartecipanti = null;
@@ -68,11 +72,11 @@ public class Attivita implements Parcelable {
         }
     };
 
-    public String getCicerone() {
+    public Integer getCicerone() {
         return Cicerone;
     }
 
-    public void setCicerone(String cicerone) {
+    public void setCicerone(Integer cicerone) {
         Cicerone = cicerone;
     }
 
@@ -100,11 +104,11 @@ public class Attivita implements Parcelable {
         this.descrizione = descrizione;
     }
 
-    public String getLingua() {
+    public Integer getLingua() {
         return lingua;
     }
 
-    public void setLingua(String lingua) {
+    public void setLingua(Integer lingua) {
         this.lingua = lingua;
     }
 
@@ -131,10 +135,10 @@ public class Attivita implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(Cicerone);
+        dest.writeInt(Cicerone);
         dest.writeString(data);
         dest.writeString(descrizione);
-        dest.writeString(lingua);
+        dest.writeInt(lingua);
         dest.writeString(citta);
         if (maxPartecipanti == null) {
             dest.writeByte((byte) 0);
@@ -148,5 +152,13 @@ public class Attivita implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(idAttivita);
         }
+    }
+
+    public Time getOra() {
+        return ora;
+    }
+
+    public void setOra(Time ora) {
+        this.ora = ora;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.cicerone.data.control;
+package com.example.cicerone.data;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-import com.example.cicerone.data.model.Attivita;
-import com.example.cicerone.data.model.DBhelper;
-import com.example.cicerone.data.model.Prenotazione;
 
 import java.util.ArrayList;
 
@@ -29,6 +26,7 @@ public class DettagliAttivita extends AppCompatActivity {
         description = findViewById(R.id.description);
         TextView city = findViewById(R.id.city);
         TextView date = findViewById(R.id.date);
+        TextView hour = findViewById(R.id.hour);
         TextView tongue = findViewById(R.id.tongue);
         final TextView npartecipanti = findViewById(R.id.npartecipanti);
         TextView npartecipantitxt = findViewById(R.id.npartecipantitxt);
@@ -41,6 +39,7 @@ public class DettagliAttivita extends AppCompatActivity {
         final Integer id = getIntent().getExtras().getInt("id");
 
         final Attivita a = new DBhelper(DettagliAttivita.this).getAttivita(id);
+        final Utente u = new DBhelper(this).getInfoUtentebyID(a.getCicerone());
 
         chiamante = getIntent().getExtras().getString("chiamante");
 
@@ -48,14 +47,24 @@ public class DettagliAttivita extends AppCompatActivity {
 
         city.setText(a.getCitta());
         date.setText(a.getData());
-        tongue.setText(a.getLingua());
+        hour.setText(a.getOra().toString());
+
+        ArrayList<Lingua> l = new DBhelper(this).getAllLingue();
+
+        String lingua="";
+        for(Lingua l2:l){
+            if(l2.getId().equals(a.getLingua()))
+                lingua=l2.getNome();
+        }
+
+        tongue.setText(lingua);
 
         p = new DBhelper(this).getAllPrenotazioni(id,chiamante);
 
         rimuovi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottone(chiamante,a,id);
+                bottone(chiamante,a,id,u);
             }
         });
     }
@@ -74,7 +83,7 @@ public class DettagliAttivita extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent inte = new Intent(DettagliAttivita.this,ElencoFeedback.class);
-                    inte.putExtra("email",a.getCicerone());
+                    inte.putExtra("id",a.getCicerone());
                     startActivity(inte);
                 }
             });
@@ -100,7 +109,7 @@ public class DettagliAttivita extends AppCompatActivity {
         }
     }
 
-    private void bottone(String chiamante,Attivita a,Integer id){
+    private void bottone(String chiamante,Attivita a,Integer id,Utente u){
         if(chiamante.equals("modifica")){
             if(new DBhelper(DettagliAttivita.this).rimuoviAttivita(a.getIdAttivita())==0)
                 Toast.makeText(DettagliAttivita.this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
@@ -130,7 +139,7 @@ public class DettagliAttivita extends AppCompatActivity {
                 String corpo = "Ciao!\n\nIl Globetrotter "+email+" vorrebbe partecipare all'attività n "+a.getIdAttivita()+
                         " che si svolge a "+a.getCitta()+" il "+a.getData()+".\nCorri nella sezione 'Gestione richieste'"+
                         " e fai la tua scelta.\n\nIl team Step di Cicerone.";
-                SendIt sendIt = new SendIt(a.getCicerone(),subject,corpo,this);
+                SendIt sendIt = new SendIt(u.getEmail(),subject,corpo,this);
                 sendIt.execute();
                 finish();
             }
@@ -144,7 +153,7 @@ public class DettagliAttivita extends AppCompatActivity {
                 String subject = "Annullamento prenotazione";
                 String corpo = "Ciao!\n\nL'utente "+email+" ha rimosso la sua prenotazione dall'attività n "+a.getIdAttivita()+
                         " che si svolge a "+a.getCitta()+" il "+a.getData()+".\n\nIl team Step di Cicerone.";
-                SendIt sendIt = new SendIt(a.getCicerone(),subject,corpo,this);
+                SendIt sendIt = new SendIt(u.getEmail(),subject,corpo,this);
                 sendIt.execute();
                 finish();
             }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6979FF"
-    tools:context=".data.control.MainActivity">
+    android:background="#90CAF9"
+    tools:context=".data.MainActivity">
 
     <Button
         android:id="@+id/button_login"
@@ -13,7 +13,10 @@
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginBottom="51dp"
-        android:background="@drawable/ic_launcher_background"
+        android:background="#3EFFFFFF"
+        android:shadowDx="50"
+        android:shadowDy="50"
+        android:shadowRadius="50"
         android:text="Accesso"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
@@ -27,11 +30,14 @@
 
     <Button
         android:id="@+id/button_registrazione"
-        style="@style/TextAppearance.AppCompat.Button"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginBottom="166dp"
-        android:background="@color/colorAccent"
+        android:background="#3EFFFFFF"
+        android:shadowDx="50"
+        android:shadowDy="50"
+        android:shadowRadius="50"
         android:text="Registrazione"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
@@ -45,15 +51,18 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="241dp"
+        android:layout_height="153dp"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
         android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toTopOf="@+id/button_login"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:srcCompat="@mipmap/logo" />
+        app:srcCompat="@mipmap/logoc" />
 
     <TextView
         android:id="@+id/editText"
@@ -62,16 +71,19 @@
         android:layout_marginStart="22dp"
         android:layout_marginLeft="22dp"
         android:layout_marginTop="52dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp"
         android:layout_marginBottom="33dp"
         android:text="Benvenuto in Cicerone!"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#CF1B1B"
+        android:textColor="#000000"
         android:textColorHighlight="#FF9800"
         android:textIsSelectable="false"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="normal|bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

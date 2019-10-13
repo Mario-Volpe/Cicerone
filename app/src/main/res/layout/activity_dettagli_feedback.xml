@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6979FF"
-    tools:context=".data.control.DettagliFeedback">
+    android:background="#90CAF9"
+    tools:context=".data.DettagliFeedback">
 
     <Button
         android:id="@+id/inviaF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="59dp"
-        android:background="@color/colorPrimary"
+        android:background="#3EFFFFFF"
         android:text="Invia"
         android:textAllCaps="false"
         android:textSize="24sp"

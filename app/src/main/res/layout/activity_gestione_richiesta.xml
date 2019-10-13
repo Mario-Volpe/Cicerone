@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6979FF"
-    tools:context=".data.control.GestioneRichiesta">
+    android:background="#90CAF9"
+    tools:context=".data.GestioneRichiesta">
 
     <Button
         android:id="@+id/rifiuta"
