@@ -93,26 +93,33 @@ public class Utente {
     }
 
     public String getTelefono() {
+        telefono=sharedPreferences.getString("telefono","");
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+        sharedPreferences.edit().putString("telefono",telefono).commit();
     }
 
     public String getCF() {
+        CF=sharedPreferences.getString("CF","");
         return CF;
     }
 
     public void setCF(String CF) {
         this.CF = CF;
+        sharedPreferences.edit().putString("CF",CF).commit();
     }
 
     public Integer getId() {
+        id=sharedPreferences.getInt("id",0);
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+        sharedPreferences.edit().putInt("id",id).commit();
+
     }
 }

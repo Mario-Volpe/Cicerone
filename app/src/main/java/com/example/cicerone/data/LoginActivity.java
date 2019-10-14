@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         homeIntent.putExtra("datanascita",u.getDatanascita());
         homeIntent.putExtra("email",u.getEmail());
         homeIntent.putExtra("id",u.getId());
+        homeIntent.putExtra("CF",u.getCF());
         startActivity(homeIntent);
         finish();
     }

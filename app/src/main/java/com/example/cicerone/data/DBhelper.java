@@ -146,6 +146,13 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public void upgradeUtente(Integer id,String CF,String telefono){
+        String query = "UPDATE "+UTENTE_TABLE+" SET "+U_COL_CF+" = '"+CF+"', "+ U_COL_TELEFONO+" = '"+telefono+"'"+
+                " WHERE "+U_COL_ID+" = '"+id+"'";
+
+        doQuery(query);
+    }
+
     public long inserisciAttivita( Attivita a )
     {
         long res=0;
@@ -242,8 +249,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return utente;
     }
 
-    public Utente getInfoUtente( Utente utente )
-    {
+    public Utente getInfoUtente( Utente utente ) {
 
         String query = "select "+U_COL_ID+","+ U_COL_NOME+","+ U_COL_COGNOME+","+ U_COL_SEC+","+ U_COL_DATA_NASCITA+","+U_COL_CF+","+U_COL_TELEFONO+
                     FROM +UTENTE_TABLE+" WHERE "+U_COL_EMAIL+" = '"+utente.getEmail()+"'";

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90CAF9"
+    tools:context=".data.ToCicerone">
+
+    <Button
+        android:id="@+id/buttonInvia"
+        style="@style/TextAppearance.AppCompat.Button"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="128dp"
+        android:background="#3EFFFFFF"
+        android:text="Invia"
+        android:textAllCaps="false"
+        android:textAppearance="@style/Widget.AppCompat.Button.Colored"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="67dp"
+        android:ems="10"
+        android:hint="Numero di telefono"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/buttonInvia"
+        app:layout_constraintStart_toStartOf="@+id/CF"
+        app:layout_constraintTop_toBottomOf="@+id/CF" />
+
+    <EditText
+        android:id="@+id/CF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="47dp"
+        android:ems="10"
+        android:hint="Codice Fiscale"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tocicerone" />
+
+    <TextView
+        android:id="@+id/tocicerone"
+        android:layout_width="350dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginRight="19dp"
+        android:layout_marginBottom="56dp"
+        android:text="Aggiungi questi dettagli al tuo profilo per poter creare un'attività e diventare un Cicerone!"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/CF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

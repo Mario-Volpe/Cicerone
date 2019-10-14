@@ -27,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private String cognome;
     private String datanascita;
     private String email;
+    private String CF;
     private Integer id;
     private static final String CHIAMANTE = "chiamante";
 
@@ -101,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
         datanascita = getIntent().getExtras().getString("datanascita");
         email = getIntent().getExtras().getString("email");
         id = getIntent().getExtras().getInt("id");
+        CF = getIntent().getExtras().getString("CF");
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
@@ -152,7 +154,17 @@ public class HomeActivity extends AppCompatActivity {
         crea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(HomeActivity.this, Creazione.class);
+                Intent inte;
+                Utente u = new DBhelper(HomeActivity.this).getInfoUtentebyID(id);
+
+                if(CF==null)
+                    inte = new Intent(HomeActivity.this, ToCicerone.class);
+                else {
+                    if(CF.equals("null")||CF.isEmpty())
+                        inte = new Intent(HomeActivity.this, ToCicerone.class);
+                    else
+                        inte = new Intent(HomeActivity.this, Creazione.class);
+                }
                 inte.putExtra("id",id);
                 startActivity(inte);
             }
