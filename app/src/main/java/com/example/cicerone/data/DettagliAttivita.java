@@ -105,7 +105,6 @@ public class DettagliAttivita extends AppCompatActivity {
             cicerone.setVisibility(View.INVISIBLE);
             ciceronetxt.setVisibility(View.INVISIBLE);
             feedback.setVisibility(View.INVISIBLE);
-            //TODO:seteditable
             description.setText(a.getDescrizione());
         }
         if(chiamante.equals("inoltrate")) {

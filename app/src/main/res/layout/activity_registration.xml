@@ -97,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logoc" />
+        app:srcCompat="@mipmap/ic_logo" />
 
     <TextView
         android:id="@+id/link_login"

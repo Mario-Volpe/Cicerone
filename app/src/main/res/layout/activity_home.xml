@@ -93,7 +93,7 @@
         android:layout_marginRight="8dp"
         android:background="#FFFFFF"
         android:clickable="true"
-        android:text="Modifica attività"
+        android:text="Elimina attività"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/logoc" />
+        app:srcCompat="@mipmap/ic_logo" />
 
     <TextView
         android:id="@+id/info2"
