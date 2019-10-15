@@ -2,6 +2,7 @@ package com.example.cicerone.data;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +23,7 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_feedback);
 
-        final String email = getIntent().getExtras().getString("email");
+        final Integer idUtente = getIntent().getExtras().getInt("id");
         final Integer id = getIntent().getExtras().getInt("idAttivita");
         Boolean flag = getIntent().getExtras().getBoolean("flag");
         TextView titolo = findViewById(R.id.titolo);
@@ -37,7 +38,7 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
             titolo.setText("Riepilogo feedback");
             spinner.setVisibility(View.INVISIBLE);
             commentoins.setVisibility(View.VISIBLE);
-            Feedback f = db.getFeedback(id,email);
+            Feedback f = db.getFeedback(id,idUtente);
 
             votoins.setText(""+f.getVoto()+"/5");
             if(!f.getCommento().equals(""))
@@ -59,7 +60,7 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
             @Override
             public void onClick(View v) {
                 commentotxt = commento.getText().toString().trim();
-                Feedback f = new Feedback(email,id,voto,commentotxt);
+                Feedback f = new Feedback(idUtente,id,voto,commentotxt);
                 if(db.inserisciFeedback(f)!=-1)
                     Toast.makeText(DettagliFeedback.this, "Feedback inserito.", Toast.LENGTH_SHORT).show();
                 else Toast.makeText(DettagliFeedback.this, "Errore nell'inserimento del feedback.", Toast.LENGTH_SHORT).show();

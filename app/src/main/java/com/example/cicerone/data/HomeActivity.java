@@ -145,7 +145,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, FormRicerca.class);
-                inte.putExtra("id",email);
+                inte.putExtra("idUtente",id);
                 inte.putExtra(CHIAMANTE,"cerca");
                 startActivity(inte);
             }
@@ -155,7 +155,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte;
-                Utente u = new DBhelper(HomeActivity.this).getInfoUtentebyID(id);
+                Utente u = new DBhelper(HomeActivity.this).getInfoUtentebyID(HomeActivity.this,id);
 
                 if(CF==null)
                     inte = new Intent(HomeActivity.this, ToCicerone.class);
@@ -165,7 +165,7 @@ public class HomeActivity extends AppCompatActivity {
                     else
                         inte = new Intent(HomeActivity.this, Creazione.class);
                 }
-                inte.putExtra("id",id);
+                inte.putExtra("idUtente",id);
                 startActivity(inte);
             }
         });
@@ -174,7 +174,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",id);
+                inte.putExtra("idUtente",id);
                 inte.putExtra(CHIAMANTE,"modifica");
                 startActivity(inte);
             }
@@ -184,7 +184,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",id);
+                inte.putExtra("idUtente",id);
                 inte.putExtra(CHIAMANTE,"richieste");
                 startActivity(inte);
             }
@@ -194,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",id);
+                inte.putExtra("idUtente",id);
                 inte.putExtra(CHIAMANTE,"inoltrate");
                 startActivity(inte);
             }
@@ -204,7 +204,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte = new Intent(HomeActivity.this, ElencoAttivita.class);
-                inte.putExtra("id",id);
+                inte.putExtra("idUtente",id);
                 inte.putExtra(CHIAMANTE,"storico");
                 startActivity(inte);
             }

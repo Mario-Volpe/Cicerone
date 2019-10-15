@@ -77,7 +77,7 @@ public class ElencoFeedback extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent inte = new Intent(ElencoFeedback.this,DettagliFeedback.class);
-                    inte.putExtra("email",f.get(position).getGlobetrotter());
+                    inte.putExtra("id",f.get(position).getGlobetrotter());
                     inte.putExtra("idAttivita",a.get(position).getIdAttivita());
                     inte.putExtra("flag",true);
                     startActivity(inte);

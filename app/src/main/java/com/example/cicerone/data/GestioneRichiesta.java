@@ -45,7 +45,7 @@ public class GestioneRichiesta extends AppCompatActivity {
         else{
             p.setFlagConferma(flag);
             p.setCommenti(commentiStr);
-            if(new DBhelper(GestioneRichiesta.this).updatePrenotazione(p)<=0)
+            if(new DBhelper(GestioneRichiesta.this).updatePrenotazione(p)!=0)
                 Toast.makeText(GestioneRichiesta.this, "Errore.", Toast.LENGTH_SHORT).show();
             else {
                 String subject;
@@ -63,7 +63,8 @@ public class GestioneRichiesta extends AppCompatActivity {
                     corpo = "Ciao!\n\nIl Cicerone " + a.getCicerone() + " ha rifiutato la tua richiesta di partecipazione all'attività n " + p.getIdAttivita() +
                             " che si svolge a " + a.getCitta() + " il " + a.getData() + ". Commento: "+commentiStr+"\n\nIl team Step di Cicerone.";
                 }
-                SendIt sendIt = new SendIt(p.getEmail(), subject, corpo, this);
+                String email = new DBhelper(GestioneRichiesta.this).getInfoUtentebyID(GestioneRichiesta.this,p.getId()).getEmail();
+                SendIt sendIt = new SendIt(email, subject, corpo, this);
                 sendIt.execute();
                 finish();
             }

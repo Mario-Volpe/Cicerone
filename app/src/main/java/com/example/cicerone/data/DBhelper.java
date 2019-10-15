@@ -221,25 +221,28 @@ public class DBhelper extends SQLiteOpenHelper {
         return isIn;
     }
 
-    public Utente getInfoUtentebyID( Integer id )
+    public Utente getInfoUtentebyID( Context context,Integer id )
     {
-        String query = "select "+U_COL_ID+","+ U_COL_NOME+","+ U_COL_COGNOME+","+ U_COL_SEC+","+ U_COL_DATA_NASCITA+","+U_COL_CF+","+U_COL_TELEFONO+
+        String query = "select "+ U_COL_NOME+","+ U_COL_COGNOME+","+U_COL_EMAIL+","+ U_COL_SEC+","+ U_COL_DATA_NASCITA+","+U_COL_CF+","+U_COL_TELEFONO+
                 FROM +UTENTE_TABLE+" WHERE "+U_COL_ID+" = '"+id+"'";
 
         JSONArray jArray = doQuery(query);
-        Utente utente = new Utente();
+        Utente utente = null;
+        String nome,cognome,email,CF,password,datanascita,telefono;
 
         try {
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json_data = (JSONObject) jArray.get(i);
 
-                utente.setId(json_data.getInt( U_COL_ID));
-                utente.setNome(json_data.getString( U_COL_NOME));
-                utente.setCognome(json_data.getString( U_COL_COGNOME));
-                utente.setCF(json_data.getString( U_COL_CF));
-                utente.setPassword(json_data.getString( U_COL_SEC));
-                utente.setDatanascita(json_data.getString( U_COL_DATA_NASCITA));
-                utente.setTelefono(json_data.getString( U_COL_TELEFONO));
+                nome = json_data.getString( U_COL_NOME);
+                cognome = json_data.getString( U_COL_COGNOME);
+                email = json_data.getString(U_COL_EMAIL);
+                CF = json_data.getString( U_COL_CF);
+                password = json_data.getString( U_COL_SEC);
+                datanascita = json_data.getString( U_COL_DATA_NASCITA);
+                telefono = json_data.getString( U_COL_TELEFONO);
+
+                utente = new Utente(context,password,cognome,nome,email,datanascita,id);
 
             }
         } catch (JSONException|NullPointerException e){
@@ -276,12 +279,13 @@ public class DBhelper extends SQLiteOpenHelper {
         return utente;
     }
 
-    public ArrayList<Attivita> getInfoAttivita(Attivita a,String email) {
+    public ArrayList<Attivita> getInfoAttivita(Attivita a,Integer id) {
 
         String query = "select "+A_COL_ID+","+A_COL_DATA+","+ A_COL_CITTA+","+A_COL_LINGUA+","+ A_COL_ITINERARIO+","+A_COL_PARTECIPANTI+","+A_COL_CICERONE+","+A_COL_ORA+
-                 FROM +ATTIVITA_TABLE+" a WHERE "+A_COL_CITTA+" = '"+a.getCitta()+
-                "' AND "+A_COL_DATA+" != '"+a.getData()+"' AND "+A_COL_PARTECIPANTI+" >= '"+a.getMaxPartecipanti()+
-                "' AND "+A_COL_CICERONE+" != '"+email+"' AND "+A_COL_LINGUA+" = '"+a.getLingua()+"'";
+                 FROM +ATTIVITA_TABLE+" WHERE "+A_COL_CITTA+" = '"+a.getCitta()+
+                "' AND "+A_COL_PARTECIPANTI+" >= '"+a.getMaxPartecipanti()+
+                "' AND "+A_COL_CICERONE+" != '"+id+"' AND "+A_COL_LINGUA+" = '"+a.getLingua()+"'";
+        //TODO gestire data
 
         ArrayList<Attivita> s = new ArrayList<>();
 
@@ -307,16 +311,17 @@ public class DBhelper extends SQLiteOpenHelper {
 
                 if(p==null||p.size()==0){
                     Integer[] gma = Functions.parseData(data);
-                    if(Functions.checkData(gma[0],gma[1],gma[2])){
+                    Log.e("data:",""+gma[0]+gma[1]+gma[2]);
+                    if(Functions.checkData(gma[2],gma[1],gma[0],"cerca")){
                         Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                         s.add(c);
                     }
                 }
                 else
                     for(Prenotazione p2:p){
-                        if(!p2.getEmail().equals(email)){
+                        if(p2.getId()!=id){
                             Integer[] gma = Functions.parseData(data);
-                            if(Functions.checkData(gma[0],gma[1],gma[2])){
+                            if(Functions.checkData(gma[2],gma[1],gma[0],"cerca")){
                                 Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                                 s.add(c);
                             }
@@ -420,19 +425,11 @@ public class DBhelper extends SQLiteOpenHelper {
         return flag;
     }
 
-    public long richiestaPartecipazione(int partecipanti,int id,String email){
+    public long richiestaPartecipazione(int partecipanti,int id,Integer idUtente){
         long res=0;
         String query="INSERT INTO "+PRENOTAZIONE_TABLE+" ("+P_COL_GLOBETROTTER+","+P_COL_ATTIVITA+","+P_COL_PARTECIPANTI+","+P_COL_COMMENTI+","+P_COL_CONFERMA+")"+
-                " VALUES ('"+email+"','"+id+"','"+partecipanti+"','',0)";
-
-        JSONArray jArray = doQuery(query);
-        try {
-            if(jArray.getBoolean(0))
-                res=1;
-        } catch (JSONException|NullPointerException e){
-            e.printStackTrace();
-        }
-
+                " VALUES ('"+idUtente+"','"+id+"','"+partecipanti+"','',0)";
+        doQuery(query);
         return res;
     }
 
@@ -443,16 +440,14 @@ public class DBhelper extends SQLiteOpenHelper {
         String sel="select "+P_COL_GLOBETROTTER+","+ P_COL_ATTIVITA+","+ P_COL_PARTECIPANTI+","+ P_COL_COMMENTI+","+ P_COL_CONFERMA;
         String where=" WHERE "+P_COL_ATTIVITA+" = ";
         if(chiamante.equals("modifica"))
-            query = sel + FROM +PRENOTAZIONE_TABLE+ where+id;
+            query = sel + FROM +PRENOTAZIONE_TABLE+ where+"'"+id+"'";
         else
-            query = sel + FROM +PRENOTAZIONE_TABLE+ where+id+" AND "+P_COL_CONFERMA+" = '1'";
+            query = sel + FROM +PRENOTAZIONE_TABLE+ where+"'"+id+"' AND "+P_COL_CONFERMA+" = '1'";
 
         if(chiamante.equals("richieste"))
-            query = sel + FROM +PRENOTAZIONE_TABLE+ where+id+" AND "+P_COL_CONFERMA+" = '0'";
+            query = sel + FROM +PRENOTAZIONE_TABLE+ where+"'"+id+"' AND "+P_COL_CONFERMA+" = '0'";
 
-
-        String Globetrotter;
-        Integer nPartecipanti,idAttivita;
+        Integer nPartecipanti,idAttivita,Globetrotter;
 
         JSONArray jArray = doQuery(query);
 
@@ -460,7 +455,7 @@ public class DBhelper extends SQLiteOpenHelper {
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json_data = (JSONObject) jArray.get(i);
 
-                Globetrotter = json_data.getString(P_COL_GLOBETROTTER);
+                Globetrotter = json_data.getInt(P_COL_GLOBETROTTER);
                 idAttivita = json_data.getInt(P_COL_ATTIVITA);
                 nPartecipanti = json_data.getInt(P_COL_PARTECIPANTI);
 
@@ -475,14 +470,14 @@ public class DBhelper extends SQLiteOpenHelper {
         return p;
     }
 
-    public ArrayList<Prenotazione> getAllPrenotazioniUtente(String id){
+    public ArrayList<Prenotazione> getAllPrenotazioniUtente(Integer id){
         ArrayList<Prenotazione> p = new ArrayList<>();
 
         String query = "select "+P_COL_GLOBETROTTER+","+ P_COL_ATTIVITA+","+ P_COL_PARTECIPANTI+","+ P_COL_COMMENTI+","+ P_COL_CONFERMA+
                  FROM +PRENOTAZIONE_TABLE+ " WHERE "+P_COL_GLOBETROTTER +" = '"+id+"'";
 
-        String Globetrotter,commenti;
-        Integer nPartecipanti,idAttivita,conferma;
+        String commenti;
+        Integer nPartecipanti,Globetrotter,idAttivita,conferma;
 
         JSONArray jArray = doQuery(query);
 
@@ -490,7 +485,7 @@ public class DBhelper extends SQLiteOpenHelper {
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json_data = (JSONObject) jArray.get(i);
 
-                Globetrotter = json_data.getString(P_COL_GLOBETROTTER);
+                Globetrotter = json_data.getInt(P_COL_GLOBETROTTER);
                 idAttivita = json_data.getInt(P_COL_ATTIVITA);
                 nPartecipanti = json_data.getInt(P_COL_PARTECIPANTI);
                 commenti = json_data.getString(P_COL_COMMENTI);
@@ -510,17 +505,10 @@ public class DBhelper extends SQLiteOpenHelper {
     public int updatePrenotazione(Prenotazione p){
         int flag=0;
 
-        String query = "UPDATE"+PRENOTAZIONE_TABLE+" SET "+P_COL_COMMENTI+"='"+p.getCommenti()+"',"+P_COL_CONFERMA+"='"+p.getFlagConferma()+
-                "' WHERE "+P_COL_ATTIVITA+" = '"+p.getIdAttivita()+"' AND "+P_COL_GLOBETROTTER+" = '"+p.getEmail()+"'";
+        String query = "UPDATE "+PRENOTAZIONE_TABLE+" SET "+P_COL_COMMENTI+"='"+p.getCommenti()+"',"+P_COL_CONFERMA+"='"+p.getFlagConferma()+
+                "' WHERE "+P_COL_ATTIVITA+" = '"+p.getIdAttivita()+"' AND "+P_COL_GLOBETROTTER+" = '"+p.getId()+"'";
 
-        JSONArray jArray = doQuery(query);
-
-        try {
-            if(jArray.getBoolean(0))
-                flag=1;
-        } catch (JSONException|NullPointerException e){
-            e.printStackTrace();
-        }
+        doQuery(query);
 
         return flag;
     }
@@ -530,36 +518,22 @@ public class DBhelper extends SQLiteOpenHelper {
 
         String query = "DELETE"+FROM+PRENOTAZIONE_TABLE+" WHERE "+P_COL_ATTIVITA+" = '"+id+"'";
 
-        JSONArray jArray = doQuery(query);
+        doQuery(query);
 
-        try {
-            if(jArray.getBoolean(0))
-                flag=1;
-        } catch (JSONException|NullPointerException e){
-            e.printStackTrace();
-        }
         return flag;
     }
 
     public long inserisciFeedback(Feedback f){
         long res=0;
         String query="INSERT INTO "+FEEDBACK_TABLE+" ("+F_COL_GLOBETROTTER+","+F_COL_ATTIVITA+","+F_COL_VOTO+","+F_COL_COMMENTO+")"+
-                " VALUES ('"+f.getGlobetrotter()+"','"+f.getIdAttivita()+"','"+f.getVoto()+"','"+f.getCommento()+"'";
-
-        JSONArray jArray = doQuery(query);
-        try {
-            if(jArray.getBoolean(0))
-                res=1;
-        } catch (JSONException|NullPointerException e){
-            e.printStackTrace();
-        }
-
+                " VALUES ('"+f.getGlobetrotter()+"','"+f.getIdAttivita()+"','"+f.getVoto()+"','"+f.getCommento()+"')";
+        doQuery(query);
         return res;
     }
 
-    public Feedback getFeedback(Integer idAttivita, String email) {
+    public Feedback getFeedback(Integer idAttivita, Integer id) {
         String query = "select "+ F_COL_GLOBETROTTER+","+ F_COL_ATTIVITA+","+ F_COL_VOTO+","+ F_COL_COMMENTO +
-                FROM +FEEDBACK_TABLE+ " WHERE "+F_COL_GLOBETROTTER +"= '"+email+"' AND "+F_COL_ATTIVITA+" = '"+idAttivita+"'";
+                FROM +FEEDBACK_TABLE+ " WHERE "+F_COL_GLOBETROTTER +"= '"+id+"' AND "+F_COL_ATTIVITA+" = '"+idAttivita+"'";
 
         ArrayList<Feedback> f = feedbackSearcher(query);
 
@@ -578,8 +552,8 @@ public class DBhelper extends SQLiteOpenHelper {
     private ArrayList<Feedback> feedbackSearcher(String query){
         Feedback f;
         ArrayList<Feedback> a = new ArrayList<>();
-        String commento,email;
-        Integer voto,idAttivita;
+        String commento;
+        Integer voto,idAttivita,id;
 
         JSONArray jArray = doQuery(query);
 
@@ -587,12 +561,12 @@ public class DBhelper extends SQLiteOpenHelper {
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json_data = (JSONObject) jArray.get(i);
 
-                email = json_data.getString(F_COL_GLOBETROTTER);
+                id = json_data.getInt(F_COL_GLOBETROTTER);
                 idAttivita = json_data.getInt(F_COL_ATTIVITA);
                 voto = json_data.getInt(F_COL_VOTO);
                 commento = json_data.getString(F_COL_COMMENTO);
 
-                f = new Feedback(email,idAttivita,voto,commento);
+                f = new Feedback(id,idAttivita,voto,commento);
                 a.add(f);
 
             }

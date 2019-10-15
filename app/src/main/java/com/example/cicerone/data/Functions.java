@@ -6,7 +6,7 @@ public abstract class Functions {
 
     private static int C=48;
 
-    public static boolean checkData(int anno,int mese,int giorno){
+    public static boolean checkData(int anno,int mese,int giorno,String chiamante){
         boolean res = true;
         Date date = new Date();
         int g=date.getDate();
@@ -19,8 +19,12 @@ public abstract class Functions {
             if(mese<m)
                 res=false;
             else
-            if(mese==m&&giorno<=g)
-                res=false;
+                if(chiamante.equals("cerca")) {
+                    if (mese == m && giorno < g)
+                        res = false;
+                } else if (mese == m && giorno <= g)
+                            res = false;
+
         }
         return res;
     }

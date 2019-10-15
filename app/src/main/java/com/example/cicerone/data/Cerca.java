@@ -74,7 +74,7 @@ public class Cerca extends AppCompatActivity {
                     inte.putExtra("id",ids[position]);
                     inte.putExtra("chiamante",chiamante);
                     inte.putExtra("npartecipanti",getIntent().getExtras().getInt("npartecipanti"));
-                    inte.putExtra("email",getIntent().getExtras().getString("email"));
+                    inte.putExtra("idUtente",getIntent().getExtras().getInt("idUtente"));
                     inte.putExtra("postidisponibili",s.get(position).getMaxPartecipanti()-r.get(position));
                     startActivity(inte);
                     finishFromChild(Cerca.this);

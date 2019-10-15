@@ -83,7 +83,7 @@ public class FormRicerca extends AppCompatActivity {
 
                 DBhelper db = new DBhelper(FormRicerca.super.getBaseContext());
 
-                if (!Functions.checkData(anno,mese,giorno)) {
+                if (!Functions.checkData(anno,mese,giorno,"cerca")) {
                     Toast.makeText(FormRicerca.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -99,12 +99,12 @@ public class FormRicerca extends AppCompatActivity {
                         }
 
                         Attivita a = new Attivita(0, dataStr, "", idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
-                        String id = getIntent().getExtras().getString("id");
+                        Integer id = getIntent().getExtras().getInt("idUtente");
                         ArrayList<Attivita> c = db.getInfoAttivita(a,id);
                         Intent res = new Intent(FormRicerca.this, Cerca.class);
                         res.putExtra("risultati", c);
                         res.putExtra("npartecipanti",partecipantiInt);
-                        res.putExtra("email",id);
+                        res.putExtra("idUtente",id);
                         res.putExtra("chiamante",getIntent().getExtras().getString("chiamante"));
                         startActivity(res);
                         finish();

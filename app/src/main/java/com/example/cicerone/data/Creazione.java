@@ -87,7 +87,7 @@ public class Creazione extends AppCompatActivity {
                 }
 
                 if (checkInfo(partecipantiInt)) {
-                    final Attivita a = new Attivita(getIntent().getExtras().getInt("id"), dataStr,itinerarioStr, idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
+                    final Attivita a = new Attivita(getIntent().getExtras().getInt("idUtente"), dataStr,itinerarioStr, idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
 
                     DBhelper db = new DBhelper(Creazione.super.getBaseContext());
                     if(db.inserisciAttivita(a)!=-1)
@@ -177,7 +177,7 @@ public class Creazione extends AppCompatActivity {
 
     private boolean checkInfo(Integer partecipantiInt){
 
-        if (!Functions.checkData(anno,mese,giorno)) {
+        if (!Functions.checkData(anno,mese,giorno,"creazione")) {
             Toast.makeText(Creazione.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
             return false;
         } else {

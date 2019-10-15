@@ -130,16 +130,13 @@ public class EAdapter extends BaseAdapter {
                 String esito;
 
                 switch (p.get(position).getFlagConferma()){
-                    case 0:
-                        esito="In sospeso";
-                        break;
                     case 1:
                         esito="Accettata";
                         break;
                     case 2:
                         esito="Rifiutata";
                         break;
-                    default:
+                    default://0
                         esito="In sospeso";
                 }
                 holder.partecipanti.setText(esito);

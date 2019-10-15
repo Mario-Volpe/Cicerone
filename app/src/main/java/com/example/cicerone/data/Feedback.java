@@ -1,12 +1,12 @@
 package com.example.cicerone.data;
 
 public class Feedback {
-    private String globetrotter;
+    private Integer globetrotter;
     private Integer idAttivita;
     private String commento;
     private Integer voto;
 
-    public Feedback(String globetrotter,Integer idAttivita,Integer voto,String commento){
+    public Feedback(Integer globetrotter,Integer idAttivita,Integer voto,String commento){
         setGlobetrotter(globetrotter);
         setIdAttivita(idAttivita);
         setVoto(voto);
@@ -14,16 +14,16 @@ public class Feedback {
 
     }
 
-    public Feedback(String globetrotter,Integer idAttivita){
+    public Feedback(Integer globetrotter,Integer idAttivita){
         setGlobetrotter(globetrotter);
         setIdAttivita(idAttivita);
     }
 
-    public String getGlobetrotter() {
+    public Integer getGlobetrotter() {
         return globetrotter;
     }
 
-    public void setGlobetrotter(String globetrotter) {
+    public void setGlobetrotter(Integer globetrotter) {
         this.globetrotter = globetrotter;
     }
 

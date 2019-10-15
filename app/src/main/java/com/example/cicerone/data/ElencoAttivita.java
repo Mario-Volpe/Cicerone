@@ -24,7 +24,7 @@ public class ElencoAttivita extends AppCompatActivity {
     private String avv=""; //non ci sono attività
     private Integer[] ids; //array degli id
     private ListView lista;
-    private String globetrotter;
+    private Integer globetrotter;
     private ArrayList<Boolean> f = new ArrayList<Boolean>(); //true: feedback presente, false: assente
     ArrayList<Attivita> sf = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class ElencoAttivita extends AppCompatActivity {
         TextView partecipantitxt = findViewById(R.id.partecipantitxt);
 
         lista = findViewById(R.id.listaAttivita);
-        globetrotter = getIntent().getExtras().getString("id");
+        globetrotter = getIntent().getExtras().getInt("idUtente");
 
         ArrayList<String> array = new ArrayList<>(); //visualizzati nella lista
         ArrayList<Attivita> s = new ArrayList<>();
@@ -56,7 +56,7 @@ public class ElencoAttivita extends AppCompatActivity {
 
                 Integer[] data = Functions.parseData(a.getData());
 
-                if(!Functions.checkData(data[2],data[1],data[0])) { //controlla se la data è antecedente alla data odierna
+                if(!Functions.checkData(data[2],data[1],data[0],"cerca")) { //controlla se la data è antecedente alla data odierna
                     sf.add(a); //se è antecedente devo mostrarla tra i feedback
                     if(db.getFeedback(a.getIdAttivita(),globetrotter)!=null)
                         f.add(true);
@@ -67,12 +67,12 @@ public class ElencoAttivita extends AppCompatActivity {
             }
 
         } else {
-            ArrayList<Attivita> s2 = db.getAllAttivita(getIntent().getExtras().getInt("id"));
+            ArrayList<Attivita> s2 = db.getAllAttivita(getIntent().getExtras().getInt("idUtente"));
 
             for(Attivita a:s2){
                 Integer[] data = Functions.parseData(a.getData());
 
-                if(Functions.checkData(data[2],data[1],data[0]))
+                if(Functions.checkData(data[2],data[1],data[0],"cerca"))
                     s.add(a);
             }
         }
@@ -161,11 +161,11 @@ public class ElencoAttivita extends AppCompatActivity {
             inte.putExtra("prenotati",pf.get(position).getPartecipanti());
             inte.putExtra("flag",pf.get(position).getFlagConferma());
             inte.putExtra("descrizione",pf.get(position).getCommenti());
-            inte.putExtra("email",globetrotter);
+            inte.putExtra("idAttivita",pf.get(position).getIdAttivita());
         }
         if(chiamante.equals(STORICO)) {
             inte = new Intent(ElencoAttivita.this, DettagliFeedback.class);
-            inte.putExtra("email",globetrotter);
+            inte.putExtra("id",globetrotter);
             inte.putExtra("idAttivita",sf.get(position).getIdAttivita());
             inte.putExtra("flag",f.get(position));
         }

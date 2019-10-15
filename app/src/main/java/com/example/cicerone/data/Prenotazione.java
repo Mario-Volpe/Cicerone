@@ -4,27 +4,29 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Prenotazione implements Parcelable {
-    private String email,commenti;
-    private Integer idAttivita,partecipanti,flagConferma;
+    private String commenti;
+    private Integer idAttivita,partecipanti,flagConferma,id;
 
-    public Prenotazione(String email,Integer idAttivita,Integer partecipanti){
+    public Prenotazione(Integer id,Integer idAttivita,Integer partecipanti){
         setIdAttivita(idAttivita);
-        setEmail(email);
+        setId(id);
         setPartecipanti(partecipanti);
         setCommenti("");
         setFlagConferma(0);
     }
 
-    public Prenotazione(String email,Integer idAttivita,Integer partecipanti,String commenti,Integer flagConferma){
+    public Prenotazione(Integer id,Integer idAttivita,Integer partecipanti,String commenti,Integer flagConferma){
         setIdAttivita(idAttivita);
-        setEmail(email);
+        setId(id);
         setPartecipanti(partecipanti);
         setCommenti(commenti);
         setFlagConferma(flagConferma);
     }
 
     protected Prenotazione(Parcel in) {
-        email = in.readString();
+        if(in.readByte()==0)
+            id = null;
+        else id = in.readInt();
         commenti = in.readString();
         if (in.readByte() == 0) {
             idAttivita = null;
@@ -54,14 +56,6 @@ public class Prenotazione implements Parcelable {
             return new Prenotazione[size];
         }
     };
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getCommenti() {
         return commenti;
@@ -102,7 +96,12 @@ public class Prenotazione implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(email);
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
         dest.writeString(commenti);
         if (idAttivita == null) {
             dest.writeByte((byte) 0);
@@ -122,5 +121,13 @@ public class Prenotazione implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(flagConferma);
         }
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

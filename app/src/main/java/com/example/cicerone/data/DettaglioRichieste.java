@@ -43,8 +43,8 @@ public class DettaglioRichieste extends AppCompatActivity {
             ids = new Integer[p.size()];
             for (Prenotazione b : p) {
                 ids[j] = b.getIdAttivita();
-                Utente u2 = new Utente(this,"","","",b.getEmail(),"", 0);
-                u.add(new DBhelper(this).getInfoUtente(u2));
+                Utente u2 = new DBhelper(this).getInfoUtentebyID(DettaglioRichieste.this,b.getId());
+                u.add(u2);
                 j++;
             }
         }

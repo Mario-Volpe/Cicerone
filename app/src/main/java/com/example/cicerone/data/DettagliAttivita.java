@@ -3,6 +3,7 @@ package com.example.cicerone.data;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,12 @@ public class DettagliAttivita extends AppCompatActivity {
     private TextView description;
     private Button feedback;
     private ArrayList<Prenotazione> p;
+    private String emailcic="";
+    private TextView hour;
+    private TextView date;
+    private TextView city;
+    private TextView tongue;
+    private TextView npartecipanti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +31,11 @@ public class DettagliAttivita extends AppCompatActivity {
         setContentView(R.layout.activity_dettagli_attivita);
 
         description = findViewById(R.id.description);
-        TextView city = findViewById(R.id.city);
-        TextView date = findViewById(R.id.date);
-        TextView hour = findViewById(R.id.hour);
-        TextView tongue = findViewById(R.id.tongue);
-        final TextView npartecipanti = findViewById(R.id.npartecipanti);
+        city = findViewById(R.id.city);
+        date = findViewById(R.id.date);
+        hour = findViewById(R.id.hour);
+        tongue = findViewById(R.id.tongue);
+        npartecipanti = findViewById(R.id.npartecipanti);
         TextView npartecipantitxt = findViewById(R.id.npartecipantitxt);
         TextView cicerone = findViewById(R.id.cicerone);
         TextView ciceronetxt = findViewById(R.id.ciceronetxt);
@@ -39,7 +46,8 @@ public class DettagliAttivita extends AppCompatActivity {
         final Integer id = getIntent().getExtras().getInt("id");
 
         final Attivita a = new DBhelper(DettagliAttivita.this).getAttivita(id);
-        final Utente u = new DBhelper(this).getInfoUtentebyID(a.getCicerone());
+        final Utente u = new DBhelper(this).getInfoUtentebyID(DettagliAttivita.this,a.getCicerone());
+        emailcic= u.getEmail();
 
         chiamante = getIntent().getExtras().getString("chiamante");
 
@@ -70,14 +78,17 @@ public class DettagliAttivita extends AppCompatActivity {
     }
 
     private void inizializza(Button rimuovi, TextView alert, TextView npartecipantitxt, TextView npartecipanti, TextView cicerone, TextView ciceronetxt, final Attivita a){
+        Utente utente = new DBhelper(DettagliAttivita.this).getInfoUtentebyID(DettagliAttivita.this,a.getCicerone());
+        String email = utente.getEmail();
 
         if(chiamante.equals("cerca")) {
             rimuovi.setText("Partecipa");
             alert.setText("Inoltrando la richiesta di partecipazione bisogna aspettare di essere accettati dal Cicerone.");
             npartecipantitxt.setText("Posti disponibili:");
             npartecipanti.setText(""+getIntent().getExtras().getInt("postidisponibili"));
-            cicerone.setText(a.getCicerone());
             description.setText(a.getDescrizione());
+
+            cicerone.setText(email);
 
             feedback.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,6 +105,7 @@ public class DettagliAttivita extends AppCompatActivity {
             cicerone.setVisibility(View.INVISIBLE);
             ciceronetxt.setVisibility(View.INVISIBLE);
             feedback.setVisibility(View.INVISIBLE);
+            //TODO:seteditable
             description.setText(a.getDescrizione());
         }
         if(chiamante.equals("inoltrate")) {
@@ -102,7 +114,7 @@ public class DettagliAttivita extends AppCompatActivity {
             feedback.setVisibility(View.INVISIBLE);
             npartecipantitxt.setText("Posti prenotati:");
             npartecipanti.setText(""+getIntent().getExtras().getInt("prenotati"));
-            cicerone.setText(a.getCicerone());
+            cicerone.setText(email);
             if(getIntent().getExtras().getInt("flag")==0)
                 description.setText(a.getDescrizione());
             else description.setText(getIntent().getExtras().getString("descrizione"));
@@ -116,10 +128,12 @@ public class DettagliAttivita extends AppCompatActivity {
             else {
                 Toast.makeText(DettagliAttivita.this, "Rimozione completata.", Toast.LENGTH_SHORT).show();
                 for(Prenotazione p2:p){
+                    String email = new DBhelper(DettagliAttivita.this).getInfoUtentebyID(DettagliAttivita.this,p2.getId()).getEmail();
+
                     String subject = "Rimozione attività";
                     String corpo = "Ciao!\n\nPurtroppo il Cicerone "+a.getCicerone()+" ha rimosso la sua attività n "+a.getIdAttivita()+
                             " che si sarebbe svolta a "+a.getCitta()+" il "+a.getData()+".\n\nIl team Step di Cicerone.";
-                    SendIt sendIt = new SendIt(p2.getEmail(),subject,corpo,this);
+                    SendIt sendIt = new SendIt(email,subject,corpo,this);
                     sendIt.execute();
                 }
                 finish();
@@ -129,9 +143,10 @@ public class DettagliAttivita extends AppCompatActivity {
         if(chiamante.equals("cerca")) {
             //richiesta di partecipazione
             int partecipanti = getIntent().getExtras().getInt("npartecipanti");
-            String email = getIntent().getExtras().getString("email");
+            Integer idUtente = getIntent().getExtras().getInt("idUtente");
+            String email = new DBhelper(this).getInfoUtentebyID(DettagliAttivita.this,idUtente).getEmail();
 
-            if (new DBhelper(DettagliAttivita.this).richiestaPartecipazione(partecipanti,id,email)==-1)
+            if (new DBhelper(DettagliAttivita.this).richiestaPartecipazione(partecipanti,id,idUtente)==-1)
                 Toast.makeText(DettagliAttivita.this, "Errore nell'inoltro della richiesta.", Toast.LENGTH_SHORT).show();
             else{
                 Toast.makeText(DettagliAttivita.this, "Richiesta inoltrata.", Toast.LENGTH_SHORT).show();
@@ -139,13 +154,13 @@ public class DettagliAttivita extends AppCompatActivity {
                 String corpo = "Ciao!\n\nIl Globetrotter "+email+" vorrebbe partecipare all'attività n "+a.getIdAttivita()+
                         " che si svolge a "+a.getCitta()+" il "+a.getData()+".\nCorri nella sezione 'Gestione richieste'"+
                         " e fai la tua scelta.\n\nIl team Step di Cicerone.";
-                SendIt sendIt = new SendIt(u.getEmail(),subject,corpo,this);
+                SendIt sendIt = new SendIt(emailcic,subject,corpo,this);
                 sendIt.execute();
                 finish();
             }
         }
         if(chiamante.equals("inoltrate")){
-            if(new DBhelper(DettagliAttivita.this).rimuoviPrenotazione(a.getIdAttivita())==0)
+            if(new DBhelper(DettagliAttivita.this).rimuoviPrenotazione(a.getIdAttivita())==1)
                 Toast.makeText(DettagliAttivita.this, "Errore nell'annullamento.", Toast.LENGTH_SHORT).show();
             else {
                 String email = getIntent().getExtras().getString("email");

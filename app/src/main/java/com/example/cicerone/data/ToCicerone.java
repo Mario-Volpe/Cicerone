@@ -22,7 +22,7 @@ public class ToCicerone extends AppCompatActivity {
         final EditText CFBox = findViewById(R.id.CF);
         final EditText TelefonoBox = findViewById(R.id.phone);
         final DBhelper db = new DBhelper(this);
-        final Integer id = getIntent().getExtras().getInt("id");
+        final Integer id = getIntent().getExtras().getInt("idUtente");
         Button invia = findViewById(R.id.buttonInvia);
 
         invia.setOnClickListener(new View.OnClickListener() {

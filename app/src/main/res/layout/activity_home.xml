@@ -153,13 +153,16 @@
         android:id="@+id/info2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:gravity="right"
         android:text="Nome:\nCognome:\nData di nascita:\nE-mail:"
         android:textSize="14sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/info"
+        app:layout_constraintEnd_toStartOf="@+id/crea"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -183,18 +186,16 @@
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginRight="140dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
         android:text="Nome\nCognome\nData di nascita\nemail"
         android:textSize="14sp"
         app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@+id/crea"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/info2"
-        app:layout_constraintTop_toBottomOf="@+id/message" />
+        app:layout_constraintStart_toEndOf="@+id/info2" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
