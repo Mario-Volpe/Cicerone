@@ -83,7 +83,7 @@ public class FormRicerca extends AppCompatActivity {
 
                 DBhelper db = new DBhelper(FormRicerca.super.getBaseContext());
 
-                if (!Functions.checkData(anno,mese,giorno,"cerca")) {
+                if (!new DBhelper(FormRicerca.this).checkData(anno,mese,giorno,"cerca")) {
                     Toast.makeText(FormRicerca.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -122,7 +122,7 @@ public class FormRicerca extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
-                TextView txt=(TextView) arg1.findViewById(R.id.rowtext);
+                TextView txt= arg1.findViewById(R.id.rowtext);
                 updateLingua(txt.getText().toString());
             }
             @Override

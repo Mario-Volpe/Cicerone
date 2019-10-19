@@ -13,7 +13,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpResponse;
@@ -126,7 +128,66 @@ public class DBhelper extends SQLiteOpenHelper {
         return jArray;
     }
 
+    public boolean checkData(int anno,int mese,int giorno,String chiamante){
+        boolean res = true;
+        Date date = new Date();
+        int g=date.getDate();
+        int m=date.getMonth()+1;
+        int a=date.getYear()+1900;
 
+        if(anno<a)
+            res=false;
+        else if(anno==a){
+            if(mese<m)
+                res=false;
+            else
+            if(chiamante.equals("cerca")) {
+                if (mese == m && giorno < g)
+                    res = false;
+            } else if (mese == m && giorno <= g)
+                res = false;
+
+        }
+        return res;
+    }
+
+    private final int C = 48;
+
+    public Integer[] parseData(String data){
+        char[] c = data.toCharArray();
+        int giorno=c[0]-C;
+        int mese=0;
+        int anno=0;
+        int i=1;
+
+        if(c[i]!='/') {
+            giorno = giorno * 10 + (c[i] - C);
+            i++;
+        }
+
+        i++;
+        mese=c[i]-C;
+        i++;
+
+        if(c[i]!='/'){
+            mese = mese * 10 + (c[i] - C);
+            i++;
+        }
+        i++;
+
+        for(int j=3;j>=0;j--){
+            anno+=(c[i]-C)*Math.pow(10,j);
+            i++;
+        }
+
+
+        Integer[] res = new Integer[3];
+        res[0]=giorno;
+        res[1]=mese;
+        res[2]=anno;
+
+        return res;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db)
@@ -283,7 +344,6 @@ public class DBhelper extends SQLiteOpenHelper {
                  FROM +ATTIVITA_TABLE+" WHERE "+A_COL_CITTA+" = '"+a.getCitta()+
                 "' AND "+A_COL_PARTECIPANTI+" >= '"+a.getMaxPartecipanti()+
                 "' AND "+A_COL_CICERONE+" != '"+id+"' AND "+A_COL_LINGUA+" = '"+a.getLingua()+"'";
-        //TODO gestire data
 
         ArrayList<Attivita> s = new ArrayList<>();
 
@@ -308,9 +368,9 @@ public class DBhelper extends SQLiteOpenHelper {
                 ArrayList <Prenotazione> p = getAllPrenotazioni(idAttivita,"cerca");
 
                 if(p==null||p.size()==0){
-                    Integer[] gma = Functions.parseData(data);
-                    Log.e("data:",""+gma[0]+gma[1]+gma[2]);
-                    if(Functions.checkData(gma[2],gma[1],gma[0],"cerca")){
+                    Integer gma[] = parseData(data);
+
+                    if(checkData(gma[2],gma[1],gma[0],"cerca")){
                         Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                         s.add(c);
                     }
@@ -318,8 +378,9 @@ public class DBhelper extends SQLiteOpenHelper {
                 else
                     for(Prenotazione p2:p){
                         if(p2.getId()!=id){
-                            Integer[] gma = Functions.parseData(data);
-                            if(Functions.checkData(gma[2],gma[1],gma[0],"cerca")){
+                            Integer gma[] = parseData(data);
+
+                            if(checkData(gma[2],gma[1],gma[0],"cerca")){
                                 Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                                 s.add(c);
                             }

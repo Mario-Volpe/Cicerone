@@ -177,7 +177,7 @@ public class Creazione extends AppCompatActivity {
 
     private boolean checkInfo(Integer partecipantiInt){
 
-        if (!Functions.checkData(anno,mese,giorno,"creazione")) {
+        if (!new DBhelper(this).checkData(anno,mese,giorno,"creazione")) {
             Toast.makeText(Creazione.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
             return false;
         } else {

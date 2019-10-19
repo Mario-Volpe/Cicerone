@@ -3,6 +3,7 @@ package com.example.cicerone.data;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +13,10 @@ import android.widget.Toast;
 
 import com.example.cicerone.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ElencoAttivita extends AppCompatActivity {
     private static final String INOLTRATE = "inoltrate";
@@ -25,7 +29,7 @@ public class ElencoAttivita extends AppCompatActivity {
     private Integer[] ids; //array degli id
     private ListView lista;
     private Integer globetrotter;
-    private ArrayList<Boolean> f = new ArrayList<Boolean>(); //true: feedback presente, false: assente
+    private ArrayList<Boolean> f = new ArrayList<>(); //true: feedback presente, false: assente
     ArrayList<Attivita> sf = new ArrayList<>();
 
     @Override
@@ -54,9 +58,9 @@ public class ElencoAttivita extends AppCompatActivity {
             for(Prenotazione p2:p){
                 Attivita a = db.getAttivita(p2.getIdAttivita());
 
-                Integer[] data = Functions.parseData(a.getData());
+                Integer[] data = db.parseData(a.getData());
 
-                if(!Functions.checkData(data[2],data[1],data[0],"cerca")) { //controlla se la data è antecedente alla data odierna
+                if(!new DBhelper(this).checkData(data[2],data[1],data[0],"cerca")) { //controlla se la data è antecedente alla data odierna
                     sf.add(a); //se è antecedente devo mostrarla tra i feedback
                     if(db.getFeedback(a.getIdAttivita(),globetrotter)!=null)
                         f.add(true);
@@ -70,9 +74,9 @@ public class ElencoAttivita extends AppCompatActivity {
             ArrayList<Attivita> s2 = db.getAllAttivita(getIntent().getExtras().getInt("idUtente"));
 
             for(Attivita a:s2){
-                Integer[] data = Functions.parseData(a.getData());
+                Integer[] data = db.parseData(a.getData());
 
-                if(Functions.checkData(data[2],data[1],data[0],"cerca"))
+                if(new DBhelper(this).checkData(data[2],data[1],data[0],"cerca"))
                     s.add(a);
             }
         }
