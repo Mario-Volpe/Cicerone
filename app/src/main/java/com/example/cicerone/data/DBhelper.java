@@ -3,6 +3,7 @@ package com.example.cicerone.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.StrictMode;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -71,17 +72,34 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public DBhelper(Context context ) {
         super(context, DBNAME, null, 15);
-        new ConnectDB().conn();
+        conn();
+    }
+
+    private void conn(){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        try{
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost("http://18.232.247.191/conn.php");
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            InputStream is = entity.getContent();
+            Log.e("log_tag", "Success in http connection ");
+        }catch(Exception e){
+            Log.e("log_tag", "Error in http connection "+e.toString());
+
+        }
     }
 
 
-    public JSONArray doQuery(String query){
+    private JSONArray doQuery(String query){
 
         String result="";
         JSONArray jArray = null;
         StringBuilder sb;
         InputStream is = null;
-        ArrayList<NameValuePair> querySend = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> querySend = new ArrayList<>();
         querySend.add(new BasicNameValuePair("querySend",query));
 
         try{
