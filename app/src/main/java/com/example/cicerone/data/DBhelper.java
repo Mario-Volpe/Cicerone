@@ -96,7 +96,7 @@ public class DBhelper extends SQLiteOpenHelper {
     private JSONArray doQuery(String query){
 
         String result="";
-        JSONArray jArray = null;
+        JSONArray jArray = new JSONArray();
         StringBuilder sb;
         InputStream is = null;
         ArrayList<NameValuePair> querySend = new ArrayList<>();
@@ -129,7 +129,6 @@ public class DBhelper extends SQLiteOpenHelper {
                 sb.append(line + "\n");
             }
             result = sb.toString();
-            is.close();
             Log.e("log_tag", "No converting errors");
         } catch (Exception e) {
             Log.e("log_tag", "Error converting result " + e.toString());

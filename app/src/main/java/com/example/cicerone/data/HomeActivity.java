@@ -1,6 +1,7 @@
 package com.example.cicerone.data;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cicerone.R;
+
+import cz.msebera.android.httpclient.client.cache.Resource;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -214,9 +217,12 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        BottomNavigationView b = findViewById(R.id.nav_view);
+        b.setSelectedItemId(R.id.navigation_home);
         logoutButton.setVisibility(View.INVISIBLE);
         mTextMessage.setVisibility(View.VISIBLE);
         info.setVisibility(View.INVISIBLE);
+        info2.setVisibility(View.INVISIBLE);
         cerca.setVisibility(View.INVISIBLE);
         crea.setVisibility(View.INVISIBLE);
         richieste.setVisibility(View.INVISIBLE);

@@ -53,14 +53,15 @@ public class GestioneRichiesta extends AppCompatActivity {
 
                 Toast.makeText(GestioneRichiesta.this, "Operazione effettuata.", Toast.LENGTH_SHORT).show();
                 Attivita a= new DBhelper(this).getAttivita(p.getIdAttivita());
+                Utente u = new DBhelper(this).getInfoUtentebyID(this,a.getCicerone());
                 if(flag==1) {
                     subject = "Conferma prenotazione";
-                    corpo = "Ciao!\n\nIl Cicerone " + a.getCicerone() + " ha confermato la tua prenotazione dall'attività n " + p.getIdAttivita() +
+                    corpo = "Ciao!\n\nIl Cicerone " + u.getEmail() + " ha confermato la tua prenotazione dall'attività n " + p.getIdAttivita() +
                             " che si svolge a " + a.getCitta() + " il " + a.getData() + ". Commento: "+commentiStr+"\n\nIl team Step di Cicerone.";
                 }
                 else {
                     subject = "Annullamento prenotazione";
-                    corpo = "Ciao!\n\nIl Cicerone " + a.getCicerone() + " ha rifiutato la tua richiesta di partecipazione all'attività n " + p.getIdAttivita() +
+                    corpo = "Ciao!\n\nIl Cicerone " + u.getEmail() + " ha rifiutato la tua richiesta di partecipazione all'attività n " + p.getIdAttivita() +
                             " che si svolge a " + a.getCitta() + " il " + a.getData() + ". Commento: "+commentiStr+"\n\nIl team Step di Cicerone.";
                 }
                 String email = new DBhelper(GestioneRichiesta.this).getInfoUtentebyID(GestioneRichiesta.this,p.getId()).getEmail();

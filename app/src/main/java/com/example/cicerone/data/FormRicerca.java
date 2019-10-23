@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.example.cicerone.R;
 
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -34,7 +33,7 @@ public class FormRicerca extends AppCompatActivity {
     private int ora=0;
     private int minuto=0;
     private String linguaStr="";
-    private String hour = "";
+    private String hour ="";
     private ArrayAdapter<String> spinnerAdapter;
 
     @Override
@@ -72,14 +71,10 @@ public class FormRicerca extends AppCompatActivity {
                 Integer partecipantiInt=0;
                 String partecipantiStr = partecipanti.getText().toString().trim();
 
-                if(partecipantiStr.equals(""))
-                    Toast.makeText(FormRicerca.this, "Tutti i campi sono obbligatori!.", Toast.LENGTH_SHORT).show();
+                if(partecipantiStr.equals("")||dataStr.equals("")||cittaStr.equals("")||hour.equals(""))
+                    Toast.makeText(FormRicerca.this, "Tutti i campi sono obbligatori!", Toast.LENGTH_SHORT).show();
                 else {
                     partecipantiInt = Integer.parseInt(partecipantiStr);
-                }
-
-                if(dataStr.equals("")||cittaStr.equals(""))
-                    Toast.makeText(FormRicerca.this, "Tutti i campi sono obbligatori!.", Toast.LENGTH_SHORT).show();
 
                 DBhelper db = new DBhelper(FormRicerca.super.getBaseContext());
 
@@ -109,6 +104,7 @@ public class FormRicerca extends AppCompatActivity {
                         startActivity(res);
                         finish();
                     }
+                }
                 }
             }
         });

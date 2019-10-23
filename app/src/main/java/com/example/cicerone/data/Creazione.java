@@ -68,33 +68,35 @@ public class Creazione extends AppCompatActivity {
         crea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer partecipantiInt=0;
+                Integer partecipantiInt = 0;
                 String partecipantiStr = partecipanti.getText().toString().trim();
                 String dataStr = mostraData.getText().toString().trim();
                 String itinerarioStr = itinerario.getText().toString().trim();
                 String cittaStr = citta.getText().toString().trim().toUpperCase();
 
-                if(partecipantiStr.equals("")||dataStr.equals("")||itinerarioStr.equals("")||linguaStr.equals("")||cittaStr.equals(""))
+                if (partecipantiStr.equals("") || dataStr.equals("") || itinerarioStr.equals("") || linguaStr.equals("") || cittaStr.equals("") || hour.equals(""))
                     Toast.makeText(Creazione.this, "Tutti i campi sono obbligatori!", Toast.LENGTH_SHORT).show();
-                else partecipantiInt = Integer.parseInt(partecipantiStr);
+                else {
+                    partecipantiInt = Integer.parseInt(partecipantiStr);
 
-                ArrayList<Lingua> l = new DBhelper(Creazione.super.getBaseContext()).getAllLingue();
+                    ArrayList<Lingua> l = new DBhelper(Creazione.super.getBaseContext()).getAllLingue();
 
-                int idLingua=0;
-                for(Lingua l2:l){
-                    if(l2.getNome().equals(linguaStr))
-                        idLingua=l2.getId();
-                }
+                    int idLingua = 0;
+                    for (Lingua l2 : l) {
+                        if (l2.getNome().equals(linguaStr))
+                            idLingua = l2.getId();
+                    }
 
-                if (checkInfo(partecipantiInt)) {
-                    final Attivita a = new Attivita(getIntent().getExtras().getInt("idUtente"), dataStr,itinerarioStr, idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
+                    if (checkInfo(partecipantiInt)) {
+                        final Attivita a = new Attivita(getIntent().getExtras().getInt("idUtente"), dataStr, itinerarioStr, idLingua, cittaStr, partecipantiInt, Time.valueOf(hour + ":00"));
 
-                    DBhelper db = new DBhelper(Creazione.super.getBaseContext());
-                    if(db.inserisciAttivita(a)!=-1)
-                        Toast.makeText(Creazione.this, "Creazione riuscita.", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(Creazione.this, "Errore nella creazione.", Toast.LENGTH_SHORT).show();
-                    finish();
+                        DBhelper db = new DBhelper(Creazione.super.getBaseContext());
+                        if (db.inserisciAttivita(a) != -1)
+                            Toast.makeText(Creazione.this, "Creazione riuscita.", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(Creazione.this, "Errore nella creazione.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
             }
         });
