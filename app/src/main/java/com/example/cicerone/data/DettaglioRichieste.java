@@ -27,7 +27,7 @@ public class DettaglioRichieste extends AppCompatActivity {
         Integer idAttivita = getIntent().getExtras().getInt("id");
         String chiamante = "richieste";
 
-        final ArrayList<Prenotazione> p = new DBhelper(DettaglioRichieste.this).getAllPrenotazioni(idAttivita,chiamante);
+        final ArrayList<Prenotazione> p = DBhelper.getAllPrenotazioni(idAttivita,chiamante);
 
         final Integer[] ids;
         String avv="Nessuna richiesta trovata";
@@ -43,7 +43,7 @@ public class DettaglioRichieste extends AppCompatActivity {
             ids = new Integer[p.size()];
             for (Prenotazione b : p) {
                 ids[j] = b.getIdAttivita();
-                Utente u2 = new DBhelper(this).getInfoUtentebyID(DettaglioRichieste.this,b.getId());
+                Utente u2 = DBhelper.getInfoUtentebyID(DettaglioRichieste.this,b.getId());
                 u.add(u2);
                 j++;
             }

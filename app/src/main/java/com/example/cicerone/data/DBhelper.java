@@ -1,8 +1,6 @@
 package com.example.cicerone.data;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -14,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,10 +26,9 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import cz.msebera.android.httpclient.protocol.HTTP;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
-public class DBhelper extends SQLiteOpenHelper {
+public abstract class DBhelper {
     private static final String FROM=" FROM ";
 
-    private static final String DBNAME="Cicerone.db";
     private static final String UTENTE_TABLE="Utenti";
     private static final String U_COL_ID="IdUtente";
     private static final String U_COL_NOME="NomeUtente";
@@ -70,12 +66,7 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String L_COL_ID="IdLingua";
     private static final String L_COL_NOME="NomeLingua";
 
-    public DBhelper(Context context ) {
-        super(context, DBNAME, null, 15);
-        conn();
-    }
-
-    private void conn(){
+    private static void conn(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -93,8 +84,8 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
 
-    private JSONArray doQuery(String query){
-
+    private static JSONArray doQuery(String query){
+        conn();
         String result="";
         JSONArray jArray = new JSONArray();
         StringBuilder sb;
@@ -118,7 +109,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
         try {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 100);
 
             sb = new StringBuilder();
 
@@ -132,6 +123,7 @@ public class DBhelper extends SQLiteOpenHelper {
             Log.e("log_tag", "No converting errors");
         } catch (Exception e) {
             Log.e("log_tag", "Error converting result " + e.toString());
+            e.printStackTrace();
         }
 
         if(result.isEmpty())
@@ -145,7 +137,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return jArray;
     }
 
-    public boolean checkData(int anno,int mese,int giorno,String chiamante){
+    public static boolean checkData(int anno, int mese, int giorno, String chiamante){
         boolean res = true;
         Date date = new Date();
         int g=date.getDate();
@@ -168,9 +160,9 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
-    private final int C = 48;
+    private final static int C = 48;
 
-    public Integer[] parseData(String data){
+    public static Integer[] parseData(String data){
         char[] c = data.toCharArray();
         int giorno=c[0]-C;
         int mese=0;
@@ -206,13 +198,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db)
-    {
-
-    }
-
-    public long inserisciUtente( Utente u )
+    public static long inserisciUtente(Utente u)
     {
         long res=0;
         String query="INSERT INTO "+UTENTE_TABLE+" ("+U_COL_EMAIL+","+U_COL_NOME+","+U_COL_COGNOME+","+U_COL_SEC+","+U_COL_DATA_NASCITA+","+U_COL_TELEFONO+","+U_COL_CF+")"+
@@ -222,14 +208,14 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public void upgradeUtente(Integer id,String CF,String telefono){
+    public static void upgradeUtente(Integer id, String CF, String telefono){
         String query = "UPDATE "+UTENTE_TABLE+" SET "+U_COL_CF+" = '"+CF+"', "+ U_COL_TELEFONO+" = '"+telefono+"'"+
                 " WHERE "+U_COL_ID+" = '"+id+"'";
 
         doQuery(query);
     }
 
-    public long inserisciAttivita( Attivita a )
+    public static long inserisciAttivita(Attivita a)
     {
         long res=0;
         String query="INSERT INTO "+ATTIVITA_TABLE+" ("+A_COL_CICERONE+","+A_COL_CITTA+","+A_COL_DATA+","+A_COL_ITINERARIO+","+A_COL_LINGUA+","+A_COL_ORA+","+A_COL_PARTECIPANTI+")"+
@@ -239,18 +225,12 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
-    }
-
     /**
      * Metodo che dato un utente cerca la corrispettiva password
      * @param utente dati del registrante
      * @return "" se la password non viene trovata, altrimenti password
      */
-    public String searchPassword (Utente utente)
+    public static String searchPassword(Utente utente)
     {
         String stringaFinale="";
         String query = "select "+U_COL_SEC+FROM+UTENTE_TABLE+" WHERE "+U_COL_EMAIL+"='"+utente.getEmail()+"'";
@@ -274,7 +254,7 @@ public class DBhelper extends SQLiteOpenHelper {
      * @param utente da cercare
      * @return True se utente esiste, False altrimenti
      */
-    public boolean isSignedUp (Utente utente)
+    public static boolean isSignedUp(Utente utente)
     {
         String stringaFinale="";
         String query = "select "+ U_COL_EMAIL+FROM+UTENTE_TABLE+" WHERE "+U_COL_EMAIL+"='"+utente.getEmail()+"'";
@@ -297,7 +277,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return isIn;
     }
 
-    public Utente getInfoUtentebyID( Context context,Integer id )
+    public static Utente getInfoUtentebyID(Context context, Integer id)
     {
         String query = "select "+ U_COL_NOME+","+ U_COL_COGNOME+","+U_COL_EMAIL+","+ U_COL_SEC+","+ U_COL_DATA_NASCITA+","+U_COL_CF+","+U_COL_TELEFONO+
                 FROM +UTENTE_TABLE+" WHERE "+U_COL_ID+" = '"+id+"'";
@@ -328,7 +308,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return utente;
     }
 
-    public Utente getInfoUtente( Utente utente ) {
+    public static Utente getInfoUtente(Utente utente) {
 
         String query = "select "+U_COL_ID+","+ U_COL_NOME+","+ U_COL_COGNOME+","+ U_COL_SEC+","+ U_COL_DATA_NASCITA+","+U_COL_CF+","+U_COL_TELEFONO+
                     FROM +UTENTE_TABLE+" WHERE "+U_COL_EMAIL+" = '"+utente.getEmail()+"'";
@@ -355,7 +335,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return utente;
     }
 
-    public ArrayList<Attivita> getInfoAttivita(Attivita a,Integer id) {
+    public static ArrayList<Attivita> getInfoAttivita(Attivita a, Integer id) {
 
         String query = "select "+A_COL_ID+","+A_COL_DATA+","+ A_COL_CITTA+","+A_COL_LINGUA+","+ A_COL_ITINERARIO+","+A_COL_PARTECIPANTI+","+A_COL_CICERONE+","+A_COL_ORA+
                  FROM +ATTIVITA_TABLE+" WHERE "+A_COL_CITTA+" = '"+a.getCitta()+
@@ -372,6 +352,7 @@ public class DBhelper extends SQLiteOpenHelper {
         try {
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json_data = (JSONObject) jArray.get(i);
+                boolean flag = true;
 
                 cicerone = json_data.getInt(A_COL_CICERONE);
                 idAttivita = json_data.getInt(A_COL_ID);
@@ -382,36 +363,41 @@ public class DBhelper extends SQLiteOpenHelper {
                 maxPartecipanti = json_data.getInt(A_COL_PARTECIPANTI);
                 ora = json_data.getString(A_COL_ORA);
 
-                ArrayList <Prenotazione> p = getAllPrenotazioni(idAttivita,"cerca");
+                ArrayList<Prenotazione> p = getAllPrenotazioni(idAttivita, "cerca");
 
-                if(p==null||p.size()==0){
+                if (p == null || p.size() == 0) {
                     Integer gma[] = parseData(data);
 
-                    if(checkData(gma[2],gma[1],gma[0],"cerca")){
+                    if (checkData(gma[2], gma[1], gma[0], "cerca")) {
                         Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                         s.add(c);
+                        Log.e("pnull", "aggiunta attività con id:" + idAttivita);
                     }
-                }
-                else
-                    for(Prenotazione p2:p){
-                        if(p2.getId()!=id){
-                            Integer gma[] = parseData(data);
+                } else {
+                    for (Prenotazione p2 : p)
+                        if (p2.getId() == id)
+                            flag = false;
 
-                            if(checkData(gma[2],gma[1],gma[0],"cerca")){
-                                Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
-                                s.add(c);
-                            }
+                    if(flag) {
+                        Integer gma[] = parseData(data);
+                        if (checkData(gma[2], gma[1], gma[0], "cerca")) {
+                            Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
+                            s.add(c);
+                            Log.e("pnotnull", "aggiunta attività con id:" + idAttivita);
                         }
                     }
 
+                }
             }
+
+
         } catch (JSONException|NullPointerException e){
             Log.e("Ricerca prenotazioni:","Non trovate");
         }
         return  s;
     }
 
-    public Attivita getAttivita(Integer id) {
+    public static Attivita getAttivita(Integer id) {
         String query = "select "+A_COL_ID+","+A_COL_DATA+","+ A_COL_CITTA+","+A_COL_LINGUA+","+ A_COL_ITINERARIO+","+A_COL_PARTECIPANTI+","+A_COL_CICERONE+","+A_COL_ORA+
                   FROM  + ATTIVITA_TABLE + " WHERE "+A_COL_ID+" = '"+id+"'";
 
@@ -420,13 +406,13 @@ public class DBhelper extends SQLiteOpenHelper {
         return s.get(0);
     }
 
-    public ArrayList<Attivita> getAllAttivita(Integer id) {
+    public static ArrayList<Attivita> getAllAttivita(Integer id) {
         String query = "select "+A_COL_ID+","+A_COL_DATA+","+ A_COL_CITTA+","+A_COL_LINGUA+","+ A_COL_ITINERARIO+","+A_COL_PARTECIPANTI+","+A_COL_CICERONE+","+A_COL_ORA+
                  FROM +ATTIVITA_TABLE+ " WHERE "+A_COL_CICERONE+" = '"+id+"'";
         return attivitaSearcher(query);
     }
 
-    public ArrayList<Lingua> getAllLingue() {
+    public static ArrayList<Lingua> getAllLingue() {
         String query = "select "+L_COL_ID+","+L_COL_NOME+FROM +LINGUA_TABLE;
 
         ArrayList<Lingua> s = new ArrayList<>();
@@ -451,7 +437,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return s;
     }
 
-    private ArrayList<Attivita> attivitaSearcher(String query) {
+    private static ArrayList<Attivita> attivitaSearcher(String query) {
         ArrayList<Attivita> s = new ArrayList<>();
 
         String data, descrizioneItinerario, citta, ora;
@@ -483,7 +469,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return  s;
     }
 
-    public int rimuoviAttivita(Integer id) {
+    public static int rimuoviAttivita(Integer id) {
 
         int flag=0;
 
@@ -501,7 +487,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return flag;
     }
 
-    public long richiestaPartecipazione(int partecipanti,int id,Integer idUtente){
+    public static long richiestaPartecipazione(int partecipanti, int id, Integer idUtente){
         long res=0;
         String query="INSERT INTO "+PRENOTAZIONE_TABLE+" ("+P_COL_GLOBETROTTER+","+P_COL_ATTIVITA+","+P_COL_PARTECIPANTI+","+P_COL_COMMENTI+","+P_COL_CONFERMA+")"+
                 " VALUES ('"+idUtente+"','"+id+"','"+partecipanti+"','',0)";
@@ -509,7 +495,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public ArrayList<Prenotazione> getAllPrenotazioni(Integer id,String chiamante){
+    public static ArrayList<Prenotazione> getAllPrenotazioni(Integer id, String chiamante){
         ArrayList<Prenotazione> p = new ArrayList<>();
 
         String query;
@@ -535,6 +521,8 @@ public class DBhelper extends SQLiteOpenHelper {
                 idAttivita = json_data.getInt(P_COL_ATTIVITA);
                 nPartecipanti = json_data.getInt(P_COL_PARTECIPANTI);
 
+                Log.e("getprenotaz:","idAtt:"+idAttivita+" nPartec:"+nPartecipanti);
+
                 Prenotazione c = new Prenotazione(Globetrotter,idAttivita,nPartecipanti);
                 p.add(c);
 
@@ -546,7 +534,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return p;
     }
 
-    public ArrayList<Prenotazione> getAllPrenotazioniUtente(Integer id){
+    public static ArrayList<Prenotazione> getAllPrenotazioniUtente(Integer id){
         ArrayList<Prenotazione> p = new ArrayList<>();
 
         String query = "select "+P_COL_GLOBETROTTER+","+ P_COL_ATTIVITA+","+ P_COL_PARTECIPANTI+","+ P_COL_COMMENTI+","+ P_COL_CONFERMA+
@@ -554,7 +542,6 @@ public class DBhelper extends SQLiteOpenHelper {
 
         String commenti;
         Integer nPartecipanti,Globetrotter,idAttivita,conferma;
-
         JSONArray jArray = doQuery(query);
 
         try {
@@ -567,6 +554,7 @@ public class DBhelper extends SQLiteOpenHelper {
                 commenti = json_data.getString(P_COL_COMMENTI);
                 conferma =json_data.getInt(P_COL_CONFERMA);
 
+                Log.e("prenotazione"," n"+i+" idA:"+idAttivita+" np:"+nPartecipanti+" comm:"+commenti+" flagc:"+conferma);
                 Prenotazione c = new Prenotazione(Globetrotter,idAttivita,nPartecipanti,commenti,conferma);
                 p.add(c);
 
@@ -578,7 +566,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return p;
     }
 
-    public int updatePrenotazione(Prenotazione p){
+    public static int updatePrenotazione(Prenotazione p){
         int flag=0;
 
         String query = "UPDATE "+PRENOTAZIONE_TABLE+" SET "+P_COL_COMMENTI+"='"+p.getCommenti()+"',"+P_COL_CONFERMA+"='"+p.getFlagConferma()+
@@ -589,7 +577,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return flag;
     }
 
-    public int rimuoviPrenotazione(Integer id) {
+    public static int rimuoviPrenotazione(Integer id) {
         int flag=0;
 
         String query = "DELETE"+FROM+PRENOTAZIONE_TABLE+" WHERE "+P_COL_ATTIVITA+" = '"+id+"'";
@@ -599,7 +587,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return flag;
     }
 
-    public long inserisciFeedback(Feedback f){
+    public static long inserisciFeedback(Feedback f){
         long res=0;
         String query="INSERT INTO "+FEEDBACK_TABLE+" ("+F_COL_GLOBETROTTER+","+F_COL_ATTIVITA+","+F_COL_VOTO+","+F_COL_COMMENTO+")"+
                 " VALUES ('"+f.getGlobetrotter()+"','"+f.getIdAttivita()+"','"+f.getVoto()+"','"+f.getCommento()+"')";
@@ -607,7 +595,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Feedback getFeedback(Integer idAttivita, Integer id) {
+    public static Feedback getFeedback(Integer idAttivita, Integer id) {
         String query = "select "+ F_COL_GLOBETROTTER+","+ F_COL_ATTIVITA+","+ F_COL_VOTO+","+ F_COL_COMMENTO +
                 FROM +FEEDBACK_TABLE+ " WHERE "+F_COL_GLOBETROTTER +"= '"+id+"' AND "+F_COL_ATTIVITA+" = '"+idAttivita+"'";
 
@@ -618,14 +606,14 @@ public class DBhelper extends SQLiteOpenHelper {
         else return f.get(0);
     }
 
-    public ArrayList<Feedback> getAllFeedback(Integer idAttivita){
+    public static ArrayList<Feedback> getAllFeedback(Integer idAttivita){
         String query = "select "+F_COL_GLOBETROTTER+","+ F_COL_ATTIVITA+", "+F_COL_VOTO+","+F_COL_COMMENTO +
                 FROM +FEEDBACK_TABLE+ " WHERE "+F_COL_ATTIVITA+" = '"+idAttivita+"'";
 
         return feedbackSearcher(query);
     }
 
-    private ArrayList<Feedback> feedbackSearcher(String query){
+    private static ArrayList<Feedback> feedbackSearcher(String query){
         Feedback f;
         ArrayList<Feedback> a = new ArrayList<>();
         String commento;

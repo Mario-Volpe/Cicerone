@@ -158,7 +158,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent inte;
-                Utente u = new DBhelper(HomeActivity.this).getInfoUtentebyID(HomeActivity.this,id);
+                Utente u = DBhelper.getInfoUtentebyID(HomeActivity.this,id);
 
                 if(CF==null)
                     inte = new Intent(HomeActivity.this, ToCicerone.class);

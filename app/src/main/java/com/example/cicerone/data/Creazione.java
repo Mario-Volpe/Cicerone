@@ -56,7 +56,7 @@ public class Creazione extends AppCompatActivity {
         ArrayAdapter<String> cAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
         citta.setAdapter(cAdapter);
 
-        ArrayList<Lingua> lingue = new DBhelper(this).getAllLingue();
+        ArrayList<Lingua> lingue = DBhelper.getAllLingue();
         String[] ls = new String[lingue.size()];
         int i=0;
 
@@ -79,7 +79,7 @@ public class Creazione extends AppCompatActivity {
                 else {
                     partecipantiInt = Integer.parseInt(partecipantiStr);
 
-                    ArrayList<Lingua> l = new DBhelper(Creazione.super.getBaseContext()).getAllLingue();
+                    ArrayList<Lingua> l = DBhelper.getAllLingue();
 
                     int idLingua = 0;
                     for (Lingua l2 : l) {
@@ -90,8 +90,7 @@ public class Creazione extends AppCompatActivity {
                     if (checkInfo(partecipantiInt)) {
                         final Attivita a = new Attivita(getIntent().getExtras().getInt("idUtente"), dataStr, itinerarioStr, idLingua, cittaStr, partecipantiInt, Time.valueOf(hour + ":00"));
 
-                        DBhelper db = new DBhelper(Creazione.super.getBaseContext());
-                        if (db.inserisciAttivita(a) != -1)
+                        if (DBhelper.inserisciAttivita(a) != -1)
                             Toast.makeText(Creazione.this, "Creazione riuscita.", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(Creazione.this, "Errore nella creazione.", Toast.LENGTH_SHORT).show();
@@ -179,7 +178,7 @@ public class Creazione extends AppCompatActivity {
 
     private boolean checkInfo(Integer partecipantiInt){
 
-        if (!new DBhelper(this).checkData(anno,mese,giorno,"creazione")) {
+        if (!DBhelper.checkData(anno,mese,giorno,"creazione")) {
             Toast.makeText(Creazione.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
             return false;
         } else {

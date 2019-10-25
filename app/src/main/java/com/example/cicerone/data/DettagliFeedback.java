@@ -32,13 +32,12 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
         TextView votoins = findViewById(R.id.votoins);
         TextView commentoins = findViewById(R.id.commentoins);
         Button b = findViewById(R.id.inviaF);
-        final DBhelper db = new DBhelper(this);
 
         if(flag==true){
             titolo.setText("Riepilogo feedback");
             spinner.setVisibility(View.INVISIBLE);
             commentoins.setVisibility(View.VISIBLE);
-            Feedback f = db.getFeedback(id,idUtente);
+            Feedback f = DBhelper.getFeedback(id,idUtente);
 
             votoins.setText(""+f.getVoto()+"/5");
             if(!f.getCommento().equals(""))
@@ -61,7 +60,7 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
                 commentotxt = commento.getText().toString().trim();
                 Feedback f = new Feedback(idUtente,id,voto,commentotxt);
-                if(db.inserisciFeedback(f)!=-1)
+                if(DBhelper.inserisciFeedback(f)!=-1)
                     Toast.makeText(DettagliFeedback.this, "Feedback inserito.", Toast.LENGTH_SHORT).show();
                 else Toast.makeText(DettagliFeedback.this, "Errore nell'inserimento del feedback.", Toast.LENGTH_SHORT).show();
                 finish();

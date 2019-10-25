@@ -12,11 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cicerone.R;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ElencoAttivita extends AppCompatActivity {
     private static final String INOLTRATE = "inoltrate";
@@ -37,7 +33,6 @@ public class ElencoAttivita extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elenco_attivita);
 
-        DBhelper db = new DBhelper(this);
         final String chiamante = getIntent().getExtras().getString("chiamante");
         ArrayAdapter<String> adapter;
         EAdapter fadapter=null;
@@ -54,15 +49,16 @@ public class ElencoAttivita extends AppCompatActivity {
         ArrayList<Integer> r= new ArrayList<>(); //n richieste per attività
 
         if(chiamante.equals(INOLTRATE)||chiamante.equals(STORICO)){
-            p = db.getAllPrenotazioniUtente(globetrotter);
+            p = DBhelper.getAllPrenotazioniUtente(globetrotter);
+            Log.e("p size:",""+p.size());
             for(Prenotazione p2:p){
-                Attivita a = db.getAttivita(p2.getIdAttivita());
+                Attivita a = DBhelper.getAttivita(p2.getIdAttivita());
 
-                Integer[] data = db.parseData(a.getData());
+                Integer[] data = DBhelper.parseData(a.getData());
 
-                if(!new DBhelper(this).checkData(data[2],data[1],data[0],"cerca")) { //controlla se la data è antecedente alla data odierna
+                if(!DBhelper.checkData(data[2],data[1],data[0],"cerca")) { //controlla se la data è antecedente alla data odierna
                     sf.add(a); //se è antecedente devo mostrarla tra i feedback
-                    if(db.getFeedback(a.getIdAttivita(),globetrotter)!=null)
+                    if(DBhelper.getFeedback(a.getIdAttivita(),globetrotter)!=null)
                         f.add(true);
                     else f.add(false);
                 }
@@ -71,12 +67,12 @@ public class ElencoAttivita extends AppCompatActivity {
             }
 
         } else {
-            ArrayList<Attivita> s2 = db.getAllAttivita(getIntent().getExtras().getInt("idUtente"));
+            ArrayList<Attivita> s2 = DBhelper.getAllAttivita(getIntent().getExtras().getInt("idUtente"));
 
             for(Attivita a:s2){
-                Integer[] data = db.parseData(a.getData());
+                Integer[] data = DBhelper.parseData(a.getData());
 
-                if(new DBhelper(this).checkData(data[2],data[1],data[0],"cerca"))
+                if(DBhelper.checkData(data[2],data[1],data[0],"cerca"))
                     s.add(a);
             }
         }
@@ -88,7 +84,7 @@ public class ElencoAttivita extends AppCompatActivity {
                 for (Attivita b : s) {
                     array.add(b.toStringSearch());
                     ids[j] = b.getIdAttivita();
-                    ArrayList<Prenotazione> p2 = db.getAllPrenotazioni(ids[j], chiamante);
+                    ArrayList<Prenotazione> p2 = DBhelper.getAllPrenotazioni(ids[j], chiamante);
                     r.add(p2.size());
                     j++;
                 }
@@ -132,6 +128,8 @@ public class ElencoAttivita extends AppCompatActivity {
             partecipantitxt.setText("Stato");
         if(chiamante.equals(STORICO))
             partecipantitxt.setText("Valutata");
+
+        Log.e("s size:",""+s.size());
 
         if((s==null||s.size()==0)&&!chiamante.equals(STORICO)) {
             if(chiamante.equals(INOLTRATE)){

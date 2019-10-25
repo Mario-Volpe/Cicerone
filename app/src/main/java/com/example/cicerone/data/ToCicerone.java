@@ -21,7 +21,6 @@ public class ToCicerone extends AppCompatActivity {
 
         final EditText CFBox = findViewById(R.id.CF);
         final EditText TelefonoBox = findViewById(R.id.phone);
-        final DBhelper db = new DBhelper(this);
         final Integer id = getIntent().getExtras().getInt("idUtente");
         Button invia = findViewById(R.id.buttonInvia);
 
@@ -37,9 +36,8 @@ public class ToCicerone extends AppCompatActivity {
                     if(CFstr.length()!=16)
                         Toast.makeText(ToCicerone.this,"Il codice fiscale è errato.",Toast.LENGTH_SHORT).show();
                     else {
-                        db.upgradeUtente(id,CFstr,Telefonostr);
+                        DBhelper.upgradeUtente(id,CFstr,Telefonostr);
                         Toast.makeText(ToCicerone.this,"Account aggiornato.",Toast.LENGTH_SHORT).show();
-                        db.close();
                         Intent inte = new Intent(ToCicerone.this, Creazione.class);
                         inte.putExtra("id",id);
                         startActivity(inte);

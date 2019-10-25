@@ -45,15 +45,15 @@ public class GestioneRichiesta extends AppCompatActivity {
         else{
             p.setFlagConferma(flag);
             p.setCommenti(commentiStr);
-            if(new DBhelper(GestioneRichiesta.this).updatePrenotazione(p)!=0)
+            if(DBhelper.updatePrenotazione(p)!=0)
                 Toast.makeText(GestioneRichiesta.this, "Errore.", Toast.LENGTH_SHORT).show();
             else {
                 String subject;
                 String corpo;
 
                 Toast.makeText(GestioneRichiesta.this, "Operazione effettuata.", Toast.LENGTH_SHORT).show();
-                Attivita a= new DBhelper(this).getAttivita(p.getIdAttivita());
-                Utente u = new DBhelper(this).getInfoUtentebyID(this,a.getCicerone());
+                Attivita a= DBhelper.getAttivita(p.getIdAttivita());
+                Utente u = DBhelper.getInfoUtentebyID(this,a.getCicerone());
                 if(flag==1) {
                     subject = "Conferma prenotazione";
                     corpo = "Ciao!\n\nIl Cicerone " + u.getEmail() + " ha confermato la tua prenotazione dall'attività n " + p.getIdAttivita() +
@@ -64,7 +64,7 @@ public class GestioneRichiesta extends AppCompatActivity {
                     corpo = "Ciao!\n\nIl Cicerone " + u.getEmail() + " ha rifiutato la tua richiesta di partecipazione all'attività n " + p.getIdAttivita() +
                             " che si svolge a " + a.getCitta() + " il " + a.getData() + ". Commento: "+commentiStr+"\n\nIl team Step di Cicerone.";
                 }
-                String email = new DBhelper(GestioneRichiesta.this).getInfoUtentebyID(GestioneRichiesta.this,p.getId()).getEmail();
+                String email = DBhelper.getInfoUtentebyID(GestioneRichiesta.this,p.getId()).getEmail();
                 SendIt sendIt = new SendIt(email, subject, corpo, this);
                 sendIt.execute();
                 finish();

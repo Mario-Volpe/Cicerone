@@ -43,7 +43,7 @@ public class Cerca extends AppCompatActivity {
             for (Attivita b : s) {
                 array.add(b.toStringSearch());
                 ids[j] = b.getIdAttivita();
-                ArrayList<Prenotazione> p = new DBhelper(Cerca.this).getAllPrenotazioni(ids[j], chiamante);
+                ArrayList<Prenotazione> p = DBhelper.getAllPrenotazioni(ids[j], chiamante);
                 int h=0;
                 for(Prenotazione p2:p)
                     h+=p2.getPartecipanti();

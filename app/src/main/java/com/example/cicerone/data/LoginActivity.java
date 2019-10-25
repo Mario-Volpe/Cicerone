@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Inserisci un indirizzo e-mail valido", Toast.LENGTH_LONG).show();
                 else {
                     Utente u = new Utente(LoginActivity.this,"","","",email,"", 0);
-                    u = new DBhelper(LoginActivity.this).getInfoUtente(u);
+                    u = DBhelper.getInfoUtente(u);
                     String subject = "Problemi all'accesso";
                     String corpo = "Ciao "+u.getNome()+"!\n\nEcco la password per effettuare l'accesso: " + u.getPassword() +
                             "\nNon dimenticarla e fai attenzione a non rivelarla a nessuno!\n\nIl team Step di Cicerone.";
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         u.setEmail(email);
         u.setPassword(password);
-        u=new DBhelper(this).getInfoUtente(u);
+        u=DBhelper.getInfoUtente(u);
         loginButton.setEnabled(true);
         Intent homeIntent = new Intent(this,HomeActivity.class);
         homeIntent.putExtra("nome",u.getNome());
@@ -162,10 +162,8 @@ public class LoginActivity extends AppCompatActivity {
             emailText.setError(null);
         }
 
-        DBhelper db = new DBhelper(this);
-
         /*Verifico che l'email inserita esista per un utente registrato*/
-        if (!db.isSignedUp(validateUser))
+        if (!DBhelper.isSignedUp(validateUser))
         {
             emailText.setError("Nessun utente registrato con questo indirizzo mail!");
             valid = false;
@@ -183,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /* Verifico che la password corrisponda a quella dell'utente*/
-        if (!db.searchPassword(validateUser).equals(password))
+        if (!DBhelper.searchPassword(validateUser).equals(password))
         {
             passwordText.setError("La password inserita non coincide con quella dell'utente!");
             valid = false;

@@ -28,8 +28,6 @@ public class ElencoFeedback extends AppCompatActivity {
         TextView media;
         media = findViewById(R.id.media);
         double avg;
-        DBhelper db;
-        db = new DBhelper(this);
         f = new ArrayList<>();
         ArrayAdapter<String> adapter;
         EAdapter fadapter;
@@ -42,9 +40,9 @@ public class ElencoFeedback extends AppCompatActivity {
 
         Integer[] ids;
 
-        a = db.getAllAttivita(cicerone);
+        a = DBhelper.getAllAttivita(cicerone);
         for(Attivita a2:a)
-            f.addAll(db.getAllFeedback(a2.getIdAttivita()));
+            f.addAll(DBhelper.getAllFeedback(a2.getIdAttivita()));
 
         if(f.size()==0||f==null){
             media.setVisibility(View.INVISIBLE);
@@ -63,7 +61,7 @@ public class ElencoFeedback extends AppCompatActivity {
             for (Feedback f2 : f){
                 somma += f2.getVoto();
                 voti.add(f2.getVoto());
-                Attivita a2 = db.getAttivita(f2.getIdAttivita());
+                Attivita a2 = DBhelper.getAttivita(f2.getIdAttivita());
                 a.add(a2);
             }
 

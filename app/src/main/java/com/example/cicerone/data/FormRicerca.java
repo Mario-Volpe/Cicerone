@@ -53,7 +53,7 @@ public class FormRicerca extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
         citta.setAdapter(adapter);
 
-        ArrayList<Lingua> lingue = new DBhelper(this).getAllLingue();
+        ArrayList<Lingua> lingue = DBhelper.getAllLingue();
         String[] ls = new String[lingue.size()];
         int i=0;
 
@@ -76,16 +76,14 @@ public class FormRicerca extends AppCompatActivity {
                 else {
                     partecipantiInt = Integer.parseInt(partecipantiStr);
 
-                DBhelper db = new DBhelper(FormRicerca.super.getBaseContext());
-
-                if (!new DBhelper(FormRicerca.this).checkData(anno,mese,giorno,"cerca")) {
+                if (!DBhelper.checkData(anno,mese,giorno,"cerca")) {
                     Toast.makeText(FormRicerca.this, "La data inserita non è corretta.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if(partecipantiInt<=0)
                         Toast.makeText(FormRicerca.this, "Il numero dei partecipanti non è corretto.", Toast.LENGTH_SHORT).show();
                     else {
-                        ArrayList<Lingua> l = db.getAllLingue();
+                        ArrayList<Lingua> l = DBhelper.getAllLingue();
 
                         int idLingua=0;
                         for(Lingua l2:l){
@@ -95,7 +93,7 @@ public class FormRicerca extends AppCompatActivity {
 
                         Attivita a = new Attivita(0, dataStr, "", idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
                         Integer id = getIntent().getExtras().getInt("idUtente");
-                        ArrayList<Attivita> c = db.getInfoAttivita(a,id);
+                        ArrayList<Attivita> c = DBhelper.getInfoAttivita(a,id);
                         Intent res = new Intent(FormRicerca.this, Cerca.class);
                         res.putExtra("risultati", c);
                         res.putExtra("npartecipanti",partecipantiInt);

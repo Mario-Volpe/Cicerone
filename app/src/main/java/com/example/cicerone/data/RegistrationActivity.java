@@ -56,7 +56,6 @@ public class RegistrationActivity extends AppCompatActivity {
                String passwordUtenteStr = passwordUtente.getText().toString().trim();
                String passwordUtende2Str = passwordUtente2.getText().toString().trim();
                String datanascita = mostraData.getText().toString().trim();
-               DBhelper db = new DBhelper(RegistrationActivity.super.getBaseContext());
 
                Utente nuovoUtente = new Utente(RegistrationActivity.this,passwordUtenteStr,cognomeUtenteStr,nomeUtenteStr,emailUtenteStr,datanascita, 0);
 
@@ -68,7 +67,7 @@ public class RegistrationActivity extends AppCompatActivity {
                    //Password e conferma non coincidono!
                    Toast.makeText(RegistrationActivity.this, "Le password non coincidono!", Toast.LENGTH_SHORT).show();
                     }
-                   else checkInfo(passwordUtenteStr,db,nuovoUtente);
+                   else checkInfo(passwordUtenteStr,nuovoUtente);
              }
             }
         }
@@ -149,7 +148,7 @@ public class RegistrationActivity extends AppCompatActivity {
         startActivity(mainIntent);
     }
 
-    private void checkInfo(String passwordUtenteStr,DBhelper db,Utente nuovoUtente){
+    private void checkInfo(String passwordUtenteStr,Utente nuovoUtente){
         //la password deve essere lunga almeno 5 caratteri
         if (passwordUtenteStr.length() < 5)
             Toast.makeText(RegistrationActivity.this, "La password deve contenere almeno 5 caratteri!", Toast.LENGTH_SHORT).show();
@@ -158,7 +157,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 Toast.makeText(RegistrationActivity.this, "La password può contenere massimo 15 caratteri!", Toast.LENGTH_SHORT).show();
             else {
                 //Se le password coincidono, bisogna controllare che l'utente (email) è gia usato e nel caso scrivere l'utente nel db
-                if (db.isSignedUp(nuovoUtente)) {
+                if (DBhelper.isSignedUp(nuovoUtente)) {
                     //utente già iscritto, stampo un messaggio d'errore
                     Toast.makeText(RegistrationActivity.this, "Questa mail risulta essere già usata!", Toast.LENGTH_LONG).show();
                 } else {
@@ -166,14 +165,13 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast.makeText(RegistrationActivity.this, "Compila tutti i campi!", Toast.LENGTH_LONG).show();
                     else
                     //inserimento nel db
-                    if (db.inserisciUtente(nuovoUtente) != -1) {
+                    if (DBhelper.inserisciUtente(nuovoUtente) != -1) {
                         Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
                         String subject = "Benvenuto in Cicerone";
                         String corpo = "Ciao "+nuovoUtente.getNome()+"!\n\nBenvenuto sulla nostra piattaforma. D'ora in poi potrai " +
                                 "creare attività o partecipare ad una di esse. Divertiti ad esplorare il mondo senza girare a vuoto!\n\nIl team Step di Cicerone.";
                         SendIt sendIt = new SendIt(nuovoUtente.getEmail(), subject, corpo, RegistrationActivity.this);
                         sendIt.execute();
-                        db.close();
                         finish();
                     }
                 }

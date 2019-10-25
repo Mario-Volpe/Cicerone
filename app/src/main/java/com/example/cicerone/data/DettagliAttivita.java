@@ -45,8 +45,8 @@ public class DettagliAttivita extends AppCompatActivity {
 
         final Integer id = getIntent().getExtras().getInt("id");
 
-        final Attivita a = new DBhelper(DettagliAttivita.this).getAttivita(id);
-        final Utente u = new DBhelper(this).getInfoUtentebyID(DettagliAttivita.this,a.getCicerone());
+        final Attivita a = DBhelper.getAttivita(id);
+        final Utente u = DBhelper.getInfoUtentebyID(DettagliAttivita.this,a.getCicerone());
         emailcic= u.getEmail();
 
         chiamante = getIntent().getExtras().getString("chiamante");
@@ -57,7 +57,7 @@ public class DettagliAttivita extends AppCompatActivity {
         date.setText(a.getData());
         hour.setText(a.getOra().toString());
 
-        ArrayList<Lingua> l = new DBhelper(this).getAllLingue();
+        ArrayList<Lingua> l = DBhelper.getAllLingue();
 
         String lingua="";
         for(Lingua l2:l){
@@ -67,7 +67,7 @@ public class DettagliAttivita extends AppCompatActivity {
 
         tongue.setText(lingua);
 
-        p = new DBhelper(this).getAllPrenotazioni(id,chiamante);
+        p = DBhelper.getAllPrenotazioni(id,chiamante);
 
         rimuovi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +78,7 @@ public class DettagliAttivita extends AppCompatActivity {
     }
 
     private void inizializza(Button rimuovi, TextView alert, TextView npartecipantitxt, TextView npartecipanti, TextView cicerone, TextView ciceronetxt, final Attivita a){
-        Utente utente = new DBhelper(DettagliAttivita.this).getInfoUtentebyID(DettagliAttivita.this,a.getCicerone());
+        Utente utente = DBhelper.getInfoUtentebyID(DettagliAttivita.this,a.getCicerone());
         String email = utente.getEmail();
 
         if(chiamante.equals("cerca")) {
@@ -122,12 +122,12 @@ public class DettagliAttivita extends AppCompatActivity {
 
     private void bottone(String chiamante,Attivita a,Integer id,Utente u){
         if(chiamante.equals("modifica")){
-            if(new DBhelper(DettagliAttivita.this).rimuoviAttivita(a.getIdAttivita())==0)
+            if(DBhelper.rimuoviAttivita(a.getIdAttivita())==0)
                 Toast.makeText(DettagliAttivita.this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
             else {
                 Toast.makeText(DettagliAttivita.this, "Rimozione completata.", Toast.LENGTH_SHORT).show();
                 for(Prenotazione p2:p){
-                    String email = new DBhelper(DettagliAttivita.this).getInfoUtentebyID(DettagliAttivita.this,p2.getId()).getEmail();
+                    String email = DBhelper.getInfoUtentebyID(DettagliAttivita.this,p2.getId()).getEmail();
 
                     String subject = "Rimozione attività";
                     String corpo = "Ciao!\n\nPurtroppo il Cicerone "+a.getCicerone()+" ha rimosso la sua attività n "+a.getIdAttivita()+
@@ -143,9 +143,9 @@ public class DettagliAttivita extends AppCompatActivity {
             //richiesta di partecipazione
             int partecipanti = getIntent().getExtras().getInt("npartecipanti");
             Integer idUtente = getIntent().getExtras().getInt("idUtente");
-            String email = new DBhelper(this).getInfoUtentebyID(DettagliAttivita.this,idUtente).getEmail();
+            String email = DBhelper.getInfoUtentebyID(DettagliAttivita.this,idUtente).getEmail();
 
-            if (new DBhelper(DettagliAttivita.this).richiestaPartecipazione(partecipanti,id,idUtente)==-1)
+            if (DBhelper.richiestaPartecipazione(partecipanti,id,idUtente)==-1)
                 Toast.makeText(DettagliAttivita.this, "Errore nell'inoltro della richiesta.", Toast.LENGTH_SHORT).show();
             else{
                 Toast.makeText(DettagliAttivita.this, "Richiesta inoltrata.", Toast.LENGTH_SHORT).show();
@@ -159,7 +159,7 @@ public class DettagliAttivita extends AppCompatActivity {
             }
         }
         if(chiamante.equals("inoltrate")){
-            if(new DBhelper(DettagliAttivita.this).rimuoviPrenotazione(a.getIdAttivita())==1)
+            if(DBhelper.rimuoviPrenotazione(a.getIdAttivita())==1)
                 Toast.makeText(DettagliAttivita.this, "Errore nell'annullamento.", Toast.LENGTH_SHORT).show();
             else {
                 String email = getIntent().getExtras().getString("email");
