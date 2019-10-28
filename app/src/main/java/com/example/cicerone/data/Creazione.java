@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.cicerone.R;
 
 import java.sql.Time;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -73,6 +74,13 @@ public class Creazione extends AppCompatActivity {
                 String dataStr = mostraData.getText().toString().trim();
                 String itinerarioStr = itinerario.getText().toString().trim();
                 String cittaStr = citta.getText().toString().trim().toUpperCase();
+
+                itinerarioStr = Normalizer.normalize(itinerarioStr, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+                String noSpecialPattern = "[^a-zA-Z0-9\\.\\s]+";
+                itinerarioStr.replaceAll(noSpecialPattern, "");
+
+                cittaStr = Normalizer.normalize(cittaStr, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+                cittaStr.replaceAll(noSpecialPattern, "");
 
                 if (partecipantiStr.equals("") || dataStr.equals("") || itinerarioStr.equals("") || linguaStr.equals("") || cittaStr.equals("") || hour.equals(""))
                     Toast.makeText(Creazione.this, "Tutti i campi sono obbligatori!", Toast.LENGTH_SHORT).show();

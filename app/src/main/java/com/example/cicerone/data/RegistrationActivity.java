@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.cicerone.R;
 
+import java.text.Normalizer;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -163,16 +164,27 @@ public class RegistrationActivity extends AppCompatActivity {
                 } else {
                     if(nuovoUtente.getNome().equals("")||nuovoUtente.getCognome().equals(""))
                         Toast.makeText(RegistrationActivity.this, "Compila tutti i campi!", Toast.LENGTH_LONG).show();
-                    else
-                    //inserimento nel db
-                    if (DBhelper.inserisciUtente(nuovoUtente) != -1) {
-                        Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
-                        String subject = "Benvenuto in Cicerone";
-                        String corpo = "Ciao "+nuovoUtente.getNome()+"!\n\nBenvenuto sulla nostra piattaforma. D'ora in poi potrai " +
-                                "creare attività o partecipare ad una di esse. Divertiti ad esplorare il mondo senza girare a vuoto!\n\nIl team Step di Cicerone.";
-                        SendIt sendIt = new SendIt(nuovoUtente.getEmail(), subject, corpo, RegistrationActivity.this);
-                        sendIt.execute();
-                        finish();
+                    else {
+                        //inserimento nel db
+                        nuovoUtente.setNome(Normalizer.normalize(nuovoUtente.getNome(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
+                        String noSpecialPattern = "[^a-zA-Z0-9\\.\\s]+";
+                        nuovoUtente.setNome(nuovoUtente.getNome().replaceAll(noSpecialPattern, ""));
+
+                        nuovoUtente.setCognome(Normalizer.normalize(nuovoUtente.getCognome(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
+                        nuovoUtente.setCognome(nuovoUtente.getCognome().replaceAll(noSpecialPattern, ""));
+
+                        nuovoUtente.setPassword(Normalizer.normalize(nuovoUtente.getPassword(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
+                        nuovoUtente.setPassword(nuovoUtente.getPassword().replaceAll(noSpecialPattern, ""));
+
+                        if (DBhelper.inserisciUtente(nuovoUtente) != -1) {
+                            Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
+                            String subject = "Benvenuto in Cicerone";
+                            String corpo = "Ciao " + nuovoUtente.getNome() + "!\n\nBenvenuto sulla nostra piattaforma. D'ora in poi potrai " +
+                                    "creare attività o partecipare ad una di esse. Divertiti ad esplorare il mondo senza girare a vuoto!\n\nIl team Step di Cicerone.";
+                            SendIt sendIt = new SendIt(nuovoUtente.getEmail(), subject, corpo, RegistrationActivity.this);
+                            sendIt.execute();
+                            finish();
+                        }
                     }
                 }
             }

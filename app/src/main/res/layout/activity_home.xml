@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#90CAF9"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
     tools:context=".data.HomeActivity">
 
     <Button
@@ -163,6 +164,7 @@
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/info"
         app:layout_constraintEnd_toStartOf="@+id/crea"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -191,10 +193,11 @@
         android:layout_marginEnd="100dp"
         android:layout_marginRight="100dp"
         android:text="Nome\nCognome\nData di nascita\nemail"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/crea"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.637"
         app:layout_constraintStart_toEndOf="@+id/info2" />
 
     <android.support.design.widget.BottomNavigationView

@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.cicerone.R;
 
+import java.text.Normalizer;
+
 public class DettagliFeedback extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Integer voto;
@@ -59,7 +61,16 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
             @Override
             public void onClick(View v) {
                 commentotxt = commento.getText().toString().trim();
-                Feedback f = new Feedback(idUtente,id,voto,commentotxt);
+                Feedback f = null;
+                if(!commentotxt.equals("")) {
+                    commentotxt = Normalizer.normalize(commentotxt, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+                    String noSpecialPattern = "[^a-zA-Z0-9\\.\\s]+";
+                    commentotxt.replaceAll(noSpecialPattern, "");
+                    f = new Feedback(idUtente,id,voto,commentotxt);
+                } else {
+                    f = new Feedback(idUtente,id,voto,"");
+                }
+
                 if(DBhelper.inserisciFeedback(f)!=-1)
                     Toast.makeText(DettagliFeedback.this, "Feedback inserito.", Toast.LENGTH_SHORT).show();
                 else Toast.makeText(DettagliFeedback.this, "Errore nell'inserimento del feedback.", Toast.LENGTH_SHORT).show();

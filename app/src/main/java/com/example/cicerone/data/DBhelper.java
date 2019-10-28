@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
-
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.NameValuePair;
@@ -23,8 +22,6 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
-import cz.msebera.android.httpclient.protocol.HTTP;
-import cz.msebera.android.httpclient.util.EntityUtils;
 
 public abstract class DBhelper {
     private static final String FROM=" FROM ";
@@ -99,7 +96,6 @@ public abstract class DBhelper {
             httppost.setEntity(new UrlEncodedFormEntity(querySend));
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
-            result = EntityUtils.toString(entity, HTTP.UTF_8);
             is = entity.getContent();
             Log.e("log_tag", "Success in http connection ");
         }catch(Exception e){
@@ -109,11 +105,9 @@ public abstract class DBhelper {
 
         try {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 100);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
 
             sb = new StringBuilder();
-
-            sb.append(reader.readLine() + "\n");
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -123,7 +117,6 @@ public abstract class DBhelper {
             Log.e("log_tag", "No converting errors");
         } catch (Exception e) {
             Log.e("log_tag", "Error converting result " + e.toString());
-            e.printStackTrace();
         }
 
         if(result.isEmpty())
@@ -537,8 +530,7 @@ public abstract class DBhelper {
     public static ArrayList<Prenotazione> getAllPrenotazioniUtente(Integer id){
         ArrayList<Prenotazione> p = new ArrayList<>();
 
-        String query = "select "+P_COL_GLOBETROTTER+","+ P_COL_ATTIVITA+","+ P_COL_PARTECIPANTI+","+ P_COL_COMMENTI+","+ P_COL_CONFERMA+
-                 FROM +PRENOTAZIONE_TABLE+ " WHERE "+P_COL_GLOBETROTTER +" = '"+id+"'";
+        String query = "select *"+FROM +PRENOTAZIONE_TABLE+ " WHERE "+P_COL_GLOBETROTTER +" = '"+id+"'";
 
         String commenti;
         Integer nPartecipanti,Globetrotter,idAttivita,conferma;

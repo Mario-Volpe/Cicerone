@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.cicerone.R;
 
 import java.sql.Time;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -90,6 +91,10 @@ public class FormRicerca extends AppCompatActivity {
                             if(l2.getNome().equals(linguaStr))
                                 idLingua=l2.getId();
                         }
+
+                        cittaStr = Normalizer.normalize(cittaStr, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+                        String noSpecialPattern = "[^a-zA-Z0-9\\.\\s]+";
+                        cittaStr.replaceAll(noSpecialPattern, "");
 
                         Attivita a = new Attivita(0, dataStr, "", idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
                         Integer id = getIntent().getExtras().getInt("idUtente");
