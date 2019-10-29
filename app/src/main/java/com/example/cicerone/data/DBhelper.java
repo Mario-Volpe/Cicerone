@@ -105,7 +105,7 @@ public abstract class DBhelper {
 
         try {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "latin1"), 8);
 
             sb = new StringBuilder();
 

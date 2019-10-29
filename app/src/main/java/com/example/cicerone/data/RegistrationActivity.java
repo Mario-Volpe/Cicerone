@@ -166,16 +166,6 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast.makeText(RegistrationActivity.this, "Compila tutti i campi!", Toast.LENGTH_LONG).show();
                     else {
                         //inserimento nel db
-                        nuovoUtente.setNome(Normalizer.normalize(nuovoUtente.getNome(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
-                        String noSpecialPattern = "[^a-zA-Z0-9\\.\\s]+";
-                        nuovoUtente.setNome(nuovoUtente.getNome().replaceAll(noSpecialPattern, ""));
-
-                        nuovoUtente.setCognome(Normalizer.normalize(nuovoUtente.getCognome(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
-                        nuovoUtente.setCognome(nuovoUtente.getCognome().replaceAll(noSpecialPattern, ""));
-
-                        nuovoUtente.setPassword(Normalizer.normalize(nuovoUtente.getPassword(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
-                        nuovoUtente.setPassword(nuovoUtente.getPassword().replaceAll(noSpecialPattern, ""));
-
                         if (DBhelper.inserisciUtente(nuovoUtente) != -1) {
                             Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
                             String subject = "Benvenuto in Cicerone";

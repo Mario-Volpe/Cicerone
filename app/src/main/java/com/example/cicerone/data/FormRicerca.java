@@ -92,10 +92,6 @@ public class FormRicerca extends AppCompatActivity {
                                 idLingua=l2.getId();
                         }
 
-                        cittaStr = Normalizer.normalize(cittaStr, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
-                        String noSpecialPattern = "[^a-zA-Z0-9\\.\\s]+";
-                        cittaStr.replaceAll(noSpecialPattern, "");
-
                         Attivita a = new Attivita(0, dataStr, "", idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
                         Integer id = getIntent().getExtras().getInt("idUtente");
                         ArrayList<Attivita> c = DBhelper.getInfoAttivita(a,id);

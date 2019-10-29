@@ -63,9 +63,6 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
                 commentotxt = commento.getText().toString().trim();
                 Feedback f = null;
                 if(!commentotxt.equals("")) {
-                    commentotxt = Normalizer.normalize(commentotxt, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
-                    String noSpecialPattern = "[^a-zA-Z0-9\\.\\s]+";
-                    commentotxt.replaceAll(noSpecialPattern, "");
                     f = new Feedback(idUtente,id,voto,commentotxt);
                 } else {
                     f = new Feedback(idUtente,id,voto,"");
