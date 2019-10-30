@@ -122,19 +122,17 @@ public class DettagliAttivita extends AppCompatActivity {
 
     private void bottone(String chiamante,Attivita a,Integer id,Utente u){
         if(chiamante.equals("modifica")){
-            if(DBhelper.rimuoviAttivita(a.getIdAttivita())==0)
-                Toast.makeText(DettagliAttivita.this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
-            else {
-                Toast.makeText(DettagliAttivita.this, "Rimozione completata.", Toast.LENGTH_SHORT).show();
-                for(Prenotazione p2:p){
-                    String email = DBhelper.getInfoUtentebyID(DettagliAttivita.this,p2.getId()).getEmail();
+            DBhelper.rimuoviAttivita(a.getIdAttivita());
+            Toast.makeText(DettagliAttivita.this, "Rimozione completata.", Toast.LENGTH_SHORT).show();
 
-                    String subject = "Rimozione attività";
-                    String corpo = "Ciao!\n\nPurtroppo il Cicerone "+a.getCicerone()+" ha rimosso la sua attività n "+a.getIdAttivita()+
+            for(Prenotazione p2:p){
+                String email = DBhelper.getInfoUtentebyID(DettagliAttivita.this,p2.getId()).getEmail();
+
+                String subject = "Rimozione attività";
+                String corpo = "Ciao!\n\nPurtroppo il Cicerone "+a.getCicerone()+" ha rimosso la sua attività n "+a.getIdAttivita()+
                             " che si sarebbe svolta a "+a.getCitta()+" il "+a.getData()+".\n\nIl team Step di Cicerone.";
-                    SendIt sendIt = new SendIt(email,subject,corpo,this);
-                    sendIt.execute();
-                }
+                SendIt sendIt = new SendIt(email,subject,corpo,this);
+                sendIt.execute();
                 finish();
             }
         }
