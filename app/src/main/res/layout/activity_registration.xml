@@ -29,6 +29,7 @@
         android:id="@+id/password2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="26dp"
         android:ems="10"
         android:hint="Conferma Password"
@@ -85,8 +86,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="241dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="84dp"
         android:layout_marginLeft="84dp"
         android:layout_marginTop="2dp"
@@ -103,6 +104,7 @@
         android:id="@+id/link_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="40dp"
         android:clickable="true"
         android:focusable="true"
