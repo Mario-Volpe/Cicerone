@@ -63,6 +63,23 @@ public abstract class DBhelper {
     private static final String L_COL_ID="IdLingua";
     private static final String L_COL_NOME="NomeLingua";
 
+    public static String rimuoviAccenti(String str) {
+        char[] buf = str.toCharArray();
+
+        for (int i = 0; i < buf.length; i++) {
+            switch (buf[i]) {
+                case 'à': buf[i] = 'a'; break;
+                case 'é':
+                case 'è': buf[i] = 'e'; break;
+                case 'ì': buf[i] = 'i'; break;
+                case 'ò': buf[i] = 'o'; break;
+                case 'ù': buf[i] = 'u'; break;
+            }
+        }
+
+        return new String(buf);
+    }
+
     private static void conn(){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -468,14 +485,7 @@ public abstract class DBhelper {
 
         String query = "DELETE"+FROM+ATTIVITA_TABLE+" WHERE "+A_COL_ID+" = '"+id+"'";
 
-        JSONArray jArray = doQuery(query);
-
-        try {
-            if(jArray.getBoolean(0))
-                flag=1;
-        } catch (JSONException|NullPointerException e){
-            e.printStackTrace();
-        }
+        doQuery(query);
 
         return flag;
     }
@@ -622,6 +632,7 @@ public abstract class DBhelper {
                 voto = json_data.getInt(F_COL_VOTO);
                 commento = json_data.getString(F_COL_COMMENTO);
 
+                Log.e("feedback:","idGlob:"+id+" idAttivita:"+idAttivita);
                 f = new Feedback(id,idAttivita,voto,commento);
                 a.add(f);
 

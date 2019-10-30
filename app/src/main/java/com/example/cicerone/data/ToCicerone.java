@@ -36,10 +36,11 @@ public class ToCicerone extends AppCompatActivity {
                     if(CFstr.length()!=16)
                         Toast.makeText(ToCicerone.this,"Il codice fiscale è errato.",Toast.LENGTH_SHORT).show();
                     else {
+                        CFstr = DBhelper.rimuoviAccenti(CFstr);
                         DBhelper.upgradeUtente(id,CFstr,Telefonostr);
                         Toast.makeText(ToCicerone.this,"Account aggiornato.",Toast.LENGTH_SHORT).show();
                         Intent inte = new Intent(ToCicerone.this, Creazione.class);
-                        inte.putExtra("id",id);
+                        inte.putExtra("idUtente",id);
                         startActivity(inte);
                         finish();
                     }

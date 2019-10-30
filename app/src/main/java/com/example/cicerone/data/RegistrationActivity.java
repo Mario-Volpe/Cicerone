@@ -166,6 +166,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast.makeText(RegistrationActivity.this, "Compila tutti i campi!", Toast.LENGTH_LONG).show();
                     else {
                         //inserimento nel db
+                        nuovoUtente.setNome(DBhelper.rimuoviAccenti(nuovoUtente.getNome()));
+                        nuovoUtente.setCognome(DBhelper.rimuoviAccenti(nuovoUtente.getCognome()));
                         if (DBhelper.inserisciUtente(nuovoUtente) != -1) {
                             Toast.makeText(RegistrationActivity.this, "Registrato!", Toast.LENGTH_SHORT).show();
                             String subject = "Benvenuto in Cicerone";

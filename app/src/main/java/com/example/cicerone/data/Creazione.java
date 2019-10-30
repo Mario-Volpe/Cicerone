@@ -89,6 +89,9 @@ public class Creazione extends AppCompatActivity {
                     }
 
                     if (checkInfo(partecipantiInt)) {
+                        itinerarioStr = DBhelper.rimuoviAccenti(itinerarioStr);
+                        cittaStr = DBhelper.rimuoviAccenti(cittaStr);
+
                         final Attivita a = new Attivita(getIntent().getExtras().getInt("idUtente"), dataStr, itinerarioStr, idLingua, cittaStr, partecipantiInt, Time.valueOf(hour + ":00"));
 
                         if (DBhelper.inserisciAttivita(a) != -1)

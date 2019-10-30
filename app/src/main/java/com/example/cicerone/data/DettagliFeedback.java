@@ -63,6 +63,7 @@ public class DettagliFeedback extends AppCompatActivity implements AdapterView.O
                 commentotxt = commento.getText().toString().trim();
                 Feedback f = null;
                 if(!commentotxt.equals("")) {
+                    commentotxt = DBhelper.rimuoviAccenti(commentotxt);
                     f = new Feedback(idUtente,id,voto,commentotxt);
                 } else {
                     f = new Feedback(idUtente,id,voto,"");
