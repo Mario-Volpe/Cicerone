@@ -12,6 +12,20 @@ public class Utente {
 
     }
 
+    public Utente(Context context, String password, String cognome, String nome, String email, String datanascita, Integer id,String CF,String telefono) {
+        this.context=context;
+        sharedPreferences=context.getSharedPreferences("userinfo",context.MODE_PRIVATE);
+        this.id = id;
+
+        setCF(CF);
+        setTelefono(telefono);
+        setPassword(password);
+        setNome(nome);
+        setCognome(cognome);
+        setEmail(email);
+        setDatanascita(datanascita);
+    }
+
     public Utente(Context context, String password, String cognome, String nome, String email, String datanascita, Integer id) {
         this.context=context;
         sharedPreferences=context.getSharedPreferences("userinfo",context.MODE_PRIVATE);

@@ -308,7 +308,9 @@ public abstract class DBhelper {
                 datanascita = json_data.getString( U_COL_DATA_NASCITA);
                 telefono = json_data.getString( U_COL_TELEFONO);
 
-                utente = new Utente(context,password,cognome,nome,email,datanascita,id);
+                if(CF.equals(""))
+                    utente = new Utente(context,password,cognome,nome,email,datanascita,id);
+                else utente = new Utente(context,password,cognome,nome,email,datanascita,id,CF,telefono);
 
             }
         } catch (JSONException|NullPointerException e){

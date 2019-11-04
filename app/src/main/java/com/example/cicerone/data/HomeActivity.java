@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -159,14 +160,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent inte;
                 Utente u = DBhelper.getInfoUtentebyID(HomeActivity.this,id);
-                if(!u.getCF().equals("")){
-                    CF=u.getCF();
-                }
 
-                if(CF==null)
+                if(u.getCF()==null||u.getCF().equals(""))
                     inte = new Intent(HomeActivity.this, ToCicerone.class);
                 else {
-                    if(CF.equals("null")||CF.isEmpty())
+                    if(u.getCF().equals("null")||u.getCF().isEmpty())
                         inte = new Intent(HomeActivity.this, ToCicerone.class);
                     else
                         inte = new Intent(HomeActivity.this, Creazione.class);
