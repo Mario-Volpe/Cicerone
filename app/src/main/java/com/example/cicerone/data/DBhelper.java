@@ -87,9 +87,7 @@ public abstract class DBhelper {
         try{
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost("http://18.232.247.191/conn.php");
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity entity = response.getEntity();
-            InputStream is = entity.getContent();
+            httpclient.execute(httppost);
             Log.e("log_tag", "Success in http connection ");
         }catch(Exception e){
             Log.e("log_tag", "Error in http connection "+e.toString());
@@ -383,22 +381,21 @@ public abstract class DBhelper {
                     if (checkData(gma[2], gma[1], gma[0], "cerca")) {
                         Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                         s.add(c);
-                        Log.e("pnull", "aggiunta attività con id:" + idAttivita);
                     }
                 } else {
                     for (Prenotazione p2 : p)
-                        if (p2.getId() == id)
+                        if (p2.getId() == id) {
                             flag = false;
+                            break;
+                        }
 
                     if(flag) {
                         Integer gma[] = parseData(data);
                         if (checkData(gma[2], gma[1], gma[0], "cerca")) {
                             Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                             s.add(c);
-                            Log.e("pnotnull", "aggiunta attività con id:" + idAttivita);
                         }
                     }
-
                 }
             }
 
@@ -525,8 +522,6 @@ public abstract class DBhelper {
                 Globetrotter = json_data.getInt(P_COL_GLOBETROTTER);
                 idAttivita = json_data.getInt(P_COL_ATTIVITA);
                 nPartecipanti = json_data.getInt(P_COL_PARTECIPANTI);
-
-                Log.e("getprenotaz:","idAtt:"+idAttivita+" nPartec:"+nPartecipanti);
 
                 Prenotazione c = new Prenotazione(Globetrotter,idAttivita,nPartecipanti);
                 p.add(c);

@@ -1,8 +1,10 @@
 package com.example.cicerone.data;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +22,6 @@ import android.widget.Toast;
 import com.example.cicerone.R;
 
 import java.sql.Time;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -36,6 +37,10 @@ public class FormRicerca extends AppCompatActivity {
     private String linguaStr="";
     private String hour ="";
     private ArrayAdapter<String> spinnerAdapter;
+    private Integer partecipantiInt2;
+    private Integer id;
+    private Attivita a;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,21 +98,27 @@ public class FormRicerca extends AppCompatActivity {
                         }
 
                         cittaStr = DBhelper.rimuoviAccenti(cittaStr);
-                        Attivita a = new Attivita(0, dataStr, "", idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
-                        Integer id = getIntent().getExtras().getInt("idUtente");
-                        ArrayList<Attivita> c = DBhelper.getInfoAttivita(a,id);
-                        Intent res = new Intent(FormRicerca.this, Cerca.class);
-                        res.putExtra("risultati", c);
-                        res.putExtra("npartecipanti",partecipantiInt);
-                        res.putExtra("idUtente",id);
-                        res.putExtra("chiamante",getIntent().getExtras().getString("chiamante"));
-                        startActivity(res);
-                        finish();
+                        partecipantiInt2 = partecipantiInt;
+                        a = new Attivita(0, dataStr, "", idLingua, cittaStr, partecipantiInt, Time.valueOf(hour+":00"));
+                        id = getIntent().getExtras().getInt("idUtente");
+                        progressDialog = new ProgressDialog(FormRicerca.this,
+                                R.style.AppTheme);
+                            progressDialog.setIndeterminate(false);
+                            progressDialog.setMessage("Ricerca in corso...");
+                            progressDialog.show();
+                            new android.os.Handler().postDelayed(
+                                new Runnable() {
+                                    public void run() {
+                                        async();
+                                        progressDialog.dismiss();
+                                    }
+                                }, 0);
                     }
                 }
                 }
             }
         });
+
 
         spinnerAdapter=new ArrayAdapter<>(this, R.layout.row);
         spinnerAdapter.addAll(ls);
@@ -180,6 +191,18 @@ public class FormRicerca extends AppCompatActivity {
             }
         };
     }
+
+        protected void async() {
+            ArrayList<Attivita> c = DBhelper.getInfoAttivita(a,id);
+            Intent res = new Intent(FormRicerca.this, Cerca.class);
+            res.putExtra("risultati", c);
+            res.putExtra("npartecipanti",partecipantiInt2);
+            res.putExtra("idUtente",id);
+            res.putExtra("chiamante",getIntent().getExtras().getString("chiamante"));
+            startActivity(res);
+            finish();
+        }
+
 
     private void updateLingua(String lingua) {
         linguaStr=lingua;

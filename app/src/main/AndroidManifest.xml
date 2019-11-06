@@ -25,11 +25,11 @@
         <activity android:name=".data.Cerca" />
         <activity
             android:name=".data.HomeActivity"
-            android:label="@string/title_activity_home" />
+            android:label= "Home" />
         <activity android:name=".data.RegistrationActivity" />
         <activity
             android:name=".data.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="Login" />
         <activity android:name=".data.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
