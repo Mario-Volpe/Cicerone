@@ -109,8 +109,9 @@ public class FormRicerca extends AppCompatActivity {
                             new android.os.Handler().postDelayed(
                                 new Runnable() {
                                     public void run() {
-                                        async();
-                                        progressDialog.dismiss();
+                                        SimpleRunner r = new SimpleRunner();
+                                        Thread t = new Thread(r);
+                                        t.start();
                                     }
                                 }, 0);
                     }
@@ -193,6 +194,12 @@ public class FormRicerca extends AppCompatActivity {
     }
 
         protected void async() {
+
+        }
+
+    protected class SimpleRunner implements Runnable {
+
+        public void run() {
             ArrayList<Attivita> c = DBhelper.getInfoAttivita(a,id);
             Intent res = new Intent(FormRicerca.this, Cerca.class);
             res.putExtra("risultati", c);
@@ -201,7 +208,9 @@ public class FormRicerca extends AppCompatActivity {
             res.putExtra("chiamante",getIntent().getExtras().getString("chiamante"));
             startActivity(res);
             finish();
+            progressDialog.dismiss();
         }
+    }
 
 
     private void updateLingua(String lingua) {

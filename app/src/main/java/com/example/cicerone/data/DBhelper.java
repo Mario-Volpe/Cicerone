@@ -137,11 +137,11 @@ public abstract class DBhelper {
         if(result.isEmpty())
             Log.e("log_tag","è vuoto.");
 
-        try{
-            jArray = new JSONArray(result);
-        } catch(JSONException e1){
-            Log.e("Errore:", "Conversione fallita");
-        }
+            try{
+                jArray = new JSONArray(result);
+            } catch(JSONException e1){
+                Log.e("Errore:", "Conversione fallita");
+            }
         return jArray;
     }
 
@@ -466,6 +466,8 @@ public abstract class DBhelper {
                 citta = json_data.getString(A_COL_CITTA);
                 maxPartecipanti = json_data.getInt(A_COL_PARTECIPANTI);
                 ora = json_data.getString(A_COL_ORA);
+
+                Log.e("attivitaserach","idAtt:"+idAttivita+" cicerone: "+cicerone);
 
                 Attivita c = new Attivita(idAttivita, cicerone, data, descrizioneItinerario, lingua, citta, maxPartecipanti, Time.valueOf(ora));
                 s.add(c);

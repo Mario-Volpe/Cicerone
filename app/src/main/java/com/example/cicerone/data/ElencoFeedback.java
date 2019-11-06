@@ -3,6 +3,7 @@ package com.example.cicerone.data;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,8 +42,10 @@ public class ElencoFeedback extends AppCompatActivity {
         Integer[] ids;
 
         a = DBhelper.getAllAttivita(cicerone);
-        for(Attivita a2:a)
+        for(Attivita a2:a) {
+            Log.e("cercaFeedback:","idAttivita:"+a2.getIdAttivita());
             f.addAll(DBhelper.getAllFeedback(a2.getIdAttivita()));
+        }
 
         if(f.size()==0||f==null){
             media.setVisibility(View.INVISIBLE);
