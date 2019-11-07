@@ -43,7 +43,6 @@ public class ElencoFeedback extends AppCompatActivity {
 
         a = DBhelper.getAllAttivita(cicerone);
         for(Attivita a2:a) {
-            Log.e("cercaFeedback:","idAttivita:"+a2.getIdAttivita());
             f.addAll(DBhelper.getAllFeedback(a2.getIdAttivita()));
         }
 
@@ -69,6 +68,7 @@ public class ElencoFeedback extends AppCompatActivity {
             }
 
             avg = (somma / f.size());
+            avg = (float) (Math.ceil(avg * Math.pow(10, 1)) / Math.pow(10, 1));
             media.append(" " + avg + "/5");
 
             fadapter = new EAdapter(this,a,voti,"elencoF");
